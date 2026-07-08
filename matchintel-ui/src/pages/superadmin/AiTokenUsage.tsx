@@ -67,9 +67,9 @@ export default function SuperAdminAiTokenUsage() {
         <div className="border border-slate-200 rounded-xl p-5 bg-white shadow-sm flex flex-col justify-center">
           <div className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1 flex items-center justify-between">
             <span>Estimated Cost (API)</span>
-            <span className="material-symbols-outlined text-emerald-500 text-[16px]">payments</span>
+            <span className="material-symbols-outlined text-emerald-700 text-[16px]">payments</span>
           </div>
-          <div className="text-3xl font-bold text-emerald-600">${totalCost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+          <div className="text-3xl font-bold text-emerald-800">${totalCost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
         </div>
       </div>
 
@@ -78,7 +78,7 @@ export default function SuperAdminAiTokenUsage() {
           <h3 className="font-bold text-emerald-900">Organization Token Usage</h3>
           <div className="relative">
             <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400">search</span>
-            <input type="text" placeholder="Search..." className="pl-8 pr-3 py-1.5 w-48 text-[12px] border border-slate-200 rounded-lg bg-slate-50 focus:outline-none focus:border-emerald-500" />
+            <input type="text" placeholder="Search..." className="pl-8 pr-3 py-1.5 w-48 text-[12px] border border-slate-200 rounded-lg bg-slate-50 focus:outline-none focus:border-emerald-700" />
           </div>
         </div>
         <table className="w-full">
@@ -112,7 +112,7 @@ export default function SuperAdminAiTokenUsage() {
                     <div className="flex items-center gap-2">
                       <div className="w-16 bg-slate-100 h-1.5 rounded-full overflow-hidden">
                         <div 
-                          className={`h-full rounded-full ${agency.usagePercentage > 80 ? 'bg-red-500' : agency.usagePercentage > 50 ? 'bg-orange-400' : 'bg-emerald-500'}`} 
+                          className={`h-full rounded-full ${agency.usagePercentage > 80 ? 'bg-red-500' : agency.usagePercentage > 50 ? 'bg-orange-400' : 'bg-emerald-700'}`} 
                           style={{ width: `${agency.usagePercentage}%` }}
                         ></div>
                       </div>
@@ -120,7 +120,7 @@ export default function SuperAdminAiTokenUsage() {
                     </div>
                   </td>
                   <td className="px-5 py-3 text-right">
-                    <button onClick={() => alert(`Allocating more tokens to ${agency.name}`)} className="text-[12px] font-semibold text-emerald-600 hover:text-emerald-700 cursor-pointer">Adjust Quota</button>
+                    <button onClick={() => alert(`Allocating more tokens to ${agency.name}`)} className="text-[12px] font-semibold text-emerald-800 hover:text-emerald-900 cursor-pointer">Adjust Quota</button>
                   </td>
                 </tr>
               ))
@@ -131,3 +131,4 @@ export default function SuperAdminAiTokenUsage() {
     </div>
   );
 }
+

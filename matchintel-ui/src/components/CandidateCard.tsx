@@ -43,7 +43,7 @@ export function CandidateCard({ candidate, delay = 0 }: CandidateCardProps) {
           </div>
           
           <div className="flex flex-col items-end">
-            <span className="text-2xl font-extrabold text-emerald-600 leading-none">{candidate.score}%</span>
+            <span className="text-2xl font-extrabold text-emerald-800 leading-none">{candidate.score}%</span>
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Match Score</span>
           </div>
         </div>
@@ -61,7 +61,7 @@ export function CandidateCard({ candidate, delay = 0 }: CandidateCardProps) {
               {/* Trust/Risk Badges */}
               <div className="flex flex-wrap gap-3">
                 {candidate.trustBadge && (
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-emerald-200 bg-emerald-50 text-emerald-700 rounded-full text-xs font-bold shadow-sm">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-emerald-200 bg-emerald-50 text-emerald-900 rounded-full text-xs font-bold shadow-sm">
                     <span className="material-symbols-outlined text-[16px]">verified</span>
                     {candidate.trustBadge}
                   </div>
@@ -91,7 +91,7 @@ export function CandidateCard({ candidate, delay = 0 }: CandidateCardProps) {
                 <button className="px-4 py-2 bg-white border border-slate-300 text-slate-700 font-bold text-sm rounded-lg hover:bg-slate-100 transition-colors shadow-sm">
                   Decline
                 </button>
-                <button className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-lg shadow-sm transition-colors">
+                <button className="px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-sm rounded-lg shadow-sm transition-colors">
                   Advance to Interview
                 </button>
               </div>
@@ -102,7 +102,7 @@ export function CandidateCard({ candidate, delay = 0 }: CandidateCardProps) {
       
       {/* Expand/Collapse affordance */}
       <div 
-        className="w-full py-2 bg-slate-50 border-t border-slate-100 flex justify-center items-center text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 cursor-pointer transition-colors"
+        className="w-full py-2 bg-slate-50 border-t border-slate-100 flex justify-center items-center text-slate-400 hover:text-emerald-800 hover:bg-emerald-50 cursor-pointer transition-colors"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <span className="material-symbols-outlined text-[20px]">
@@ -112,3 +112,4 @@ export function CandidateCard({ candidate, delay = 0 }: CandidateCardProps) {
     </motion.div>
   );
 }
+

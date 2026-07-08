@@ -151,7 +151,7 @@ export default function CandidateResumeUpload() {
         {/* Upload Zone inside the form */}
         <div
           className={`border-b-2 border-dashed p-8 flex flex-col items-center justify-center text-center transition-all cursor-pointer ${
-            dragActive ? 'border-emerald-500 bg-emerald-50/50' : 'border-slate-200 hover:bg-slate-50'
+            dragActive ? 'border-emerald-700 bg-emerald-50/50' : 'border-slate-200 hover:bg-slate-50'
           }`}
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
@@ -167,7 +167,7 @@ export default function CandidateResumeUpload() {
             className="hidden"
           />
           <div className="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center mb-3">
-            <span className="material-symbols-outlined text-[28px] text-emerald-600">
+            <span className="material-symbols-outlined text-[28px] text-emerald-800">
               cloud_upload
             </span>
           </div>
@@ -183,7 +183,7 @@ export default function CandidateResumeUpload() {
             <span className="text-[12px] font-bold text-slate-500 uppercase tracking-widest">
               {parseStep === 0 ? 'Ready to parse' : parseStep === 1 ? '✨ Parsing Resume...' : 'Parsed successfully'}
             </span>
-            <div className={`w-2.5 h-2.5 rounded-full ${parseStep === 0 ? 'bg-slate-300' : parseStep === 1 ? 'bg-amber-400 animate-pulse' : 'bg-green-500'}`} />
+            <div className={`w-2.5 h-2.5 rounded-full ${parseStep === 0 ? 'bg-slate-300' : parseStep === 1 ? 'bg-amber-400 animate-pulse' : 'bg-green-700'}`} />
           </div>
         </div>
         
@@ -194,8 +194,8 @@ export default function CandidateResumeUpload() {
             <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-20 flex flex-col items-center justify-center animate-in fade-in duration-300">
               <div className="relative w-16 h-16 mb-6">
                 <div className="absolute inset-0 border-4 border-slate-100 rounded-full"></div>
-                <div className="absolute inset-0 border-4 border-emerald-600 rounded-full border-t-transparent animate-spin"></div>
-                <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-emerald-600 text-[24px]">auto_awesome</span>
+                <div className="absolute inset-0 border-4 border-emerald-800 rounded-full border-t-transparent animate-spin"></div>
+                <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-emerald-800 text-[24px]">auto_awesome</span>
               </div>
               <h3 className="font-display text-[18px] font-bold text-emerald-900 mb-2">Analyzing Document...</h3>
               <p className="text-[14px] text-slate-500 font-medium">Extracting skills, experience, and metadata</p>
@@ -205,28 +205,28 @@ export default function CandidateResumeUpload() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             <div className="space-y-1.5 lg:col-span-1">
               <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Full Name</label>
-              <input type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-500 bg-white transition-all" />
+              <input type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-700 bg-white transition-all" />
             </div>
             <div className="space-y-1.5 lg:col-span-1">
               <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Email Address</label>
-              <input type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-500 bg-white transition-all" />
+              <input type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-700 bg-white transition-all" />
             </div>
             <div className="space-y-1.5 lg:col-span-1">
               <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Mobile Phone</label>
-              <input type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-500 bg-white transition-all" />
+              <input type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-700 bg-white transition-all" />
             </div>
             
             <div className="space-y-1.5 lg:col-span-1">
               <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Location</label>
-              <input type="text" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-500 bg-white transition-all" />
+              <input type="text" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-700 bg-white transition-all" />
             </div>
             <div className="space-y-1.5 lg:col-span-1">
               <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Preferred Location</label>
-              <input type="text" value={formData.preferredLocation} onChange={e => setFormData({...formData, preferredLocation: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-500 bg-white transition-all" />
+              <input type="text" value={formData.preferredLocation} onChange={e => setFormData({...formData, preferredLocation: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-700 bg-white transition-all" />
             </div>
             <div className="space-y-1.5 lg:col-span-1">
               <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Gender</label>
-              <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-500 bg-white transition-all">
+              <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-700 bg-white transition-all">
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -237,7 +237,7 @@ export default function CandidateResumeUpload() {
             
             <div className="space-y-1.5 lg:col-span-1">
               <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Date of Birth</label>
-              <input type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-500 bg-white transition-all" />
+              <input type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-700 bg-white transition-all" />
             </div>
             <div className="space-y-1.5 lg:col-span-1">
               <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Age (Auto-calculated)</label>
@@ -247,25 +247,25 @@ export default function CandidateResumeUpload() {
 
             <div className="space-y-1.5 md:col-span-2 lg:col-span-3">
               <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Experience Snippet</label>
-              <textarea rows={3} value={formData.experience} onChange={e => setFormData({...formData, experience: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-500 bg-white transition-all resize-none" placeholder="Experience details..." />
+              <textarea rows={3} value={formData.experience} onChange={e => setFormData({...formData, experience: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-700 bg-white transition-all resize-none" placeholder="Experience details..." />
             </div>
             
             <div className="space-y-1.5 md:col-span-2 lg:col-span-3">
               <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Education</label>
-              <textarea rows={2} value={formData.education} onChange={e => setFormData({...formData, education: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-500 bg-white transition-all resize-none" placeholder="Education details..." />
+              <textarea rows={2} value={formData.education} onChange={e => setFormData({...formData, education: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-700 bg-white transition-all resize-none" placeholder="Education details..." />
             </div>
             
             <div className="space-y-1.5 md:col-span-2 lg:col-span-3">
               <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Projects</label>
-              <textarea rows={3} value={formData.projects.join('\n\n')} onChange={e => setFormData({...formData, projects: e.target.value.split('\n\n')})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-500 bg-white transition-all resize-none" placeholder="Extracted projects..." />
+              <textarea rows={3} value={formData.projects.join('\n\n')} onChange={e => setFormData({...formData, projects: e.target.value.split('\n\n')})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-700 bg-white transition-all resize-none" placeholder="Extracted projects..." />
             </div>
           </div>
 
           <div className="space-y-1.5">
             <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Technical Skills</label>
-            <div className="w-full min-h-[42px] px-3 py-2 border border-slate-200 rounded-lg bg-white focus-within:border-emerald-500 transition-all flex flex-wrap gap-2 items-center">
+            <div className="w-full min-h-[42px] px-3 py-2 border border-slate-200 rounded-lg bg-white focus-within:border-emerald-700 transition-all flex flex-wrap gap-2 items-center">
               {formData.skills.map(skill => (
-                <span key={skill} className="px-2 py-1 bg-emerald-50 text-emerald-700 border border-emerald-100 rounded text-[12px] font-bold flex items-center gap-1">
+                <span key={skill} className="px-2 py-1 bg-emerald-50 text-emerald-900 border border-emerald-100 rounded text-[12px] font-bold flex items-center gap-1">
                   {skill}
                   <button onClick={() => removeSkill(skill, false)} className="material-symbols-outlined text-[14px] hover:text-red-500 cursor-pointer">close</button>
                 </span>
@@ -283,7 +283,7 @@ export default function CandidateResumeUpload() {
           {formData.softSkills.length > 0 && (
             <div className="space-y-1.5 mt-4">
               <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Soft Skills</label>
-              <div className="w-full min-h-[42px] px-3 py-2 border border-slate-200 rounded-lg bg-white focus-within:border-emerald-500 transition-all flex flex-wrap gap-2 items-center">
+              <div className="w-full min-h-[42px] px-3 py-2 border border-slate-200 rounded-lg bg-white focus-within:border-emerald-700 transition-all flex flex-wrap gap-2 items-center">
                 {formData.softSkills.map(skill => (
                   <span key={skill} className="px-2 py-1 bg-blue-50 text-blue-700 border border-blue-100 rounded text-[12px] font-bold flex items-center gap-1">
                     {skill}
@@ -319,7 +319,7 @@ export default function CandidateResumeUpload() {
           <div className="pt-6 mt-auto">
             <button 
               onClick={handleConfirm} 
-              className={`w-full py-3.5 rounded-xl text-[14px] font-bold transition-all shadow-sm flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer active:scale-[0.98]`}
+              className={`w-full py-3.5 rounded-xl text-[14px] font-bold transition-all shadow-sm flex items-center justify-center gap-2 bg-emerald-800 hover:bg-emerald-900 text-white cursor-pointer active:scale-[0.98]`}
             >
               Save & Sync to My Profile
             </button>
@@ -330,3 +330,4 @@ export default function CandidateResumeUpload() {
     </div>
   );
 }
+

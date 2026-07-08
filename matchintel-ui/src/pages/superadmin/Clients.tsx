@@ -31,7 +31,7 @@ export default function RecruiterClients() {
       contact: c.contactName,
       email: c.contactEmail,
       status: c.status === 'Account Healthy' ? 'Healthy' : c.status === 'Action Required' ? 'At Risk' : 'Onboarding',
-      statusColor: c.status === 'Account Healthy' ? 'text-green-600' : c.status === 'Action Required' ? 'text-red-500' : 'text-emerald-600',
+      statusColor: c.status === 'Account Healthy' ? 'text-green-800' : c.status === 'Action Required' ? 'text-red-500' : 'text-emerald-800',
       revenue: new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(c.revenue || 0),
       rawRevenue: c.revenue || 0,
       rawStatus: c.status
@@ -143,11 +143,11 @@ export default function RecruiterClients() {
         </div>
         <div className="border border-slate-200 rounded-xl p-4">
           <div className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1">Open Requisitions</div>
- <div className=" text-3xl font-bold text-emerald-600">{allClients.reduce((sum, c) => sum + c.activeRoles, 0)}</div>
+ <div className=" text-3xl font-bold text-emerald-800">{allClients.reduce((sum, c) => sum + c.activeRoles, 0)}</div>
         </div>
         <div className="border border-slate-200 rounded-xl p-4">
           <div className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1">Revenue (YTD)</div>
- <div className=" text-3xl font-bold text-green-600">
+ <div className=" text-3xl font-bold text-green-800">
             {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(allClients.reduce((sum, c) => sum + c.rawRevenue, 0))}
           </div>
         </div>
@@ -157,10 +157,10 @@ export default function RecruiterClients() {
         <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100">
           <div className="relative">
             <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-500">search</span>
-            <input type="text" placeholder="Search clients..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-8 pr-3 py-1.5 w-64 text-[13px] border border-slate-200 rounded-lg bg-white focus:outline-none focus:border-emerald-500 placeholder:text-slate-500" />
+            <input type="text" placeholder="Search clients..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-8 pr-3 py-1.5 w-64 text-[13px] border border-slate-200 rounded-lg bg-white focus:outline-none focus:border-emerald-700 placeholder:text-slate-500" />
           </div>
           <div className="flex items-center gap-2">
-            <select value={statusFilter || ''} onChange={(e) => setStatusFilter(e.target.value || null)} className="px-3 py-1.5 border border-slate-200 rounded-lg text-[13px] font-medium text-slate-700 bg-white focus:outline-none focus:border-emerald-500 cursor-pointer">
+            <select value={statusFilter || ''} onChange={(e) => setStatusFilter(e.target.value || null)} className="px-3 py-1.5 border border-slate-200 rounded-lg text-[13px] font-medium text-slate-700 bg-white focus:outline-none focus:border-emerald-700 cursor-pointer">
               <option value="">All Status</option>
               <option value="Healthy">Healthy</option>
               <option value="At Risk">At Risk</option>
@@ -208,12 +208,12 @@ export default function RecruiterClients() {
                 <td className="px-5 py-3 text-[13px] font-semibold text-emerald-900">{c.revenue}</td>
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-1.5">
-                    <div className={`w-1.5 h-1.5 rounded-full ${c.status === 'Healthy' ? 'bg-green-500' : c.status === 'At Risk' ? 'bg-red-500' : 'bg-emerald-500'}`} />
+                    <div className={`w-1.5 h-1.5 rounded-full ${c.status === 'Healthy' ? 'bg-green-700' : c.status === 'At Risk' ? 'bg-red-500' : 'bg-emerald-700'}`} />
                     <span className={`text-[12px] font-semibold ${c.statusColor}`}>{c.status}</span>
                   </div>
                 </td>
                 <td className="px-5 py-3 text-right">
-                  <button onClick={(e) => { e.stopPropagation(); handleManage(c); }} className="text-[12px] font-semibold text-emerald-600 hover:text-emerald-700 cursor-pointer">Manage →</button>
+                  <button onClick={(e) => { e.stopPropagation(); handleManage(c); }} className="text-[12px] font-semibold text-emerald-800 hover:text-emerald-900 cursor-pointer">Manage →</button>
                 </td>
               </tr>
             ))}
@@ -236,16 +236,16 @@ export default function RecruiterClients() {
             <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
               <div>
                 <label className="block text-[12px] font-bold text-slate-700 mb-1">Company Name</label>
-                <input type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" placeholder="e.g. Acme Corp" />
+                <input type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" placeholder="e.g. Acme Corp" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[12px] font-bold text-slate-700 mb-1">Industry</label>
-                  <input type="text" value={formData.industry} onChange={e => setFormData({ ...formData, industry: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" placeholder="e.g. Fintech" />
+                  <input type="text" value={formData.industry} onChange={e => setFormData({ ...formData, industry: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" placeholder="e.g. Fintech" />
                 </div>
                 <div>
                   <label className="block text-[12px] font-bold text-slate-700 mb-1">Status</label>
-                  <select value={formData.status} onChange={e => setFormData({ ...formData, status: e.target.value as any })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white">
+                  <select value={formData.status} onChange={e => setFormData({ ...formData, status: e.target.value as any })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 bg-white">
                     <option value="Onboarding">Onboarding</option>
                     <option value="Account Healthy">Account Healthy</option>
                     <option value="Action Required">Action Required</option>
@@ -256,15 +256,15 @@ export default function RecruiterClients() {
               <div className="grid grid-cols-3 gap-4">
                 <div>
                   <label className="block text-[12px] font-bold text-slate-700 mb-1">Active Roles</label>
-                  <input type="number" value={formData.activeRoles} onChange={e => setFormData({ ...formData, activeRoles: parseInt(e.target.value) || 0 })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+                  <input type="number" value={formData.activeRoles} onChange={e => setFormData({ ...formData, activeRoles: parseInt(e.target.value) || 0 })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" />
                 </div>
                 <div>
                   <label className="block text-[12px] font-bold text-slate-700 mb-1">Pipeline Size</label>
-                  <input type="number" value={formData.pipeline} onChange={e => setFormData({ ...formData, pipeline: parseInt(e.target.value) || 0 })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+                  <input type="number" value={formData.pipeline} onChange={e => setFormData({ ...formData, pipeline: parseInt(e.target.value) || 0 })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" />
                 </div>
                 <div>
                   <label className="block text-[12px] font-bold text-slate-700 mb-1">Revenue ($)</label>
-                  <input type="number" value={formData.revenue} onChange={e => setFormData({ ...formData, revenue: parseInt(e.target.value) || 0 })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+                  <input type="number" value={formData.revenue} onChange={e => setFormData({ ...formData, revenue: parseInt(e.target.value) || 0 })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" />
                 </div>
               </div>
 
@@ -273,11 +273,11 @@ export default function RecruiterClients() {
                 <div className="space-y-3">
                   <div>
                     <label className="block text-[12px] font-bold text-slate-700 mb-1">Name</label>
-                    <input type="text" value={formData.contactName} onChange={e => setFormData({ ...formData, contactName: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" placeholder="Contact Name" />
+                    <input type="text" value={formData.contactName} onChange={e => setFormData({ ...formData, contactName: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" placeholder="Contact Name" />
                   </div>
                   <div>
                     <label className="block text-[12px] font-bold text-slate-700 mb-1">Email</label>
-                    <input type="email" value={formData.contactEmail} onChange={e => setFormData({ ...formData, contactEmail: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" placeholder="contact@company.com" />
+                    <input type="email" value={formData.contactEmail} onChange={e => setFormData({ ...formData, contactEmail: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" placeholder="contact@company.com" />
                   </div>
                 </div>
               </div>
@@ -295,7 +295,7 @@ export default function RecruiterClients() {
                 <button onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer">
                   Cancel
                 </button>
-                <button onClick={handleSaveClient} className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[13px] font-bold rounded-lg shadow-sm transition-colors cursor-pointer">
+                <button onClick={handleSaveClient} className="px-6 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white text-[13px] font-bold rounded-lg shadow-sm transition-colors cursor-pointer">
                   {editingClient ? 'Save Changes' : 'Create Client'}
                 </button>
               </div>
@@ -306,3 +306,4 @@ export default function RecruiterClients() {
     </div>
   );
 }
+

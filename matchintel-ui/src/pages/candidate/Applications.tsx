@@ -9,9 +9,9 @@ export default function CandidateApplications() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Applied': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+      case 'Applied': return 'bg-emerald-100 text-emerald-900 border-emerald-200';
       case 'Screening': return 'bg-amber-100 text-amber-700 border-amber-200';
-      case 'Shortlisted': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+      case 'Shortlisted': return 'bg-emerald-100 text-emerald-900 border-emerald-200';
       case 'Interview Scheduled': return 'bg-purple-100 text-purple-700 border-purple-200';
       case 'Rejected': return 'bg-red-100 text-red-700 border-red-200';
       default: return 'bg-slate-100 text-slate-700 border-slate-200';
@@ -50,7 +50,7 @@ export default function CandidateApplications() {
         
         {/* 3D Track Fill */}
         <div 
-          className="absolute left-[10%] top-4 h-1.5 bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full shadow-[0_2px_6px_rgba(37,99,235,0.4)] transition-all duration-1000 ease-out -z-0" 
+          className="absolute left-[10%] top-4 h-1.5 bg-gradient-to-r from-emerald-400 to-emerald-800 rounded-full shadow-[0_2px_6px_rgba(37,99,235,0.4)] transition-all duration-1000 ease-out -z-0" 
           style={{ width: `${(currentStepIndex / (allSteps.length - 1)) * 80}%` }}
         ></div>
         
@@ -60,11 +60,11 @@ export default function CandidateApplications() {
           
           return (
             <div key={step} className="flex flex-col items-center flex-1 relative z-10 group" style={{ animationDelay: `${idx * 150}ms` }}>
-              <div className={`w-8 h-8 rounded-full shadow-[inset_0_-2px_4px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.1)] border-2 border-white flex items-center justify-center transition-all duration-700 ease-in-out transform group-hover:scale-110 ${isCompleted ? 'bg-gradient-to-br from-emerald-400 to-emerald-600' : 'bg-slate-200'}`}>
+              <div className={`w-8 h-8 rounded-full shadow-[inset_0_-2px_4px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.1)] border-2 border-white flex items-center justify-center transition-all duration-700 ease-in-out transform group-hover:scale-110 ${isCompleted ? 'bg-gradient-to-br from-emerald-400 to-emerald-800' : 'bg-slate-200'}`}>
                 {isCompleted && !isCurrent && <span className="material-symbols-outlined text-[16px] text-white font-bold drop-shadow-md animate-fade-in">check</span>}
                 {isCurrent && <div className="w-3 h-3 bg-white rounded-full shadow-sm animate-pulse"></div>}
               </div>
-              <span className={`text-[12px] font-bold mt-3 transition-colors duration-500 ${isCurrent ? 'text-emerald-600' : isCompleted ? 'text-slate-800' : 'text-slate-400'}`}>
+              <span className={`text-[12px] font-bold mt-3 transition-colors duration-500 ${isCurrent ? 'text-emerald-800' : isCompleted ? 'text-slate-800' : 'text-slate-400'}`}>
                 {step}
               </span>
             </div>
@@ -92,7 +92,7 @@ export default function CandidateApplications() {
           </p>
           <button 
             onClick={() => navigate('/candidate/dashboard')}
-            className="px-6 py-3 bg-emerald-600 text-white font-bold rounded-xl shadow-sm hover:bg-emerald-700 transition-colors"
+            className="px-6 py-3 bg-emerald-800 text-white font-bold rounded-xl shadow-sm hover:bg-emerald-900 transition-colors"
           >
             View Active Jobs
           </button>
@@ -148,7 +148,7 @@ export default function CandidateApplications() {
                     {app.status === 'Shortlisted' && (
                       <button 
                         onClick={() => navigate(`/candidate/test/${app.id}`)}
-                        className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-[12px] font-bold transition-all shadow-md mt-1"
+                        className="flex items-center gap-1.5 px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-[12px] font-bold transition-all shadow-md mt-1"
                       >
                         <span className="material-symbols-outlined text-[16px]">quiz</span>
                         Start MCQ Test
@@ -181,3 +181,4 @@ export default function CandidateApplications() {
     </div>
   );
 }
+

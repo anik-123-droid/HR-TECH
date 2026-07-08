@@ -81,7 +81,7 @@ export default function CandidateProfile() {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-xl font-bold text-emerald-700 border-2 border-emerald-200 relative group overflow-hidden">
+          <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-xl font-bold text-emerald-900 border-2 border-emerald-200 relative group overflow-hidden">
             {candidateProfile.imageUrl ? (
               <img src={candidateProfile.imageUrl} alt="Profile" className="w-full h-full object-cover" />
             ) : (
@@ -111,7 +111,7 @@ export default function CandidateProfile() {
                 {candidateProfile.readinessScore > 50 ? 'Profile Complete' : 'Profile Incomplete'}
               </span>
               {candidateProfile.skillsVerified && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[11px] font-semibold rounded border border-emerald-100">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-900 text-[11px] font-semibold rounded border border-emerald-100">
                   <span className="material-symbols-outlined text-[12px]">verified</span> AI Verified
                 </span>
               )}
@@ -128,7 +128,7 @@ export default function CandidateProfile() {
             <span className="material-symbols-outlined text-[16px]">upload_file</span>
             Update Resume
           </button>
-          <button onClick={handleEdit} className={`flex items-center gap-2 px-4 py-2 rounded-lg text-[13px] font-medium transition-colors cursor-pointer ${isEditing ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'border border-slate-200 text-slate-700 hover:bg-slate-50'}`}>
+          <button onClick={handleEdit} className={`flex items-center gap-2 px-4 py-2 rounded-lg text-[13px] font-medium transition-colors cursor-pointer ${isEditing ? 'bg-emerald-800 hover:bg-emerald-900 text-white' : 'border border-slate-200 text-slate-700 hover:bg-slate-50'}`}>
             <span className="material-symbols-outlined text-[16px]">{isEditing ? 'save' : 'edit'}</span>
             {isEditing ? 'Save Profile' : 'Edit Profile'}
           </button>
@@ -141,7 +141,7 @@ export default function CandidateProfile() {
            <span className="material-symbols-outlined text-4xl text-slate-400 mb-3">person_off</span>
            <h3 className="font-display text-lg font-bold text-emerald-900 mb-1">Your Profile is Empty</h3>
            <p className="text-sm text-slate-500 text-center max-w-md mb-6">You haven't added any professional details yet. Complete your profile to get matched with top AI and tech companies.</p>
-           <button onClick={() => setIsEditing(true)} className="px-5 py-2.5 bg-emerald-600 text-white text-[13px] font-bold rounded-xl hover:bg-emerald-700 transition-colors cursor-pointer shadow-sm">
+           <button onClick={() => setIsEditing(true)} className="px-5 py-2.5 bg-emerald-800 text-white text-[13px] font-bold rounded-xl hover:bg-emerald-900 transition-colors cursor-pointer shadow-sm">
              Complete Profile
            </button>
         </div>
@@ -173,7 +173,7 @@ export default function CandidateProfile() {
                   value={bio}
                   onChange={e => setBio(e.target.value)}
                   placeholder="Write a short professional summary..."
-                  className="w-full h-32 p-3 border border-emerald-200 bg-emerald-50/20 rounded-xl text-[14px] text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition-all resize-y font-medium" 
+                  className="w-full h-32 p-3 border border-emerald-200 bg-emerald-50/20 rounded-xl text-[14px] text-slate-700 focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-100 transition-all resize-y font-medium" 
                 />
               ) : (
                 <p className="text-[14px] text-slate-600 leading-relaxed font-medium whitespace-pre-wrap transition-opacity duration-300">
@@ -199,7 +199,7 @@ export default function CandidateProfile() {
                           value={experience} 
                           onChange={e => setExperience(e.target.value)} 
                           placeholder="e.g. Senior Frontend Engineer at Tech Corp&#10;- Led a team of 5 developers&#10;- Improved performance by 40%" 
-                          className="px-3 py-3 text-[13px] border border-emerald-200 bg-emerald-50/20 rounded-xl w-full h-32 resize-y focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition-all leading-relaxed" 
+                          className="px-3 py-3 text-[13px] border border-emerald-200 bg-emerald-50/20 rounded-xl w-full h-32 resize-y focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-100 transition-all leading-relaxed" 
                         />
                       ) : (
                         <div className="text-[14px] text-slate-700 mt-0.5 leading-relaxed whitespace-pre-wrap">{candidateProfile.experience}</div>
@@ -229,7 +229,7 @@ export default function CandidateProfile() {
                           value={projects.join('\n\n')} 
                           onChange={e => setProjects(e.target.value.split('\n\n'))} 
                           placeholder="Project 1: Developed a full-stack HR app using React..." 
-                          className="px-3 py-3 text-[13px] border border-emerald-200 bg-emerald-50/20 rounded-xl w-full h-32 resize-y focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition-all leading-relaxed" 
+                          className="px-3 py-3 text-[13px] border border-emerald-200 bg-emerald-50/20 rounded-xl w-full h-32 resize-y focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-100 transition-all leading-relaxed" 
                         />
                       ) : (
                         <div className="space-y-4">
@@ -263,7 +263,7 @@ export default function CandidateProfile() {
                           value={education} 
                           onChange={e => setEducation(e.target.value)} 
                           placeholder="e.g. B.S. in Computer Science - University of Tech&#10;Graduated 2022 with 3.8 GPA" 
-                          className="px-3 py-3 text-[13px] border border-emerald-200 bg-emerald-50/20 rounded-xl w-full h-24 resize-y focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition-all leading-relaxed" 
+                          className="px-3 py-3 text-[13px] border border-emerald-200 bg-emerald-50/20 rounded-xl w-full h-24 resize-y focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-100 transition-all leading-relaxed" 
                         />
                       ) : (
                         <div className="text-[14px] text-slate-700 mt-0.5 leading-relaxed whitespace-pre-wrap">{candidateProfile.education}</div>
@@ -288,20 +288,20 @@ export default function CandidateProfile() {
                     <select 
                       value={selectedSkill} 
                       onChange={e => setSelectedSkill(e.target.value)}
-                      className="px-4 py-2 text-[13px] border border-emerald-200 bg-emerald-50/20 rounded-xl flex-1 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition-all"
+                      className="px-4 py-2 text-[13px] border border-emerald-200 bg-emerald-50/20 rounded-xl flex-1 focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-100 transition-all"
                     >
                       <option value="" disabled>Select a skill to add...</option>
                       {availableSkills.map(s => (
                         <option key={s} value={s}>{s}</option>
                       ))}
                     </select>
-                    <button onClick={handleAddSkill} className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-[13px] font-bold rounded-xl transition-all shadow-sm shrink-0 active:scale-95">
+                    <button onClick={handleAddSkill} className="px-5 py-2 bg-emerald-800 hover:bg-emerald-900 text-white text-[13px] font-bold rounded-xl transition-all shadow-sm shrink-0 active:scale-95">
                       Add
                     </button>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {skills.map(skill => (
-                      <div key={skill} className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-100 rounded-lg text-[13px] font-semibold transition-all hover:-translate-y-0.5">
+                      <div key={skill} className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-900 border border-emerald-100 rounded-lg text-[13px] font-semibold transition-all hover:-translate-y-0.5">
                         {skill}
                         <button onClick={() => handleRemoveSkill(skill)} className="material-symbols-outlined text-[16px] hover:text-red-500 transition-colors ml-1">close</button>
                       </div>
@@ -311,7 +311,7 @@ export default function CandidateProfile() {
               ) : (
                 <div className="mb-5 flex flex-wrap gap-2">
                   {candidateProfile.skills.length > 0 ? candidateProfile.skills.map((skill) => (
-                    <div key={skill} className="flex items-center px-3 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-100 rounded-lg text-[13px] font-semibold shadow-sm">
+                    <div key={skill} className="flex items-center px-3 py-1.5 bg-emerald-50 text-emerald-900 border border-emerald-100 rounded-lg text-[13px] font-semibold shadow-sm">
                       {skill}
                     </div>
                   )) : (
@@ -377,14 +377,14 @@ export default function CandidateProfile() {
             {candidateProfile.careerSuggestions && candidateProfile.careerSuggestions.length > 0 && (
               <div className="border border-slate-200 rounded-[24px] p-6 bg-white shadow-sm">
                 <div className="flex items-center gap-1.5 mb-4">
-                  <span className="material-symbols-outlined text-[18px] text-emerald-600">trending_up</span>
+                  <span className="material-symbols-outlined text-[18px] text-emerald-800">trending_up</span>
                   <h3 className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Career Trajectory</h3>
                 </div>
                 <div className="space-y-2">
                   {candidateProfile.careerSuggestions.map(role => (
                     <div key={role} className="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-100">
                       <span className="text-[12px] font-semibold text-slate-700">{role}</span>
-                      <span className="material-symbols-outlined text-[14px] text-emerald-500">arrow_forward</span>
+                      <span className="material-symbols-outlined text-[14px] text-emerald-700">arrow_forward</span>
                     </div>
                   ))}
                 </div>
@@ -399,13 +399,13 @@ export default function CandidateProfile() {
                   {candidateProfile.timeline.map((step: any, idx: number) => (
                     <div key={step.stage} className="relative flex items-start gap-4">
                       {idx !== candidateProfile.timeline!.length - 1 && (
-                        <div className={`absolute top-5 left-[7px] w-[2px] h-[calc(100%+8px)] ${step.status === 'completed' ? 'bg-emerald-500' : 'bg-slate-200'}`}></div>
+                        <div className={`absolute top-5 left-[7px] w-[2px] h-[calc(100%+8px)] ${step.status === 'completed' ? 'bg-emerald-700' : 'bg-slate-200'}`}></div>
                       )}
                       <div className={`relative z-10 w-4 h-4 rounded-full mt-0.5 border-2 ${
-                        step.status === 'completed' ? 'bg-emerald-500 border-emerald-500' : 
-                        step.status === 'current' ? 'bg-white border-emerald-500' : 'bg-white border-slate-300'
+                        step.status === 'completed' ? 'bg-emerald-700 border-emerald-700' : 
+                        step.status === 'current' ? 'bg-white border-emerald-700' : 'bg-white border-slate-300'
                       }`}>
-                        {step.status === 'current' && <div className="absolute inset-[2px] bg-emerald-500 rounded-full animate-pulse"></div>}
+                        {step.status === 'current' && <div className="absolute inset-[2px] bg-emerald-700 rounded-full animate-pulse"></div>}
                       </div>
                       <div>
                         <div className={`text-[13px] font-semibold ${step.status === 'pending' ? 'text-slate-400' : 'text-emerald-900'}`}>{step.stage}</div>
@@ -426,7 +426,7 @@ export default function CandidateProfile() {
                 <div className="flex items-center gap-2.5">
                   <span className="material-symbols-outlined text-[16px] text-slate-400">mail</span>
                   {isEditing ? (
-                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" className="px-3 py-1.5 text-[13px] border border-emerald-200 bg-emerald-50/20 rounded-lg w-full focus:outline-none focus:border-emerald-500 transition-all" />
+                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" className="px-3 py-1.5 text-[13px] border border-emerald-200 bg-emerald-50/20 rounded-lg w-full focus:outline-none focus:border-emerald-700 transition-all" />
                   ) : (
                     <span className="text-[13px] text-slate-700 font-medium">{candidateProfile.email}</span>
                   )}
@@ -434,7 +434,7 @@ export default function CandidateProfile() {
                 <div className="flex items-center gap-2.5">
                   <span className="material-symbols-outlined text-[16px] text-slate-400">call</span>
                   {isEditing ? (
-                    <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder="Phone Number" className="px-3 py-1.5 text-[13px] border border-emerald-200 bg-emerald-50/20 rounded-lg w-full focus:outline-none focus:border-emerald-500 transition-all" />
+                    <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder="Phone Number" className="px-3 py-1.5 text-[13px] border border-emerald-200 bg-emerald-50/20 rounded-lg w-full focus:outline-none focus:border-emerald-700 transition-all" />
                   ) : (
                     <span className="text-[13px] text-slate-700 font-medium">{candidateProfile.phone || 'No phone added'}</span>
                   )}
@@ -448,3 +448,4 @@ export default function CandidateProfile() {
     </div>
   );
 }
+

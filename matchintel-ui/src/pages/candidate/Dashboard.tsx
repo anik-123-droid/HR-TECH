@@ -41,7 +41,7 @@ export default function CandidateDashboard() {
       return;
     }
     setSelectedJob({ id: jobId, title: jobTitle });
-    setModalStep(0);
+    setModalStep(2);
     setFormData({ expectedSalary: '', noticePeriod: '' });
     setApplyModalOpen(true);
   };
@@ -103,7 +103,7 @@ export default function CandidateDashboard() {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-2">
         <div>
-          <h3 className="text-[11px] font-bold text-emerald-600 uppercase tracking-widest mb-1.5">Candidate Portal</h3>
+          <h3 className="text-[11px] font-bold text-emerald-800 uppercase tracking-widest mb-1.5">Candidate Portal</h3>
           <h1 className="font-display text-[32px] font-extrabold text-emerald-900 tracking-tight leading-tight">
             Welcome back, {currentUser.name}
           </h1>
@@ -113,7 +113,7 @@ export default function CandidateDashboard() {
         </div>
         <button 
           onClick={() => navigate('/candidate/resume-upload')}
-          className="flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-[14px] font-bold transition-all shadow-[0_4px_14px_rgba(37,99,235,0.3)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.4)] hover:-translate-y-0.5 self-start"
+          className="flex items-center gap-2 px-6 py-3 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-[14px] font-bold transition-all shadow-[0_4px_14px_rgba(37,99,235,0.3)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.4)] hover:-translate-y-0.5 self-start"
         >
           <span className="material-symbols-outlined text-[20px]">upload_file</span>
           Update Resume
@@ -158,17 +158,17 @@ export default function CandidateDashboard() {
           <div>
             <div className="text-[13px] text-slate-500 font-medium mb-1">Profile Completeness</div>
  <div className=" text-[28px] font-bold text-emerald-900 leading-none mb-2">{profileScore}%</div>
-            <div className="text-[13px] font-medium text-emerald-600 hover:underline" onClick={() => navigate('/candidate/profile')}>Complete your profile</div>
+            <div className="text-[13px] font-medium text-emerald-800 hover:underline" onClick={() => navigate('/candidate/profile')}>Complete your profile</div>
           </div>
         </div>
 
         {/* Active Applications */}
         <div className="bg-white border border-slate-100 rounded-[24px] p-6 shadow-sm relative overflow-hidden group hover:border-slate-200 transition-colors cursor-pointer">
           <div className="flex justify-between items-start mb-4">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center">
               <span className="material-symbols-outlined text-[22px]">work_outline</span>
             </div>
-            <div className="flex items-center gap-1 text-[13px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
+            <div className="flex items-center gap-1 text-[13px] font-bold text-emerald-800 bg-emerald-50 px-2 py-1 rounded-lg">
               <span className="material-symbols-outlined text-[14px]">trending_up</span>
               +3
             </div>
@@ -181,10 +181,10 @@ export default function CandidateDashboard() {
         {/* Profile Views */}
         <div className="bg-white border border-slate-100 rounded-[24px] p-6 shadow-sm relative overflow-hidden group hover:border-slate-200 transition-colors cursor-pointer">
           <div className="flex justify-between items-start mb-4">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center">
               <span className="material-symbols-outlined text-[22px]">visibility</span>
             </div>
-            <div className="flex items-center gap-1 text-[13px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
+            <div className="flex items-center gap-1 text-[13px] font-bold text-emerald-800 bg-emerald-50 px-2 py-1 rounded-lg">
               <span className="material-symbols-outlined text-[14px]">trending_up</span>
               +24%
             </div>
@@ -205,7 +205,7 @@ export default function CandidateDashboard() {
           </div>
           <button 
             onClick={() => navigate('/candidate/applications')}
-            className="text-[13px] font-bold text-emerald-600 hover:text-emerald-700 hover:underline flex items-center gap-1"
+            className="text-[13px] font-bold text-emerald-800 hover:text-emerald-900 hover:underline flex items-center gap-1"
           >
             View your applications <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
           </button>
@@ -245,7 +245,7 @@ export default function CandidateDashboard() {
                     
                     <div className="flex flex-wrap gap-2 mb-6">
                       {job.requiredSkills?.slice(0, 3).map(tag => (
-                        <span key={tag} className="px-2.5 py-1 bg-emerald-50/50 border border-emerald-100/50 text-emerald-700 rounded-lg text-[12px] font-semibold">
+                        <span key={tag} className="px-2.5 py-1 bg-emerald-50/50 border border-emerald-100/50 text-emerald-900 rounded-lg text-[12px] font-semibold">
                           {tag}
                         </span>
                       ))}
@@ -271,7 +271,7 @@ export default function CandidateDashboard() {
                     className={`w-full py-3.5 rounded-xl text-[14px] font-bold transition-all shadow-sm flex items-center justify-center gap-2 
                       ${hasApplied 
                         ? 'bg-slate-100 text-slate-500 cursor-not-allowed' 
-                        : 'bg-emerald-600 hover:bg-emerald-700 text-white group-hover:shadow-[0_4px_12px_rgba(37,99,235,0.2)]'}`}
+                        : 'bg-emerald-800 hover:bg-emerald-900 text-white group-hover:shadow-[0_4px_12px_rgba(37,99,235,0.2)]'}`}
                   >
                     {hasApplied ? (
                       <>
@@ -314,7 +314,7 @@ export default function CandidateDashboard() {
                   <h4 className="text-[15px] font-bold text-emerald-900 mb-4">Upload Resume to Auto-Fill Application</h4>
                   <div
                     className={`border-2 border-dashed rounded-[20px] p-8 flex flex-col items-center justify-center text-center transition-all cursor-pointer ${
-                      dragActive ? 'border-emerald-500 bg-emerald-50' : 'border-slate-300 hover:border-emerald-400 hover:bg-slate-50'
+                      dragActive ? 'border-emerald-700 bg-emerald-50' : 'border-slate-300 hover:border-emerald-400 hover:bg-slate-50'
                     }`}
                     onDragEnter={handleDrag}
                     onDragLeave={handleDrag}
@@ -323,7 +323,7 @@ export default function CandidateDashboard() {
                   >
                     <input type="file" ref={fileInputRef} onChange={handleFileChange} accept=".pdf,.doc,.docx" className="hidden" />
                     <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
-                      <span className="material-symbols-outlined text-[28px] text-emerald-600">cloud_upload</span>
+                      <span className="material-symbols-outlined text-[28px] text-emerald-800">cloud_upload</span>
                     </div>
                     <h5 className="font-bold text-[16px] text-emerald-900 mb-1">Drag and drop your resume</h5>
                     <p className="text-[13px] text-slate-500 mb-5">or click to browse files</p>
@@ -341,8 +341,8 @@ export default function CandidateDashboard() {
                 <div className="py-12 flex flex-col items-center justify-center animate-in fade-in duration-300">
                   <div className="relative w-16 h-16 mb-5">
                     <div className="absolute inset-0 border-4 border-slate-100 rounded-full"></div>
-                    <div className="absolute inset-0 border-4 border-emerald-600 rounded-full border-t-transparent animate-spin"></div>
-                    <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-emerald-600 text-[24px]">auto_awesome</span>
+                    <div className="absolute inset-0 border-4 border-emerald-800 rounded-full border-t-transparent animate-spin"></div>
+                    <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-emerald-800 text-[24px]">auto_awesome</span>
                   </div>
                   <h4 className="font-display text-[18px] font-bold text-emerald-900 mb-2">Analyzing Resume...</h4>
                   <p className="text-[14px] text-slate-500 font-medium">Extracting information for auto-fill</p>
@@ -351,7 +351,7 @@ export default function CandidateDashboard() {
 
               {modalStep === 2 && (
                 <div className="animate-in slide-in-from-bottom-4 duration-500 space-y-6">
-                  <div className="flex items-center gap-2 text-green-600 bg-green-50 px-3 py-2 rounded-lg border border-green-200">
+                  <div className="flex items-center gap-2 text-green-800 bg-green-50 px-3 py-2 rounded-lg border border-green-200">
                     <span className="material-symbols-outlined text-[18px]">check_circle</span>
                     <span className="text-[13px] font-bold">Successfully extracted data from resume</span>
                   </div>
@@ -361,14 +361,14 @@ export default function CandidateDashboard() {
                       <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Full Name</label>
                       <div className="relative">
                         <input type="text" readOnly value={candidateProfile.name || ''} className="w-full px-3 py-2 border border-green-300 bg-green-50/30 rounded-lg text-[14px] font-medium text-emerald-900 shadow-[0_0_0_1px_rgba(34,197,94,0.1)] outline-none" />
-                        <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-green-600">check_circle</span>
+                        <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-green-800">check_circle</span>
                       </div>
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Email</label>
                       <div className="relative">
                         <input type="text" readOnly value={candidateProfile.email || ''} className="w-full px-3 py-2 border border-green-300 bg-green-50/30 rounded-lg text-[14px] font-medium text-emerald-900 shadow-[0_0_0_1px_rgba(34,197,94,0.1)] outline-none" />
-                        <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-green-600">check_circle</span>
+                        <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-green-800">check_circle</span>
                       </div>
                     </div>
                     <div className="space-y-1.5 md:col-span-2">
@@ -379,7 +379,7 @@ export default function CandidateDashboard() {
                             {s}
                           </span>
                         ))}
-                        <span className="material-symbols-outlined ml-auto text-[16px] text-green-600">check_circle</span>
+                        <span className="material-symbols-outlined ml-auto text-[16px] text-green-800">check_circle</span>
                       </div>
                     </div>
                   </div>
@@ -389,11 +389,11 @@ export default function CandidateDashboard() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
                         <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Expected Salary *</label>
-                        <input type="text" value={formData.expectedSalary} onChange={e => setFormData({...formData, expectedSalary: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-500" placeholder="e.g. $120k / ₹15LPA" />
+                        <input type="text" value={formData.expectedSalary} onChange={e => setFormData({...formData, expectedSalary: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-700" placeholder="e.g. $120k / ₹15LPA" />
                       </div>
                       <div className="space-y-1.5">
                         <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Notice Period *</label>
-                        <input type="text" value={formData.noticePeriod} onChange={e => setFormData({...formData, noticePeriod: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-500" placeholder="e.g. 30 Days" />
+                        <input type="text" value={formData.noticePeriod} onChange={e => setFormData({...formData, noticePeriod: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-[14px] text-emerald-900 focus:outline-none focus:border-emerald-700" placeholder="e.g. 30 Days" />
                       </div>
                     </div>
                   </div>
@@ -427,3 +427,4 @@ export default function CandidateDashboard() {
     </div>
   );
 }
+

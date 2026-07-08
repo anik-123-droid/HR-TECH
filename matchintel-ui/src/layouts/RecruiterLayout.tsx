@@ -95,7 +95,7 @@ export default function RecruiterLayout() {
           <Link
             to="/recruiter/candidates"
             onClick={() => setIsSidebarOpen(false)}
-            className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-[13px] font-bold rounded-xl transition-all shadow-[0_4px_14px_rgba(37,99,235,0.3)]"
+            className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-emerald-800 hover:bg-emerald-900 text-white text-[13px] font-bold rounded-xl transition-all shadow-[0_4px_14px_rgba(37,99,235,0.3)]"
           >
             <span className="material-symbols-outlined text-[18px]">add</span>
             Post Job Req
@@ -130,7 +130,7 @@ export default function RecruiterLayout() {
               <input
                 type="text"
                 placeholder="Search candidates, requisitions, clients..."
-                className="w-full pl-12 pr-12 py-3.5 text-[14px] border-2 border-slate-100 rounded-2xl bg-white focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all placeholder:text-slate-400 font-medium text-emerald-900"
+                className="w-full pl-12 pr-12 py-3.5 text-[14px] border-2 border-slate-100 rounded-2xl bg-white focus:outline-none focus:border-emerald-700 focus:ring-4 focus:ring-emerald-700/10 transition-all placeholder:text-slate-400 font-medium text-emerald-900"
               />
               <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1">
                 <kbd className="px-1.5 py-0.5 bg-slate-100 text-slate-400 rounded-md text-[11px] font-bold font-sans border border-slate-200">⌘</kbd>
@@ -142,14 +142,14 @@ export default function RecruiterLayout() {
           <div className="flex items-center gap-4 lg:gap-6 flex-1 justify-end shrink-0 pl-4">
             <button className="relative w-11 h-11 shrink-0 rounded-full border-2 border-slate-100 flex items-center justify-center text-slate-600 hover:text-emerald-900 hover:bg-slate-50 transition-colors cursor-pointer group">
               <span className="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform">notifications</span>
-              <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-emerald-600 rounded-full border-2 border-white"></span>
+              <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-emerald-800 rounded-full border-2 border-white"></span>
             </button>
             <div className="flex items-center gap-3 cursor-pointer group">
               <div className="w-11 h-11 rounded-full bg-emerald-900 text-white flex items-center justify-center text-[14px] font-extrabold shadow-sm shrink-0 group-hover:shadow-md transition-all">
                 {initials}
               </div>
               <div className="text-left hidden sm:block">
-                <div className="text-[14px] font-bold text-emerald-900 leading-tight group-hover:text-emerald-600 transition-colors">{currentUser.name}</div>
+                <div className="text-[14px] font-bold text-emerald-900 leading-tight group-hover:text-emerald-800 transition-colors">{currentUser.name}</div>
                 <div className="text-[12px] font-medium text-slate-500">{currentUser.company || 'Recruiter'}</div>
               </div>
             </div>
@@ -168,3 +168,4 @@ export default function RecruiterLayout() {
     </div>
   );
 }
+

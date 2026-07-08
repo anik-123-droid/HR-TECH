@@ -101,7 +101,7 @@ export default function SuperAdminOrganizations() {
         </div>
         <div className="border border-slate-200 rounded-xl p-4">
           <div className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1">Active Candidates</div>
- <div className=" text-3xl font-bold text-emerald-600">{agencies.reduce((sum, a) => sum + parseInt(a.candidates.replace(/,/g, '') || '0', 10), 0)}</div>
+ <div className=" text-3xl font-bold text-emerald-800">{agencies.reduce((sum, a) => sum + parseInt(a.candidates.replace(/,/g, '') || '0', 10), 0)}</div>
         </div>
       </div>
 
@@ -109,10 +109,10 @@ export default function SuperAdminOrganizations() {
         <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100">
           <div className="relative">
             <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-500">search</span>
-            <input type="text" placeholder="Search organizations..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-8 pr-3 py-1.5 w-64 text-[13px] border border-slate-200 rounded-lg bg-white focus:outline-none focus:border-emerald-500 placeholder:text-slate-500" />
+            <input type="text" placeholder="Search organizations..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-8 pr-3 py-1.5 w-64 text-[13px] border border-slate-200 rounded-lg bg-white focus:outline-none focus:border-emerald-700 placeholder:text-slate-500" />
           </div>
           <div className="flex items-center gap-2">
-            <select value={statusFilter || ''} onChange={(e) => setStatusFilter(e.target.value || null)} className="px-3 py-1.5 border border-slate-200 rounded-lg text-[13px] font-medium text-slate-700 bg-white focus:outline-none focus:border-emerald-500 cursor-pointer">
+            <select value={statusFilter || ''} onChange={(e) => setStatusFilter(e.target.value || null)} className="px-3 py-1.5 border border-slate-200 rounded-lg text-[13px] font-medium text-slate-700 bg-white focus:outline-none focus:border-emerald-700 cursor-pointer">
               <option value="">All Status</option>
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
@@ -149,12 +149,12 @@ export default function SuperAdminOrganizations() {
                 <td className="px-5 py-3 text-[13px] text-slate-600">{a.candidates}</td>
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-1.5">
-                    <div className={`w-1.5 h-1.5 rounded-full ${a.status === 'Active' ? 'bg-green-500' : 'bg-red-500'}`} />
-                    <span className={`text-[12px] font-semibold ${a.status === 'Active' ? 'text-green-600' : 'text-red-500'}`}>{a.status}</span>
+                    <div className={`w-1.5 h-1.5 rounded-full ${a.status === 'Active' ? 'bg-green-700' : 'bg-red-500'}`} />
+                    <span className={`text-[12px] font-semibold ${a.status === 'Active' ? 'text-green-800' : 'text-red-500'}`}>{a.status}</span>
                   </div>
                 </td>
                 <td className="px-5 py-3 text-right">
-                  <button onClick={(e) => { e.stopPropagation(); handleManage(a); }} className="text-[12px] font-semibold text-emerald-600 hover:text-emerald-700 cursor-pointer">Manage →</button>
+                  <button onClick={(e) => { e.stopPropagation(); handleManage(a); }} className="text-[12px] font-semibold text-emerald-800 hover:text-emerald-900 cursor-pointer">Manage →</button>
                 </td>
               </tr>
             ))}
@@ -177,12 +177,12 @@ export default function SuperAdminOrganizations() {
             <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
               <div>
                 <label className="block text-[12px] font-bold text-slate-700 mb-1">Organization Name</label>
-                <input type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" placeholder="e.g. Acme Agency" />
+                <input type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" placeholder="e.g. Acme Agency" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[12px] font-bold text-slate-700 mb-1">Plan</label>
-                  <select value={formData.plan} onChange={e => setFormData({ ...formData, plan: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white">
+                  <select value={formData.plan} onChange={e => setFormData({ ...formData, plan: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 bg-white">
                     <option value="Basic">Basic</option>
                     <option value="Pro">Pro</option>
                     <option value="Enterprise">Enterprise</option>
@@ -190,7 +190,7 @@ export default function SuperAdminOrganizations() {
                 </div>
                 <div>
                   <label className="block text-[12px] font-bold text-slate-700 mb-1">Status</label>
-                  <select value={formData.status} onChange={e => setFormData({ ...formData, status: e.target.value as any })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white">
+                  <select value={formData.status} onChange={e => setFormData({ ...formData, status: e.target.value as any })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 bg-white">
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
                   </select>
@@ -200,11 +200,11 @@ export default function SuperAdminOrganizations() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[12px] font-bold text-slate-700 mb-1">Tokens Usage</label>
-                  <input type="text" value={formData.tokens} onChange={e => setFormData({ ...formData, tokens: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" placeholder="e.g. 500,000" />
+                  <input type="text" value={formData.tokens} onChange={e => setFormData({ ...formData, tokens: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" placeholder="e.g. 500,000" />
                 </div>
                 <div>
                   <label className="block text-[12px] font-bold text-slate-700 mb-1">Candidates</label>
-                  <input type="text" value={formData.candidates} onChange={e => setFormData({ ...formData, candidates: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" placeholder="e.g. 150" />
+                  <input type="text" value={formData.candidates} onChange={e => setFormData({ ...formData, candidates: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" placeholder="e.g. 150" />
                 </div>
               </div>
             </div>
@@ -221,7 +221,7 @@ export default function SuperAdminOrganizations() {
                 <button onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer">
                   Cancel
                 </button>
-                <button onClick={handleSaveAgency} className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[13px] font-bold rounded-lg shadow-sm transition-colors cursor-pointer">
+                <button onClick={handleSaveAgency} className="px-6 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white text-[13px] font-bold rounded-lg shadow-sm transition-colors cursor-pointer">
                   {editingAgency ? 'Save Changes' : 'Create Organization'}
                 </button>
               </div>
@@ -232,3 +232,4 @@ export default function SuperAdminOrganizations() {
     </div>
   );
 }
+

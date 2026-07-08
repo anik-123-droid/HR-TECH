@@ -73,25 +73,25 @@ export default function RecruiterJobs() {
         <div className="border border-slate-200 rounded-2xl p-5 bg-white shadow-xs">
           <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 flex items-center justify-between">
             <span>Candidates Sourced</span>
-            <span className="material-symbols-outlined text-[18px] text-emerald-500">groups</span>
+            <span className="material-symbols-outlined text-[18px] text-emerald-700">groups</span>
           </div>
           <div className="flex items-baseline gap-2">
- <span className=" text-3xl font-extrabold text-emerald-600">
+ <span className=" text-3xl font-extrabold text-emerald-800">
               {jobStats.reduce((acc, j) => acc + (j.candidatesCount || 0), 0)}
             </span>
-            <span className="text-[12px] font-semibold text-green-600">+18% vs manual</span>
+            <span className="text-[12px] font-semibold text-green-800">+18% vs manual</span>
           </div>
         </div>
         <div className="border border-slate-200 rounded-2xl p-5 bg-white shadow-xs">
           <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 flex items-center justify-between">
             <span>AI Matches Generated</span>
-            <span className="material-symbols-outlined text-[18px] text-green-500">auto_awesome</span>
+            <span className="material-symbols-outlined text-[18px] text-green-700">auto_awesome</span>
           </div>
           <div className="flex items-baseline gap-2">
  <span className=" text-3xl font-extrabold text-emerald-900">
               {jobStats.reduce((acc, j) => acc + (j.aiMatchesCount || 0), 0)}
             </span>
-            <span className="text-[12px] font-semibold text-green-600">High precision</span>
+            <span className="text-[12px] font-semibold text-green-800">High precision</span>
           </div>
         </div>
       </div>
@@ -99,9 +99,9 @@ export default function RecruiterJobs() {
       {/* Kanban Column Headers */}
       <div className="flex items-center gap-8 border-b border-slate-200 pb-3">
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-700" />
           <span className="text-[12px] font-extrabold text-slate-700 uppercase tracking-wider">Sourcing</span>
-          <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">{sourcingJobs.length}</span>
+          <span className="text-[11px] font-bold text-emerald-900 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">{sourcingJobs.length}</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
@@ -109,7 +109,7 @@ export default function RecruiterJobs() {
           <span className="text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">{interviewingJobs.length}</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
+          <div className="w-2.5 h-2.5 rounded-full bg-green-700" />
           <span className="text-[12px] font-extrabold text-slate-700 uppercase tracking-wider">Filled</span>
           <span className="text-[11px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">{filledJobs.length}</span>
         </div>
@@ -141,7 +141,7 @@ export default function RecruiterJobs() {
               <div key={card.id} className="border border-slate-200 rounded-2xl p-5 hover:border-indigo-300 hover:shadow-md transition-all bg-white shadow-xs cursor-pointer">
                 <div className="flex items-start justify-between mb-2">
                   <h3 className="font-display text-[15px] font-bold text-emerald-900 leading-snug">{card.title}</h3>
-                  <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full text-emerald-700 bg-emerald-50 border border-emerald-200">
+                  <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full text-emerald-900 bg-emerald-50 border border-emerald-200">
                     Sourcing
                   </span>
                 </div>
@@ -302,3 +302,4 @@ export default function RecruiterJobs() {
     </div>
   );
 }
+

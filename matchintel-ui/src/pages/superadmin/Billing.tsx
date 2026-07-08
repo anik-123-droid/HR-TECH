@@ -47,7 +47,7 @@ export default function SuperAdminBilling() {
       <div className="grid grid-cols-4 gap-4">
         <div className="border border-slate-200 rounded-xl p-5 bg-white shadow-sm flex flex-col justify-center">
           <div className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1">Total MRR</div>
- <div className=" text-3xl font-bold text-emerald-600">${totalRevenue.toLocaleString()}</div>
+ <div className=" text-3xl font-bold text-emerald-800">${totalRevenue.toLocaleString()}</div>
         </div>
         <div className="border border-slate-200 rounded-xl p-5 bg-white shadow-sm flex flex-col justify-center">
           <div className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1">Enterprise Plans</div>
@@ -68,7 +68,7 @@ export default function SuperAdminBilling() {
           <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
             <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
               <h3 className="font-bold text-emerald-900">Recent Transactions</h3>
-              <button className="text-[12px] font-semibold text-emerald-600 hover:text-emerald-700">View All</button>
+              <button className="text-[12px] font-semibold text-emerald-800 hover:text-emerald-900">View All</button>
             </div>
             <table className="w-full">
               <thead>
@@ -88,8 +88,8 @@ export default function SuperAdminBilling() {
                     <td className="px-5 py-3 text-[13px] text-slate-600">{trx.date}</td>
                     <td className="px-5 py-3 text-[13px] font-bold text-slate-700">${trx.amount.toLocaleString()}</td>
                     <td className="px-5 py-3">
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-900 bg-emerald-50 px-2 py-0.5 rounded-full">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-700"></span>
                         {trx.status}
                       </span>
                     </td>
@@ -124,7 +124,7 @@ export default function SuperAdminBilling() {
                   <span className="text-emerald-900">{planStats.Pro}</span>
                 </div>
                 <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                  <div className="bg-emerald-600 h-full rounded-full" style={{ width: `${agencies.length ? (planStats.Pro / agencies.length) * 100 : 0}%` }}></div>
+                  <div className="bg-emerald-800 h-full rounded-full" style={{ width: `${agencies.length ? (planStats.Pro / agencies.length) * 100 : 0}%` }}></div>
                 </div>
               </div>
               <div>
@@ -152,3 +152,4 @@ export default function SuperAdminBilling() {
     </div>
   );
 }
+

@@ -42,13 +42,13 @@ export default function CandidateInterviews() {
         </div>
         <div className="border border-slate-200 rounded-xl p-4">
           <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Completed</div>
- <div className=" text-3xl font-bold text-green-600">{completedCount}</div>
+ <div className=" text-3xl font-bold text-green-800">{completedCount}</div>
           <span className="text-[12px] text-slate-400">This month</span>
         </div>
         <div className="border border-slate-200 rounded-xl p-4">
           <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Pass Rate</div>
- <div className=" text-3xl font-bold text-emerald-600">87%</div>
-          <span className="text-[12px] font-semibold text-emerald-600">Excellent</span>
+ <div className=" text-3xl font-bold text-emerald-800">87%</div>
+          <span className="text-[12px] font-semibold text-emerald-800">Excellent</span>
         </div>
       </div>
 
@@ -95,14 +95,14 @@ export default function CandidateInterviews() {
                 </td>
                 <td className="px-5 py-3 text-[13px] text-slate-600">Pending</td>
                 <td className="px-5 py-3">
-                  <span className={`text-[12px] font-semibold ${i.status === 'Completed' ? 'text-green-600' : i.status === 'Scheduled' ? 'text-emerald-600' : 'text-red-500'}`}>
+                  <span className={`text-[12px] font-semibold ${i.status === 'Completed' ? 'text-green-800' : i.status === 'Scheduled' ? 'text-emerald-800' : 'text-red-500'}`}>
                     {i.status}
                   </span>
                 </td>
                 <td className="px-5 py-3 text-right">
                   <div className="flex items-center justify-end gap-2">
                     {activeTab === 'upcoming' && (
-                      <button onClick={() => window.open(i.meetLink, '_blank')} className={`px-3 py-1 text-[12px] font-semibold rounded transition-colors flex items-center gap-1.5 cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white`}>
+                      <button onClick={() => window.open(i.meetLink, '_blank')} className={`px-3 py-1 text-[12px] font-semibold rounded transition-colors flex items-center gap-1.5 cursor-pointer bg-emerald-800 hover:bg-emerald-900 text-white`}>
                         <span className="material-symbols-outlined text-[14px]">videocam</span> Join Call
                       </button>
                     )}
@@ -119,3 +119,4 @@ export default function CandidateInterviews() {
     </div>
   );
 }
+

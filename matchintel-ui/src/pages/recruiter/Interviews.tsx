@@ -109,7 +109,7 @@ export default function RecruiterInterviews() {
           <h1 className="font-display text-3xl font-bold text-emerald-900 tracking-tight">Interview Schedule</h1>
           <p className="text-[14px] text-slate-500 mt-1">Manage and track upcoming candidate interviews across all roles.</p>
         </div>
-        <button onClick={() => setIsScheduling(true)} className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[13px] font-semibold rounded-lg transition-colors cursor-pointer">
+        <button onClick={() => setIsScheduling(true)} className="flex items-center gap-2 px-5 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white text-[13px] font-semibold rounded-lg transition-colors cursor-pointer">
           <span className="material-symbols-outlined text-[16px]">add</span>
           Schedule Interview
         </button>
@@ -154,7 +154,7 @@ export default function RecruiterInterviews() {
               </div>
               <div className="pt-4 flex items-center justify-end gap-3">
                 <button type="button" onClick={() => setIsScheduling(false)} className="px-4 py-2 text-[14px] font-semibold text-slate-600 hover:bg-slate-50 rounded-lg">Cancel</button>
-                <button type="submit" className="px-4 py-2 text-[14px] font-semibold bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg">Schedule</button>
+                <button type="submit" className="px-4 py-2 text-[14px] font-semibold bg-emerald-800 hover:bg-emerald-900 text-white rounded-lg">Schedule</button>
               </div>
             </form>
           </div>
@@ -174,8 +174,8 @@ export default function RecruiterInterviews() {
         </div>
         <div className="border border-slate-200 rounded-xl p-4">
           <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Completion Rate</div>
- <div className=" text-3xl font-bold text-green-600">{stats.completionRate}%</div>
-          <span className="text-[12px] font-semibold text-green-600">Based on real data</span>
+ <div className=" text-3xl font-bold text-green-800">{stats.completionRate}%</div>
+          <span className="text-[12px] font-semibold text-green-800">Based on real data</span>
         </div>
         <div className="border border-slate-200 rounded-xl p-4">
           <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Avg. Duration</div>
@@ -193,7 +193,7 @@ export default function RecruiterInterviews() {
           </div>
           <div className="relative">
             <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400">search</span>
-            <input type="text" placeholder="Search interviews..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-8 pr-3 py-1.5 w-52 text-[13px] border border-slate-200 rounded-lg bg-white focus:outline-none focus:border-emerald-500 placeholder:text-slate-400" />
+            <input type="text" placeholder="Search interviews..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-8 pr-3 py-1.5 w-52 text-[13px] border border-slate-200 rounded-lg bg-white focus:outline-none focus:border-emerald-700 placeholder:text-slate-400" />
           </div>
         </div>
 
@@ -214,7 +214,7 @@ export default function RecruiterInterviews() {
               <tr><td colSpan={7} className="text-center py-8 text-slate-400 text-[14px]">No interviews match your search.</td></tr>
             ) : interviews.map(i => (
               <tr key={i.candidate + i.time} className={`border-b border-slate-50 hover:bg-slate-50/50 transition-colors cursor-pointer ${i.isNext ? 'bg-emerald-50/30' : ''}`}>
-                <td className="px-5 py-3"><span className={`text-[13px] font-semibold ${i.isNext ? 'text-emerald-600' : 'text-slate-700'}`}>{i.time}</span></td>
+                <td className="px-5 py-3"><span className={`text-[13px] font-semibold ${i.isNext ? 'text-emerald-800' : 'text-slate-700'}`}>{i.time}</span></td>
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-600">{i.candidate.split(' ').map(n => n[0]).join('')}</div>
@@ -224,10 +224,10 @@ export default function RecruiterInterviews() {
                 <td className="px-5 py-3 text-[13px] text-slate-600">{i.role}</td>
                 <td className="px-5 py-3"><span className="text-[11px] font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded">{i.type}</span></td>
                 <td className="px-5 py-3 text-[13px] text-slate-600">{i.interviewer}</td>
-                <td className="px-5 py-3"><span className={`text-[12px] font-semibold ${i.status === 'Completed' ? 'text-green-600' : i.status === 'Scheduled' ? 'text-emerald-600' : 'text-red-500'}`}>{i.status}</span></td>
+                <td className="px-5 py-3"><span className={`text-[12px] font-semibold ${i.status === 'Completed' ? 'text-green-800' : i.status === 'Scheduled' ? 'text-emerald-800' : 'text-red-500'}`}>{i.status}</span></td>
                 <td className="px-5 py-3 text-right">
                   <div className="flex items-center justify-end gap-2">
-                    {i.status === 'Scheduled' && <button onClick={() => handleJoin(i.meetLink)} className="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-[12px] font-semibold rounded transition-colors cursor-pointer">Join</button>}
+                    {i.status === 'Scheduled' && <button onClick={() => handleJoin(i.meetLink)} className="px-3 py-1 bg-emerald-800 hover:bg-emerald-900 text-white text-[12px] font-semibold rounded transition-colors cursor-pointer">Join</button>}
                     <button onClick={() => handleAction(i.id, i.status === 'Scheduled' ? '✅ Complete' : '📝 Rescheduled')} className="text-slate-300 hover:text-slate-600 transition-colors cursor-pointer">
                       <span className="material-symbols-outlined text-[18px]">more_horiz</span>
                     </button>
@@ -241,3 +241,4 @@ export default function RecruiterInterviews() {
     </div>
   );
 }
+

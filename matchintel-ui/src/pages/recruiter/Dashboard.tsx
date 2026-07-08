@@ -26,7 +26,7 @@ export default function RecruiterDashboard() {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5)
     .map((entry, index) => {
-      const colors = ['bg-emerald-500', 'bg-emerald-600', 'bg-green-500', 'bg-amber-500', 'bg-purple-500'];
+      const colors = ['bg-emerald-700', 'bg-emerald-800', 'bg-green-700', 'bg-amber-500', 'bg-purple-500'];
       const maxCount = Math.max(...Object.values(skillCounts), 1);
       return {
         skill: entry[0],
@@ -60,7 +60,7 @@ export default function RecruiterDashboard() {
           <div className="flex items-start justify-between mb-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <span className="material-symbols-outlined text-[20px] text-emerald-600">work</span>
+                <span className="material-symbols-outlined text-[20px] text-emerald-800">work</span>
                 <span className="text-[14px] font-bold text-slate-500 uppercase tracking-widest">Active Requisitions</span>
               </div>
  <div className=" text-4xl font-extrabold text-emerald-900 leading-none">{activeJobsCount}</div>
@@ -69,7 +69,7 @@ export default function RecruiterDashboard() {
               </div>
             </div>
             <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <span className="material-symbols-outlined text-2xl text-emerald-500">receipt_long</span>
+              <span className="material-symbols-outlined text-2xl text-emerald-700">receipt_long</span>
             </div>
           </div>
           <button 
@@ -86,7 +86,7 @@ export default function RecruiterDashboard() {
           <div className="flex items-start justify-between mb-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <span className="material-symbols-outlined text-[20px] text-emerald-600">groups</span>
+                <span className="material-symbols-outlined text-[20px] text-emerald-800">groups</span>
                 <span className="text-[14px] font-bold text-slate-500 uppercase tracking-widest">Talent Pipeline</span>
               </div>
  <div className=" text-4xl font-extrabold text-emerald-900 leading-none">{pipelineCount}</div>
@@ -134,7 +134,7 @@ export default function RecruiterDashboard() {
                 <span>{screenedCount}</span>
               </div>
               <div className="w-full bg-slate-100 rounded-full h-2.5 shadow-inner">
-                <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 h-2.5 rounded-full transition-all duration-1000 shadow-sm" style={{ width: pipelineCount > 0 ? `${(screenedCount / pipelineCount) * 100}%` : '0%' }}></div>
+                <div className="bg-gradient-to-r from-emerald-700 to-emerald-800 h-2.5 rounded-full transition-all duration-1000 shadow-sm" style={{ width: pipelineCount > 0 ? `${(screenedCount / pipelineCount) * 100}%` : '0%' }}></div>
               </div>
             </div>
             <div>
@@ -143,7 +143,7 @@ export default function RecruiterDashboard() {
                 <span>{highMatchCount}</span>
               </div>
               <div className="w-full bg-slate-100 rounded-full h-2.5 shadow-inner">
-                <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 h-2.5 rounded-full transition-all duration-1000 shadow-sm" style={{ width: screenedCount > 0 ? `${(highMatchCount / screenedCount) * 100}%` : '0%' }}></div>
+                <div className="bg-gradient-to-r from-emerald-700 to-emerald-800 h-2.5 rounded-full transition-all duration-1000 shadow-sm" style={{ width: screenedCount > 0 ? `${(highMatchCount / screenedCount) * 100}%` : '0%' }}></div>
               </div>
             </div>
             <div>
@@ -182,7 +182,7 @@ export default function RecruiterDashboard() {
       <div className="bg-white border border-slate-200 rounded-[24px] overflow-hidden shadow-sm">
         <div className="px-8 py-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
           <div className="flex items-center gap-3">
-            <span className="material-symbols-outlined text-[24px] text-emerald-600">assignment_late</span>
+            <span className="material-symbols-outlined text-[24px] text-emerald-800">assignment_late</span>
             <h2 className="font-display text-[20px] font-bold text-emerald-900">Urgent AI Screening Tasks</h2>
           </div>
           {pendingScreenings.length > 0 && (
@@ -212,7 +212,7 @@ export default function RecruiterDashboard() {
                 
                 <div className="flex items-center gap-6">
                   <div className="flex flex-col items-end gap-1">
-                    <span className={`px-2.5 py-1 ${task.aiScore >= 90 ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'} border rounded-lg text-[12px] font-bold flex items-center gap-1 shadow-sm`}>
+                    <span className={`px-2.5 py-1 ${task.aiScore >= 90 ? 'bg-emerald-50 text-emerald-900 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'} border rounded-lg text-[12px] font-bold flex items-center gap-1 shadow-sm`}>
                       <span className="material-symbols-outlined text-[14px]">auto_awesome</span>
                       AI Match: {task.aiScore}%
                     </span>
@@ -220,7 +220,7 @@ export default function RecruiterDashboard() {
                   </div>
                   <button 
                     onClick={() => navigate('/recruiter/ai-screening')}
-                    className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-[13px] font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer"
+                    className="px-5 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-[13px] font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer"
                   >
                     Review Profile
                   </button>
@@ -234,3 +234,4 @@ export default function RecruiterDashboard() {
     </div>
   );
 }
+

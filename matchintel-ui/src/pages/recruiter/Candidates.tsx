@@ -59,20 +59,20 @@ export default function RecruiterCandidates() {
               placeholder="Search roles or candidates..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full md:w-64 pl-11 pr-4 py-3 border-2 border-slate-100 rounded-xl text-[13px] font-medium text-emerald-900 focus:outline-none focus:border-emerald-500 transition-all placeholder:text-slate-400"
+              className="w-full md:w-64 pl-11 pr-4 py-3 border-2 border-slate-100 rounded-xl text-[13px] font-medium text-emerald-900 focus:outline-none focus:border-emerald-700 transition-all placeholder:text-slate-400"
             />
           </div>
           {activeTab === 'talent' && (
             <div className="flex items-center bg-slate-100 rounded-xl p-1 border border-slate-200">
               <button 
                 onClick={() => setViewMode('grid')}
-                className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${viewMode === 'grid' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-400 hover:text-slate-600'}`}
+                className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${viewMode === 'grid' ? 'bg-white shadow-sm text-emerald-800' : 'text-slate-400 hover:text-slate-600'}`}
               >
                 <span className="material-symbols-outlined">grid_view</span>
               </button>
               <button 
                 onClick={() => setViewMode('list')}
-                className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${viewMode === 'list' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-400 hover:text-slate-600'}`}
+                className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${viewMode === 'list' ? 'bg-white shadow-sm text-emerald-800' : 'text-slate-400 hover:text-slate-600'}`}
               >
                 <span className="material-symbols-outlined">view_list</span>
               </button>
@@ -85,7 +85,7 @@ export default function RecruiterCandidates() {
           {activeTab === 'requisitions' && (
             <button 
               onClick={() => alert('Create New Req clicked')}
-              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-[14px] font-bold transition-all shadow-sm flex items-center gap-2 shrink-0"
+              className="px-6 py-3 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-[14px] font-bold transition-all shadow-sm flex items-center gap-2 shrink-0"
             >
               <span className="material-symbols-outlined text-[18px]">add</span>
               New Requisition
@@ -108,15 +108,15 @@ export default function RecruiterCandidates() {
               <div className="flex items-center gap-3 md:w-1/3">
                 <button 
                   onClick={() => updateJob(req.id, { status: req.status === 'Active' ? 'Paused' : 'Active' })}
-                  className={`px-3 py-1 rounded-full text-[12px] font-bold border transition-colors cursor-pointer ${req.status === 'Active' ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100' : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'}`}
+                  className={`px-3 py-1 rounded-full text-[12px] font-bold border transition-colors cursor-pointer ${req.status === 'Active' ? 'bg-emerald-50 text-emerald-900 border-emerald-200 hover:bg-emerald-100' : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'}`}
                   title={req.status === 'Active' ? 'Click to Pause' : 'Click to Activate'}
                 >
                   <div className="flex items-center gap-1">
-                    <div className={`w-1.5 h-1.5 rounded-full ${req.status === 'Active' ? 'bg-emerald-500' : 'bg-slate-400'}`}></div>
+                    <div className={`w-1.5 h-1.5 rounded-full ${req.status === 'Active' ? 'bg-emerald-700' : 'bg-slate-400'}`}></div>
                     {req.status}
                   </div>
                 </button>
-                <span className="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[12px] font-bold">
+                <span className="px-3 py-1 bg-emerald-50 text-emerald-900 border border-emerald-200 rounded-full text-[12px] font-bold">
                   {req.matches} Matches
                 </span>
                 <span className="px-3 py-1 bg-purple-50 text-purple-700 border border-purple-200 rounded-full text-[12px] font-bold">
@@ -132,7 +132,7 @@ export default function RecruiterCandidates() {
                     <>
                       {req.avatars.slice(0, 3).map((avatar, i) => (
                         <div key={i} className={`w-10 h-10 rounded-full flex items-center justify-center text-[13px] font-extrabold text-white border-2 border-white shadow-sm ${
-                          i === 0 ? 'bg-emerald-600' : i === 1 ? 'bg-indigo-600' : i === 2 ? 'bg-purple-600' : 'bg-emerald-900'
+                          i === 0 ? 'bg-emerald-800' : i === 1 ? 'bg-indigo-600' : i === 2 ? 'bg-purple-600' : 'bg-emerald-900'
                         }`}>
                           {avatar}
                         </div>
@@ -166,7 +166,7 @@ export default function RecruiterCandidates() {
           {globalCandidates.filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()) || c.title?.toLowerCase().includes(searchQuery.toLowerCase())).map(candidate => (
             <div key={candidate.id} className={`bg-white border border-slate-200 rounded-[24px] p-6 shadow-sm hover:shadow-md transition-all flex ${viewMode === 'grid' ? 'flex-col items-center text-center gap-4' : 'items-center justify-between gap-6'}`}>
               <div className={`flex ${viewMode === 'grid' ? 'flex-col items-center gap-4' : 'items-center gap-4'}`}>
-                <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 border-2 border-emerald-200 flex items-center justify-center text-xl font-bold overflow-hidden shrink-0">
+                <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-900 border-2 border-emerald-200 flex items-center justify-center text-xl font-bold overflow-hidden shrink-0">
                   {candidate.imageUrl ? (
                     <img src={candidate.imageUrl} alt={candidate.name} className="w-full h-full object-cover" />
                   ) : (
@@ -204,3 +204,4 @@ export default function RecruiterCandidates() {
     </div>
   );
 }
+

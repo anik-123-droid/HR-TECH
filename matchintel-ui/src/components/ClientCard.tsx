@@ -30,7 +30,7 @@ export function ClientCard({ client, delay = 0 }: ClientCardProps) {
         </div>
         <div className="flex-1">
           <h3 className="text-base font-bold text-emerald-900 leading-tight">[{client.name}]</h3>
-          <div className="mt-2 inline-flex items-center px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-100 text-[10px] font-bold uppercase tracking-wider rounded-md">
+          <div className="mt-2 inline-flex items-center px-2 py-0.5 bg-emerald-50 text-emerald-900 border border-emerald-100 text-[10px] font-bold uppercase tracking-wider rounded-md">
             [{client.industry}]
           </div>
         </div>
@@ -66,10 +66,10 @@ export function ClientCard({ client, delay = 0 }: ClientCardProps) {
       {/* Footer */}
       <div className="px-5 py-3 bg-slate-50 border-t border-slate-100 flex justify-between items-center mt-auto">
         <div className="flex items-center gap-1.5">
-          <div className={`w-2 h-2 rounded-full ${client.status === 'Account Healthy' ? 'bg-green-500' : 'bg-red-500'}`}></div>
+          <div className={`w-2 h-2 rounded-full ${client.status === 'Account Healthy' ? 'bg-green-700' : 'bg-red-500'}`}></div>
           <span className="text-xs font-bold text-slate-600">{client.status}</span>
         </div>
-        <button className="text-xs font-bold text-emerald-600 hover:text-emerald-700 cursor-pointer flex items-center gap-1 transition-colors">
+        <button className="text-xs font-bold text-emerald-800 hover:text-emerald-900 cursor-pointer flex items-center gap-1 transition-colors">
           Manage Account 
           <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
         </button>
@@ -77,3 +77,4 @@ export function ClientCard({ client, delay = 0 }: ClientCardProps) {
     </motion.div>
   );
 }
+

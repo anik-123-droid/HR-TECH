@@ -23,11 +23,11 @@ export default function SuperAdminLogin() {
     <div className="min-h-screen flex items-center justify-center bg-slate-50 font-sans p-4">
       <div className="w-full max-w-md p-8 bg-white border border-slate-200 rounded-2xl shadow-xl">
         <div className="flex flex-col items-center mb-6">
-          <div className="w-14 h-14 bg-emerald-600 text-white rounded-xl flex items-center justify-center mb-4 shadow-md">
+          <div className="w-14 h-14 bg-emerald-800 text-white rounded-xl flex items-center justify-center mb-4 shadow-md">
             <span className="material-symbols-outlined text-3xl">admin_panel_settings</span>
           </div>
           <h1 className="text-2xl font-bold text-emerald-900">System Admin Access</h1>
-          <p className="text-sm text-slate-500 mt-1">Welcome, <span className="text-emerald-700 font-bold">{superadminName}</span></p>
+          <p className="text-sm text-slate-500 mt-1">Welcome, <span className="text-emerald-900 font-bold">{superadminName}</span></p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-5">
@@ -39,7 +39,7 @@ export default function SuperAdminLogin() {
               id="password"
               type="password"
               defaultValue="admin123"
-              className="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all text-emerald-900 text-sm font-medium placeholder:text-slate-400"
+              className="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl focus:outline-none focus:border-emerald-700 focus:ring-4 focus:ring-emerald-700/10 transition-all text-emerald-900 text-sm font-medium placeholder:text-slate-400"
               placeholder="••••••••"
               required
             />
@@ -47,7 +47,7 @@ export default function SuperAdminLogin() {
 
           <button
             type="submit"
-            className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-[0_4px_14px_rgba(16,185,129,0.3)] transition-all duration-200 cursor-pointer"
+            className="w-full py-3 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-sm font-bold shadow-[0_4px_14px_rgba(16,185,129,0.3)] transition-all duration-200 cursor-pointer"
           >
             Verify & Enter Platform
           </button>
@@ -56,3 +56,4 @@ export default function SuperAdminLogin() {
     </div>
   );
 }
+

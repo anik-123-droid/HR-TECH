@@ -3,5 +3,8 @@
   "private": true,
   "scripts": {
     "build": "cd matchintel-ui && npm install && npm run build"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
   }
 }

@@ -38,7 +38,7 @@ export default function SuperAdminDashboard() {
         <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
           <div className="flex justify-between items-start mb-4">
             <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Indexed Candidates</div>
-            <span className="material-symbols-outlined text-emerald-600">database</span>
+            <span className="material-symbols-outlined text-emerald-800">database</span>
           </div>
  <div className=" text-3xl font-extrabold text-emerald-900">{globalCandidates.length}</div>
           <p className="text-xs text-slate-500 mt-2 font-medium">Across all tenant agencies</p>
@@ -96,3 +96,4 @@ export default function SuperAdminDashboard() {
     </div>
   );
 }
+

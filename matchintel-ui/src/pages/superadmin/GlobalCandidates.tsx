@@ -195,18 +195,18 @@ export default function SuperAdminGlobalCandidates() {
                       {/* AI Match Score Badge */}
                       <div className="absolute top-0 right-0 flex flex-col items-end">
                         <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg shadow-sm flex items-center gap-2">
-                          <span className="material-symbols-outlined text-emerald-600 text-[18px]">memory</span>
+                          <span className="material-symbols-outlined text-emerald-800 text-[18px]">memory</span>
                           <span className="font-bold text-[14px]">AI Score: {p.readinessScore || 0}/100</span>
                         </div>
                         {p.resumeParsed && (
-                           <div className="text-[10px] text-emerald-600 font-bold uppercase mt-1 tracking-wider">
+                           <div className="text-[10px] text-emerald-800 font-bold uppercase mt-1 tracking-wider">
                              Verified Profile
                            </div>
                         )}
                       </div>
 
                       <h1 className="text-4xl md:text-5xl font-bold text-slate-900 uppercase tracking-wide pr-32">{p.name}</h1>
-                      <div className="text-[14px] md:text-[16px] text-emerald-700 mt-2 font-medium tracking-widest uppercase">
+                      <div className="text-[14px] md:text-[16px] text-emerald-900 mt-2 font-medium tracking-widest uppercase">
                         {p.title || 'Professional Candidate'}
                       </div>
                       <div className="flex flex-wrap items-center justify-center gap-4 mt-4 text-[13px] text-slate-500 font-sans font-medium">
@@ -271,7 +271,7 @@ export default function SuperAdminGlobalCandidates() {
                       <div className="flex flex-wrap gap-x-6 gap-y-2 font-sans text-[13.5px] text-slate-700 font-medium">
                         {p.skills.length > 0 ? p.skills.map((s: string) => (
                           <span key={s} className="flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-700 inline-block"></span>
                             {s}
                           </span>
                         )) : <span className="italic text-slate-400">No skills listed.</span>}
@@ -291,7 +291,7 @@ export default function SuperAdminGlobalCandidates() {
                     if (p) handleSendEmail(p, 'approved');
                   }}
                   disabled={isSendingEmail}
-                  className="px-4 py-2.5 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition-colors cursor-pointer shadow-sm text-[13px] tracking-wide flex items-center gap-1 disabled:opacity-50"
+                  className="px-4 py-2.5 bg-emerald-800 text-white font-bold rounded-lg hover:bg-emerald-900 transition-colors cursor-pointer shadow-sm text-[13px] tracking-wide flex items-center gap-1 disabled:opacity-50"
                 >
                   <span className="material-symbols-outlined text-[16px]">check_circle</span> Approve
                 </button>
@@ -327,3 +327,4 @@ export default function SuperAdminGlobalCandidates() {
     </div>
   );
 }
+

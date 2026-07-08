@@ -10,6 +10,7 @@ export default function ProctoredTest() {
 
   const [testActive, setTestActive] = useState(false);
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const [penalties, setPenalties] = useState(0);
   const [testTerminated, setTestTerminated] = useState(false);
@@ -155,16 +156,20 @@ export default function ProctoredTest() {
   };
 
   const handleAnswer = (selectedOptionStr: string) => {
-    const q = questions[currentQuestionIdx];
-    // Option format is like "A", "B", "C", "D"
-    if (selectedOptionStr === q["Correct Answer"]) {
-      setScore(prev => prev + 5); // 5 points per question
-    }
+    setSelectedOption(selectedOptionStr);
+  };
 
+  const handleNext = () => {
+    if (!selectedOption) return;
+    const q = questions[currentQuestionIdx];
+    if (selectedOption === (q as any)["Correct Answer"]) {
+      setScore(prev => prev + 5);
+    }
+    
     if (currentQuestionIdx < questions.length - 1) {
       setCurrentQuestionIdx(prev => prev + 1);
+      setSelectedOption(null);
     } else {
-      // Test complete
       finishTest();
     }
   };
@@ -204,8 +209,8 @@ export default function ProctoredTest() {
           <p className="text-xs text-slate-500">Proctored Session</p>
         </div>
         {testActive && (
-          <div className="flex items-center gap-2 text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full text-sm font-semibold">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <div className="flex items-center gap-2 text-emerald-800 bg-emerald-50 px-3 py-1.5 rounded-full text-sm font-semibold">
+            <div className="w-2 h-2 rounded-full bg-emerald-700 animate-pulse" />
             Security Active
           </div>
         )}
@@ -214,7 +219,7 @@ export default function ProctoredTest() {
       {!testActive ? (
         <div className="flex-1 flex items-center justify-center p-6">
           <div className="bg-white max-w-xl rounded-2xl shadow-sm border border-slate-200 p-8 text-center">
-            <span className="material-symbols-outlined text-4xl text-emerald-600 mb-4">security</span>
+            <span className="material-symbols-outlined text-4xl text-emerald-800 mb-4">security</span>
             <h2 className="text-2xl font-bold text-slate-800 mb-4">Security Rules</h2>
             <ul className="text-left space-y-3 text-sm text-slate-600 mb-8 bg-slate-50 p-4 rounded-xl">
               <li className="flex items-start gap-2">
@@ -236,7 +241,7 @@ export default function ProctoredTest() {
             </ul>
             <button
               onClick={startTest}
-              className="px-6 py-3 bg-emerald-600 text-white rounded-xl font-bold shadow-lg hover:bg-emerald-700 w-full"
+              className="px-6 py-3 bg-emerald-800 text-white rounded-xl font-bold shadow-lg hover:bg-emerald-900 w-full"
             >
               I Understand, Start Test
             </button>
@@ -248,7 +253,7 @@ export default function ProctoredTest() {
           <div className="flex-1 bg-white rounded-2xl shadow-sm border border-slate-200 p-8 flex flex-col">
             <div className="mb-6 flex justify-between items-center">
               <span className="text-sm font-bold text-slate-400">Question {currentQuestionIdx + 1} of {questions.length}</span>
-              <span className="text-sm font-bold text-emerald-600">Score: {score}</span>
+              <span className="text-sm font-bold text-emerald-800">Score: {score}</span>
             </div>
             
             <h2 className="text-xl font-semibold text-slate-800 mb-8 leading-relaxed">
@@ -260,12 +265,22 @@ export default function ProctoredTest() {
                 <button
                   key={opt}
                   onClick={() => handleAnswer(opt)}
-                  className="w-full text-left p-4 rounded-xl border-2 border-slate-100 hover:border-emerald-500 hover:bg-emerald-50 transition-colors font-medium text-slate-700"
+                  className={`w-full text-left p-4 rounded-xl border-2 transition-colors font-medium ${selectedOption === opt ? 'border-emerald-800 bg-emerald-50 text-emerald-900' : 'border-slate-100 hover:border-emerald-800 hover:bg-emerald-50 text-slate-700'}`}
                 >
                   <span className="inline-block w-8 font-bold text-slate-400">{opt}.</span> 
                   {(questions[currentQuestionIdx] as any)[`Option ${opt}`]}
                 </button>
               ))}
+            </div>
+            
+            <div className="mt-6 flex justify-end">
+              <button 
+                onClick={handleNext}
+                disabled={!selectedOption}
+                className="px-6 py-3 bg-emerald-800 text-white font-bold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-emerald-900 transition-colors shadow-sm"
+              >
+                {currentQuestionIdx < questions.length - 1 ? 'Next Question' : 'Submit Test'}
+              </button>
             </div>
           </div>
 
@@ -298,3 +313,4 @@ export default function ProctoredTest() {
     </div>
   );
 }
+

@@ -443,7 +443,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         // Use the deterministic ATS score (readinessScore) as the overall match score
         const overallMatch = candidateProfile.readinessScore || 85;
 
-        const bgColors = ['bg-emerald-600', 'bg-purple-600', 'bg-emerald-900', 'bg-emerald-600', 'bg-amber-600'];
+        const bgColors = ['bg-emerald-800', 'bg-purple-600', 'bg-emerald-900', 'bg-emerald-800', 'bg-amber-600'];
         
         const newApp: CandidateApplication = {
           id: `app_${Date.now()}`,
@@ -636,3 +636,4 @@ export const useApp = () => {
   if (!context) throw new Error('useApp must be used within an AppProvider');
   return context;
 };
+

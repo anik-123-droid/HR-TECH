@@ -140,17 +140,17 @@ export default function SuperAdminLayout() {
           </div>
 
           <div className="flex items-center gap-4 lg:gap-6 flex-1 justify-end shrink-0 pl-4">
-            <div className="hidden md:flex px-3 py-1 bg-green-500/10 text-emerald-600 border border-green-500/20 text-xs rounded-full font-bold items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <div className="hidden md:flex px-3 py-1 bg-green-700/10 text-emerald-800 border border-green-700/20 text-xs rounded-full font-bold items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-700 animate-pulse"></span>
               All AI Nodes Operational
             </div>
             
             <div className="flex items-center gap-3 cursor-pointer group border-l border-slate-200 pl-4">
-              <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-emerald-600 to-indigo-600 text-white flex items-center justify-center text-[14px] font-extrabold shadow-sm shrink-0 group-hover:shadow-md transition-all">
+              <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-emerald-800 to-indigo-600 text-white flex items-center justify-center text-[14px] font-extrabold shadow-sm shrink-0 group-hover:shadow-md transition-all">
                 {initials}
               </div>
               <div className="hidden sm:block">
-                <div className="text-[13px] font-extrabold text-emerald-900 leading-tight group-hover:text-emerald-700 transition-colors">{currentUser.name}</div>
+                <div className="text-[13px] font-extrabold text-emerald-900 leading-tight group-hover:text-emerald-900 transition-colors">{currentUser.name}</div>
                 <div className="text-[11px] font-semibold text-slate-500">Super Admin</div>
               </div>
               <span className="material-symbols-outlined text-slate-400 text-[20px] group-hover:text-emerald-900 transition-colors hidden sm:block">expand_more</span>
@@ -170,3 +170,4 @@ export default function SuperAdminLayout() {
     </div>
   );
 }
+

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Match Analytics - RecruitAI Intel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#004ac6",
+                        "on-surface": "#131b2e",
+                        "tertiary-fixed": "#ffdbcd",
+                        "surface-container": "#eaedff",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-dim": "#d2d9f4",
+                        "tertiary-container": "#bc4800",
+                        "surface-container-low": "#f2f3ff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "primary-container": "#2563eb",
+                        "on-secondary-container": "#54647a",
+                        "surface-container-high": "#e2e7ff",
+                        "surface-bright": "#faf8ff",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#00174b",
+                        "on-background": "#131b2e",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "inverse-on-surface": "#eef0ff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface": "#faf8ff",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "surface-variant": "#dae2fd",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "outline": "#737686",
+                        "on-surface-variant": "#434655",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-tertiary-container": "#ffede6",
+                        "secondary-container": "#d0e1fb",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#b4c5ff",
+                        "secondary": "#505f76",
+                        "surface-tint": "#0053db",
+                        "on-primary-container": "#eeefff",
+                        "tertiary": "#943700",
+                        "error-container": "#ffdad6",
+                        "background": "#faf8ff",
+                        "outline-variant": "#c3c6d7",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-container-highest": "#dae2fd",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#283044",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "container-margin": "32px",
+                        "xs": "4px",
+                        "unit": "4px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined[data-weight="fill"] { font-variation-settings: 'FILL' 1; }
+        
+        /* Subtle custom scrollbar for data density areas */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #c3c6d7; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #737686; }
+
+        /* Chart Animations */
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+        }
+        .animate-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 2s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md flex h-screen overflow-hidden antialiased">
+<!-- Shared Component: SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-surface-container-low dark:bg-on-secondary-fixed border-r border-outline-variant dark:border-on-secondary-fixed-variant flex flex-col py-md z-40 hidden md:flex">
+<!-- Header -->
+<div class="px-lg pb-lg flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-lg overflow-hidden border border-outline-variant/30">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A professional corporate headshot of a business executive, brightly lit studio lighting, neutral background, modern corporate aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS0VwGTzzMW4as1Jm3slQHZLm7Jmla_zgAagGRJl3-Gh6XNl0f6_5qaKVq4IGGLMLrE-TrK2nmz1Yb8_jpa6H3bSYfKND48Su-iPF7uG_PaVga3JzV6XAJP3oMuf1PvXJyAUVgU-EkQzB55kahXUwcHQ0FpereI91zVtFAh_n-K_QWx0GMQ1vlj_rsgbAXuVAabh0glusiUwL4V_L4sb8NvtbPFkDuR5F3UBaBh6I8fdQbguiDdpBLuNFOKfdlQt_o0xHgCc3RaHEH"/>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed leading-tight tracking-tight text-lg">RecruitAI Intel</span>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest mt-xs text-[10px]">Enterprise Tier</span>
+</div>
+</div>
+<!-- Main Nav -->
+<nav class="flex-1 overflow-y-auto mt-sm px-sm flex flex-col gap-xs font-label-md text-label-md">
+<!-- Dashboard -->
+<a class="flex items-center gap-md text-secondary dark:text-secondary-fixed-dim py-sm px-md hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<!-- Talent Pipeline -->
+<a class="flex items-center gap-md text-secondary dark:text-secondary-fixed-dim py-sm px-md hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors" data-icon="group_work">group_work</span>
+                Talent Pipeline
+            </a>
+<!-- Open Requisitions -->
+<a class="flex items-center gap-md text-secondary dark:text-secondary-fixed-dim py-sm px-md hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors" data-icon="work_outline">work_outline</span>
+                Open Requisitions
+            </a>
+<!-- AI Match Analytics (ACTIVE) -->
+<a class="flex items-center gap-md bg-transparent text-primary dark:text-primary-fixed border-l-[2px] border-primary dark:border-primary-fixed py-sm px-md hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="query_stats" data-weight="fill">query_stats</span>
+<span class="font-semibold">AI Match Analytics</span>
+</a>
+<!-- Candidate Database -->
+<a class="flex items-center gap-md text-secondary dark:text-secondary-fixed-dim py-sm px-md hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors" data-icon="person_search">person_search</span>
+                Candidate Database
+            </a>
+<!-- Settings -->
+<a class="flex items-center gap-md text-secondary dark:text-secondary-fixed-dim py-sm px-md hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors" data-icon="settings">settings</span>
+                Settings
+            </a>
+</nav>
+<!-- CTA & Footer -->
+<div class="px-lg mt-auto pb-md flex flex-col gap-md">
+<button class="w-full bg-primary text-on-primary py-2 px-4 rounded-lg font-label-md text-label-md font-semibold hover:bg-on-primary-fixed-variant transition-colors shadow-sm flex items-center justify-center gap-2 border-t border-white/20">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Source New Talent
+            </button>
+<div class="flex flex-col gap-xs font-label-md text-label-md mt-sm">
+<a class="flex items-center gap-md text-secondary py-sm px-sm hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="help_outline">help_outline</span>
+                    Help Center
+                </a>
+<a class="flex items-center gap-md text-secondary py-sm px-sm hover:text-error transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="logout">logout</span>
+                    Log Out
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col md:ml-[260px] h-full overflow-hidden bg-background">
+<!-- Shared Component: TopNavBar -->
+<header class="docked full-width top-0 sticky z-30 bg-surface/80 dark:bg-on-background/80 backdrop-blur-md border-b border-outline-variant dark:border-on-secondary-fixed-variant shadow-sm flex justify-between items-center w-full px-xl py-md h-[72px]">
+<div class="flex items-center gap-xl h-full">
+<!-- Mobile Menu Trigger (Visible only on mobile) -->
+<button class="md:hidden text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-black text-on-surface dark:text-surface-bright hidden md:block">RecruitAI Intelligence</h1>
+<!-- Navigation Links (Hidden on mobile per rules, but rules also say web uses top nav) -->
+<nav class="hidden md:flex h-full items-end gap-lg font-label-md text-label-md pb-[-16px]">
+<!-- Analytics (ACTIVE) -->
+<a class="text-primary dark:text-primary-fixed font-bold border-b-2 border-primary dark:border-primary-fixed pb-4 -mb-[17px] opacity-80 hover:text-primary dark:hover:text-primary-fixed transition-all flex items-center gap-2" href="#">
+                        Analytics
+                    </a>
+<!-- Inbox -->
+<a class="text-on-surface-variant dark:text-outline-variant pb-4 -mb-[17px] hover:text-primary dark:hover:text-primary-fixed transition-all flex items-center gap-2" href="#">
+                        Inbox
+                    </a>
+<!-- Schedule -->
+<a class="text-on-surface-variant dark:text-outline-variant pb-4 -mb-[17px] hover:text-primary dark:hover:text-primary-fixed transition-all flex items-center gap-2" href="#">
+                        Schedule
+                    </a>
+</nav>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-sm">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Page Canvas -->
+<main class="flex-1 overflow-y-auto p-xl bg-background">
+<!-- Page Header -->
+<div class="mb-lg flex justify-between items-end">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-xs">Model Performance</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Deep-dive analysis of AI candidate matching efficacy and outcome metrics.</p>
+</div>
+<div class="flex gap-sm">
+<button class="bg-surface text-on-surface border border-outline-variant py-2 px-4 rounded-lg font-label-md text-label-md font-semibold hover:bg-surface-variant transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                        Last 30 Days
+                    </button>
+<button class="bg-surface text-on-surface border border-outline-variant py-2 px-4 rounded-lg font-label-md text-label-md font-semibold hover:bg-surface-variant transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                        Filter Models
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-lg">
+<!-- Top Row: High-level KPI Cards -->
+<div class="col-span-12 md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-md">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">Total Recommendations</h3>
+<span class="material-symbols-outlined text-outline">group</span>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-on-surface">14,289</div>
+<div class="flex items-center gap-xs mt-xs text-sm">
+<span class="material-symbols-outlined text-primary text-[16px]">trending_up</span>
+<span class="text-primary font-medium">+12.4%</span>
+<span class="text-on-surface-variant text-xs">vs last period</span>
+</div>
+</div>
+</div>
+<div class="col-span-12 md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-md">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">Avg. Match Confidence</h3>
+<span class="material-symbols-outlined text-outline">psychology</span>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-on-surface">87.3%</div>
+<div class="flex items-center gap-xs mt-xs text-sm">
+<span class="material-symbols-outlined text-primary text-[16px]">trending_up</span>
+<span class="text-primary font-medium">+2.1%</span>
+<span class="text-on-surface-variant text-xs">vs last period</span>
+</div>
+</div>
+</div>
+<div class="col-span-12 md:col-span-4 bg-primary text-on-primary rounded-xl p-lg shadow-sm flex flex-col justify-between relative overflow-hidden border-t border-white/20">
+<div class="absolute -right-6 -top-6 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+<div class="flex justify-between items-start mb-md relative z-10">
+<h3 class="font-title-md text-title-md font-semibold text-on-primary/90">Time-to-Hire Reduction</h3>
+<span class="material-symbols-outlined text-on-primary/70">timer</span>
+</div>
+<div class="relative z-10">
+<div class="font-headline-lg text-headline-lg">14 Days</div>
+<div class="flex items-center gap-xs mt-xs text-sm text-on-primary/80">
+                            Saved per requisition average
+                        </div>
+</div>
+</div>
+<!-- Middle Row: Complex Visualizations -->
+<!-- Matching Accuracy Trends (Line Chart) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm flex flex-col h-[400px]">
+<div class="flex justify-between items-center mb-lg">
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface font-semibold">Matching Accuracy Trends</h3>
+<p class="font-label-md text-label-md text-on-surface-variant mt-xs">Model prediction vs. Human recruiter validation</p>
+</div>
+<div class="flex gap-md font-label-sm text-label-sm">
+<div class="flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-primary"></span> AI Prediction</div>
+<div class="flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-tertiary-container"></span> Human Validation</div>
+</div>
+</div>
+<!-- Simulated Chart Area -->
+<div class="flex-1 relative w-full h-full border-b border-l border-outline-variant/50 pb-4 pl-4">
+<!-- Y-Axis Labels -->
+<div class="absolute left-[-30px] top-0 h-full flex flex-col justify-between font-label-sm text-label-sm text-outline-variant py-4">
+<span>100%</span><span>80%</span><span>60%</span><span>40%</span><span>20%</span>
+</div>
+<!-- X-Axis Labels -->
+<div class="absolute bottom-[-24px] left-0 w-full flex justify-between font-label-sm text-label-sm text-outline-variant px-4">
+<span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span><span>Week 5</span>
+</div>
+<!-- Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between ml-4 py-4 pointer-events-none">
+<div class="w-full h-px bg-outline-variant/20"></div>
+<div class="w-full h-px bg-outline-variant/20"></div>
+<div class="w-full h-px bg-outline-variant/20"></div>
+<div class="w-full h-px bg-outline-variant/20"></div>
+<div class="w-full h-px bg-outline-variant/20"></div>
+</div>
+<!-- SVG Chart Lines -->
+<svg class="w-full h-full overflow-visible ml-4" preserveaspectratio="none" viewbox="0 0 100 100">
+<defs>
+<lineargradient id="lineGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#004ac6" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#004ac6" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- AI Prediction Area & Line -->
+<path class="animate-opacity" d="M0 60 Q 20 40, 40 45 T 80 20 L 100 25 L 100 100 L 0 100 Z" fill="url(#lineGrad)"></path>
+<path class="animate-path" d="M0 60 Q 20 40, 40 45 T 80 20 L 100 25" fill="none" stroke="#004ac6" stroke-width="2"></path>
+<!-- Human Validation Line (Dashed) -->
+<path class="animate-path" d="M0 65 Q 25 50, 45 60 T 75 35 L 100 30" fill="none" stroke="#bc4800" stroke-dasharray="4,4" stroke-width="2"></path>
+<!-- Data Points (AI) -->
+<circle class="hover:r-3 transition-all cursor-pointer" cx="0" cy="60" fill="#004ac6" r="1.5"></circle>
+<circle class="hover:r-3 transition-all cursor-pointer" cx="20" cy="46" fill="#004ac6" r="1.5"></circle>
+<circle class="hover:r-3 transition-all cursor-pointer" cx="40" cy="45" fill="#004ac6" r="1.5"></circle>
+<circle class="hover:r-3 transition-all cursor-pointer" cx="60" cy="30" fill="#004ac6" r="1.5"></circle>
+<circle class="hover:r-3 transition-all cursor-pointer" cx="80" cy="20" fill="#004ac6" r="1.5"></circle>
+<circle class="hover:r-3 transition-all cursor-pointer" cx="100" cy="25" fill="#004ac6" r="1.5"></circle>
+</svg>
+</div>
+</div>
+<!-- AI Recommendation Acceptance Rate (Donut) -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm flex flex-col h-[400px]">
+<div class="mb-md">
+<h3 class="font-title-lg text-title-lg text-on-surface font-semibold">Acceptance Rate</h3>
+<p class="font-label-md text-label-md text-on-surface-variant mt-xs">Recruiter interaction with AI flags</p>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center relative">
+<!-- SVG Donut Chart -->
+<div class="relative w-48 h-48">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<!-- Background Circle -->
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#eaedff" stroke-width="12"></circle>
+<!-- Progress Circle (Accepted - 68%) -->
+<circle class="animate-path" cx="50" cy="50" fill="transparent" r="40" stroke="#004ac6" stroke-dasharray="251.2" stroke-dashoffset="80.38" stroke-linecap="round" stroke-width="12"></circle>
+<!-- Progress Circle (Rejected/Adjusted - 20% starting after accepted) -->
+<!-- Simplified for visual representation without complex path math -->
+</svg>
+<!-- Center Text -->
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display-lg text-[32px] font-bold text-on-surface">68%</span>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Accepted</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="w-full mt-lg flex flex-col gap-sm">
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2 text-on-surface"><span class="w-3 h-3 rounded-sm bg-primary"></span> Accepted as-is</div>
+<span class="font-semibold">68%</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2 text-on-surface"><span class="w-3 h-3 rounded-sm bg-surface-variant border border-outline-variant"></span> Modified by Human</div>
+<span class="font-semibold">22%</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2 text-on-surface"><span class="w-3 h-3 rounded-sm bg-tertiary-container"></span> Rejected</div>
+<span class="font-semibold">10%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Row -->
+<!-- Candidate Quality Distribution (Bar Chart) -->
+<div class="col-span-12 md:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm flex flex-col h-[360px]">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-title-lg text-title-lg text-on-surface font-semibold">Quality Tier Distribution</h3>
+<button class="text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-lg">AI categorization of sourced pipeline across all active requisitions.</p>
+<div class="flex-1 flex items-end justify-around gap-2 px-md pb-4 border-b border-outline-variant/30">
+<!-- Bars -->
+<div class="w-12 flex flex-col items-center gap-2 group">
+<div class="w-full bg-surface-container-high rounded-t-sm h-[20%] group-hover:bg-primary-fixed transition-colors relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">450 Cands</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">Tier 4</span>
+</div>
+<div class="w-12 flex flex-col items-center gap-2 group">
+<div class="w-full bg-surface-container-high rounded-t-sm h-[45%] group-hover:bg-primary-fixed transition-colors relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">1,200 Cands</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">Tier 3</span>
+</div>
+<div class="w-12 flex flex-col items-center gap-2 group">
+<div class="w-full bg-primary rounded-t-sm h-[85%] group-hover:bg-on-primary-fixed-variant transition-colors shadow-[0_0_10px_rgba(0,74,198,0.2)] relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">3,400 Cands</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">Tier 2</span>
+</div>
+<div class="w-12 flex flex-col items-center gap-2 group">
+<div class="w-full bg-tertiary-container rounded-t-sm h-[60%] group-hover:bg-tertiary transition-colors relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">890 Cands</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">Tier 1</span>
+</div>
+<div class="w-12 flex flex-col items-center gap-2 group">
+<div class="w-full bg-surface-container-high rounded-t-sm h-[15%] group-hover:bg-primary-fixed transition-colors relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">120 Cands</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">Top 1%</span>
+</div>
+</div>
+</div>
+<!-- Top Performing Skills (List/Bars) -->
+<div class="col-span-12 md:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm flex flex-col h-[360px]">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-title-lg text-title-lg text-on-surface font-semibold">High-Demand Skill Matches</h3>
+<button class="text-primary font-label-md text-label-md hover:underline">View All</button>
+</div>
+<div class="flex-1 overflow-y-auto pr-sm flex flex-col gap-md">
+<!-- Skill Item -->
+<div class="w-full">
+<div class="flex justify-between text-sm mb-1">
+<span class="font-medium text-on-surface">React / Next.js</span>
+<span class="text-on-surface-variant">94% Match Rate</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 94%"></div>
+</div>
+</div>
+<!-- Skill Item -->
+<div class="w-full">
+<div class="flex justify-between text-sm mb-1">
+<span class="font-medium text-on-surface">Python (Data Science)</span>
+<span class="text-on-surface-variant">88% Match Rate</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 88%"></div>
+</div>
+</div>
+<!-- Skill Item -->
+<div class="w-full">
+<div class="flex justify-between text-sm mb-1">
+<span class="font-medium text-on-surface">Kubernetes / Docker</span>
+<span class="text-on-surface-variant">82% Match Rate</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 82%"></div>
+</div>
+</div>
+<!-- Skill Item -->
+<div class="w-full">
+<div class="flex justify-between text-sm mb-1">
+<span class="font-medium text-on-surface">AWS Cloud Architecture</span>
+<span class="text-on-surface-variant">76% Match Rate</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 76%"></div>
+</div>
+</div>
+<!-- Skill Item -->
+<div class="w-full">
+<div class="flex justify-between text-sm mb-1">
+<span class="font-medium text-on-surface">UX Research</span>
+<span class="text-on-surface-variant">65% Match Rate</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-secondary-fixed-dim h-2 rounded-full" style="width: 65%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RecruitAI Intelligence | Loading...</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        .skeleton {
+            background: linear-gradient(90deg, #f0f1f7 25%, #e2e4ef 50%, #f0f1f7 75%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite linear;
+        }
+
+        .spinner-ring {
+            border: 3px solid rgba(0, 74, 198, 0.1);
+            border-top: 3px solid #004ac6;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .glass-header {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "background": "#faf8ff",
+                        "outline": "#737686",
+                        "tertiary": "#943700",
+                        "surface-variant": "#dae2fd",
+                        "surface-container-high": "#e2e7ff",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-dim": "#d2d9f4",
+                        "surface": "#faf8ff",
+                        "surface-container-low": "#f2f3ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#ffede6",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#283044",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "secondary-container": "#d0e1fb",
+                        "on-surface-variant": "#434655",
+                        "on-background": "#131b2e",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "error": "#ba1a1a",
+                        "primary": "#004ac6",
+                        "surface-tint": "#0053db",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eaedff",
+                        "surface-container-highest": "#dae2fd",
+                        "surface-bright": "#faf8ff",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-primary-container": "#eeefff",
+                        "outline-variant": "#c3c6d7",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#131b2e",
+                        "tertiary-container": "#bc4800",
+                        "inverse-primary": "#b4c5ff",
+                        "primary-fixed": "#dbe1ff",
+                        "primary-container": "#2563eb",
+                        "on-primary-fixed": "#00174b",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-tertiary-fixed": "#360f00",
+                        "inverse-on-surface": "#eef0ff",
+                        "secondary": "#505f76",
+                        "on-secondary-container": "#54647a",
+                        "secondary-fixed": "#d3e4fe"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "xxl": "48px",
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "container-margin": "32px"
+                    },
+                    "fontFamily": {
+                        "title-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "title-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "600"}],
+                        "title-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<!-- Shell Container -->
+<div class="flex h-screen w-full">
+<!-- SideNavBar (Predicted Component) -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-surface-container-low border-r border-outline-variant flex flex-col py-md z-40">
+<!-- Brand Section -->
+<div class="px-md mb-xl">
+<div class="font-headline-md text-headline-md font-bold text-primary">RecruitAI Intel</div>
+<div class="font-label-md text-label-md text-secondary mt-xs opacity-70">Enterprise Tier</div>
+</div>
+<!-- Primary Nav -->
+<nav class="flex-1 space-y-1">
+<div class="flex items-center gap-md bg-transparent text-primary border-l-[2px] border-primary py-sm px-md transition-transform duration-150 scale-[0.98]">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</div>
+<div class="flex items-center gap-md text-secondary py-sm px-md hover:bg-surface-container-high transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-icon="group_work">group_work</span>
+<span class="font-label-md text-label-md">Talent Pipeline</span>
+</div>
+<div class="flex items-center gap-md text-secondary py-sm px-md hover:bg-surface-container-high transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-icon="work_outline">work_outline</span>
+<span class="font-label-md text-label-md">Open Requisitions</span>
+</div>
+<div class="flex items-center gap-md text-secondary py-sm px-md hover:bg-surface-container-high transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-label-md text-label-md">AI Match Analytics</span>
+</div>
+<div class="flex items-center gap-md text-secondary py-sm px-md hover:bg-surface-container-high transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-icon="person_search">person_search</span>
+<span class="font-label-md text-label-md">Candidate Database</span>
+</div>
+<div class="flex items-center gap-md text-secondary py-sm px-md hover:bg-surface-container-high transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</div>
+</nav>
+<!-- CTA -->
+<div class="px-md my-lg">
+<button class="w-full bg-primary-container text-on-primary-container font-label-md py-md rounded-lg flex items-center justify-center gap-sm shadow-sm hover:opacity-90 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+                    Source New Talent
+                </button>
+</div>
+<!-- Footer Nav -->
+<div class="mt-auto border-t border-outline-variant pt-md space-y-1">
+<div class="flex items-center gap-md text-secondary py-sm px-md hover:bg-surface-container-high transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="font-label-md text-label-md">Help Center</span>
+</div>
+<div class="flex items-center gap-md text-secondary py-sm px-md hover:bg-surface-container-high transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Log Out</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-[260px] relative overflow-hidden flex flex-col h-screen">
+<!-- TopNavBar (Predicted Component) -->
+<header class="sticky top-0 z-50 w-full px-xl py-md flex justify-between items-center bg-surface/80 glass-header border-b border-outline-variant shadow-sm">
+<div class="flex items-center gap-xl">
+<div class="font-headline-md text-headline-md font-black text-on-surface">RecruitAI Intelligence</div>
+<div class="flex gap-lg items-center ml-xl">
+<span class="font-label-md text-label-md text-primary font-bold border-b-2 border-primary pb-2 opacity-80 cursor-default">Analytics</span>
+<span class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-all cursor-pointer">Inbox</span>
+<span class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-all cursor-pointer">Schedule</span>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="relative">
+<span class="material-symbols-outlined text-secondary hover:text-primary cursor-pointer" data-icon="notifications">notifications</span>
+<div class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></div>
+</div>
+<span class="material-symbols-outlined text-secondary hover:text-primary cursor-pointer" data-icon="history_edu">history_edu</span>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary text-headline-md" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Loading Content Canvas -->
+<div class="flex-1 overflow-y-auto p-xl space-y-xl">
+<!-- Page Title Skeleton -->
+<div class="flex justify-between items-end">
+<div class="space-y-sm">
+<div class="skeleton h-10 w-64 rounded-lg"></div>
+<div class="skeleton h-4 w-96 rounded-lg opacity-50"></div>
+</div>
+<div class="skeleton h-10 w-32 rounded-lg"></div>
+</div>
+<!-- 4 Stat Cards Skeleton Grid -->
+<div class="grid grid-cols-4 gap-lg">
+<div class="bg-white border border-outline-variant rounded-xl p-lg shadow-sm space-y-md">
+<div class="flex justify-between">
+<div class="skeleton h-4 w-20 rounded"></div>
+<div class="skeleton h-6 w-6 rounded-full"></div>
+</div>
+<div class="skeleton h-8 w-24 rounded"></div>
+<div class="skeleton h-4 w-32 rounded opacity-50"></div>
+</div>
+<div class="bg-white border border-outline-variant rounded-xl p-lg shadow-sm space-y-md">
+<div class="flex justify-between">
+<div class="skeleton h-4 w-20 rounded"></div>
+<div class="skeleton h-6 w-6 rounded-full"></div>
+</div>
+<div class="skeleton h-8 w-24 rounded"></div>
+<div class="skeleton h-4 w-32 rounded opacity-50"></div>
+</div>
+<div class="bg-white border border-outline-variant rounded-xl p-lg shadow-sm space-y-md">
+<div class="flex justify-between">
+<div class="skeleton h-4 w-20 rounded"></div>
+<div class="skeleton h-6 w-6 rounded-full"></div>
+</div>
+<div class="skeleton h-8 w-24 rounded"></div>
+<div class="skeleton h-4 w-32 rounded opacity-50"></div>
+</div>
+<div class="bg-white border border-outline-variant rounded-xl p-lg shadow-sm space-y-md">
+<div class="flex justify-between">
+<div class="skeleton h-4 w-20 rounded"></div>
+<div class="skeleton h-6 w-6 rounded-full"></div>
+</div>
+<div class="skeleton h-8 w-24 rounded"></div>
+<div class="skeleton h-4 w-32 rounded opacity-50"></div>
+</div>
+</div>
+<!-- Main Layout Area: Bento Grid Layout for Loading -->
+<div class="grid grid-cols-12 gap-lg h-[500px]">
+<!-- Central Data Visualization Area -->
+<div class="col-span-8 bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="p-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
+<div class="skeleton h-5 w-40 rounded"></div>
+<div class="flex gap-sm">
+<div class="skeleton h-8 w-16 rounded"></div>
+<div class="skeleton h-8 w-16 rounded"></div>
+</div>
+</div>
+<div class="flex-1 p-lg flex flex-col gap-lg">
+<div class="flex-1 flex items-end gap-md justify-between px-md pb-md">
+<div class="skeleton w-12 h-[30%] rounded-t-lg"></div>
+<div class="skeleton w-12 h-[60%] rounded-t-lg"></div>
+<div class="skeleton w-12 h-[45%] rounded-t-lg"></div>
+<div class="skeleton w-12 h-[80%] rounded-t-lg"></div>
+<div class="skeleton w-12 h-[55%] rounded-t-lg"></div>
+<div class="skeleton w-12 h-[70%] rounded-t-lg"></div>
+<div class="skeleton w-12 h-[40%] rounded-t-lg"></div>
+<div class="skeleton w-12 h-[90%] rounded-t-lg"></div>
+</div>
+<div class="skeleton h-1 w-full rounded opacity-20"></div>
+</div>
+</div>
+<!-- Right-hand Info Panel Skeleton -->
+<div class="col-span-4 bg-white border border-outline-variant rounded-xl shadow-sm p-lg flex flex-col gap-xl">
+<div class="space-y-md">
+<div class="skeleton h-6 w-48 rounded"></div>
+<div class="space-y-sm">
+<div class="flex gap-md">
+<div class="skeleton h-12 w-12 rounded-full flex-shrink-0"></div>
+<div class="flex-1 space-y-xs py-1">
+<div class="skeleton h-4 w-3/4 rounded"></div>
+<div class="skeleton h-3 w-1/2 rounded opacity-50"></div>
+</div>
+</div>
+<div class="flex gap-md">
+<div class="skeleton h-12 w-12 rounded-full flex-shrink-0"></div>
+<div class="flex-1 space-y-xs py-1">
+<div class="skeleton h-4 w-2/3 rounded"></div>
+<div class="skeleton h-3 w-1/3 rounded opacity-50"></div>
+</div>
+</div>
+<div class="flex gap-md">
+<div class="skeleton h-12 w-12 rounded-full flex-shrink-0"></div>
+<div class="flex-1 space-y-xs py-1">
+<div class="skeleton h-4 w-4/5 rounded"></div>
+<div class="skeleton h-3 w-1/2 rounded opacity-50"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto space-y-md p-md bg-surface-container-lowest border border-outline-variant rounded-lg">
+<div class="skeleton h-4 w-32 rounded"></div>
+<div class="skeleton h-2 w-full rounded"></div>
+<div class="skeleton h-2 w-4/5 rounded"></div>
+<div class="skeleton h-2 w-3/4 rounded"></div>
+</div>
+</div>
+</div>
+<!-- Secondary Data Table Area -->
+<div class="bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="p-md border-b border-outline-variant flex gap-xl items-center">
+<div class="skeleton h-6 w-32 rounded"></div>
+<div class="skeleton h-6 w-32 rounded opacity-30"></div>
+<div class="skeleton h-6 w-32 rounded opacity-30"></div>
+</div>
+<div class="divide-y divide-outline-variant">
+<div class="p-lg flex items-center justify-between">
+<div class="flex gap-lg items-center flex-1">
+<div class="skeleton h-10 w-10 rounded"></div>
+<div class="skeleton h-5 w-48 rounded"></div>
+</div>
+<div class="skeleton h-5 w-32 rounded"></div>
+<div class="skeleton h-5 w-24 rounded"></div>
+<div class="skeleton h-8 w-8 rounded-full"></div>
+</div>
+<div class="p-lg flex items-center justify-between">
+<div class="flex gap-lg items-center flex-1">
+<div class="skeleton h-10 w-10 rounded"></div>
+<div class="skeleton h-5 w-40 rounded"></div>
+</div>
+<div class="skeleton h-5 w-32 rounded"></div>
+<div class="skeleton h-5 w-24 rounded"></div>
+<div class="skeleton h-8 w-8 rounded-full"></div>
+</div>
+<div class="p-lg flex items-center justify-between">
+<div class="flex gap-lg items-center flex-1">
+<div class="skeleton h-10 w-10 rounded"></div>
+<div class="skeleton h-5 w-56 rounded"></div>
+</div>
+<div class="skeleton h-5 w-32 rounded"></div>
+<div class="skeleton h-5 w-24 rounded"></div>
+<div class="skeleton h-8 w-8 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Central AI Processing Overlay -->
+<div class="absolute inset-0 bg-white/40 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center pointer-events-none">
+<div class="bg-white/90 p-xl rounded-2xl shadow-xl border border-primary/10 flex flex-col items-center gap-lg max-w-sm text-center">
+<div class="relative">
+<!-- Spinner -->
+<div class="spinner-ring"></div>
+<!-- Inner Icon -->
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-headline-md animate-pulse" data-icon="auto_awesome">auto_awesome</span>
+</div>
+</div>
+<div class="space-y-sm">
+<div class="font-title-lg text-title-lg text-primary">Optimizing your intelligence dashboard...</div>
+<p class="font-body-md text-body-md text-secondary max-w-[280px]">Our AI models are currently cross-referencing candidate metrics with your requisitions for high-precision matching.</p>
+</div>
+<div class="flex gap-xs items-center">
+<div class="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style="animation-delay: 0.1s;"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style="animation-delay: 0.2s;"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style="animation-delay: 0.3s;"></div>
+</div>
+</div>
+</div>
+<!-- Processing Status (Fixed Bottom Left) -->
+<div class="fixed bottom-lg right-xl z-50">
+<div class="bg-surface-container-lowest border border-outline-variant px-md py-sm rounded-full flex items-center gap-md shadow-lg animate-fade-in">
+<span class="material-symbols-outlined text-primary text-sm animate-spin" data-icon="sync" style="font-size: 18px;">sync</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Analyzing talent data...</span>
+<div class="h-4 w-[1px] bg-outline-variant"></div>
+<span class="font-label-md text-label-md text-secondary">84% complete</span>
+</div>
+</div>
+</main>
+</div>
+<script>
+        // Simple micro-interaction for the sidebar hover effect
+        document.querySelectorAll('aside nav div').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                if(!item.classList.contains('text-primary')) {
+                    item.style.transform = 'translateX(4px)';
+                }
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Simulating progress update for the processing status bar
+        let progress = 84;
+        const statusSpan = document.querySelector('.fixed.bottom-lg .text-secondary');
+        
+        setInterval(() => {
+            if(progress < 99) {
+                progress += Math.floor(Math.random() * 2);
+                statusSpan.textContent = `${progress}% complete`;
+            }
+        }, 3000);
+    </script>
+</body></html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Candidate Dashboard - RecruitAI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#b4c5ff",
+                        "inverse-on-surface": "#eef0ff",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#434655",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#bc4800",
+                        "inverse-primary": "#b4c5ff",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-surface": "#131b2e",
+                        "surface-bright": "#faf8ff",
+                        "surface-container-highest": "#dae2fd",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "outline-variant": "#c3c6d7",
+                        "primary-container": "#2563eb",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#d2d9f4",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#dae2fd",
+                        "secondary-fixed": "#d3e4fe",
+                        "outline": "#737686",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#360f00",
+                        "secondary": "#505f76",
+                        "primary": "#004ac6",
+                        "on-primary-fixed": "#00174b",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-container": "#eaedff",
+                        "on-tertiary-container": "#ffede6",
+                        "surface-tint": "#0053db",
+                        "on-primary-container": "#eeefff",
+                        "inverse-surface": "#283044",
+                        "primary-fixed": "#dbe1ff",
+                        "on-secondary-fixed": "#0b1c30",
+                        "tertiary-fixed": "#ffdbcd",
+                        "secondary-container": "#d0e1fb",
+                        "on-background": "#131b2e",
+                        "on-secondary-container": "#54647a",
+                        "surface-container-low": "#f2f3ff",
+                        "on-secondary": "#ffffff",
+                        "background": "#faf8ff",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "tertiary": "#943700",
+                        "surface": "#faf8ff",
+                        "surface-container-high": "#e2e7ff",
+                        "on-tertiary-fixed-variant": "#7d2d00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "md": "16px",
+                        "xxl": "48px",
+                        "gutter": "24px",
+                        "xl": "32px",
+                        "unit": "4px",
+                        "container-margin": "32px",
+                        "sm": "8px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "title-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "title-md": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "500" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row antialiased">
+<!-- Mobile Nav (TopAppBar converted for mobile) -->
+<nav class="md:hidden bg-surface/80 dark:bg-on-background/80 backdrop-blur-md text-primary dark:text-primary-fixed font-title-md text-title-md font-label-md text-label-md docked full-width top-0 sticky z-50 border-b border-outline-variant dark:border-on-secondary-fixed-variant shadow-sm flex justify-between items-center w-full px-xl py-md">
+<div class="font-headline-md text-headline-md font-black text-on-surface dark:text-surface-bright">
+            RecruitAI Intelligence
+        </div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined hover:text-primary dark:hover:text-primary-fixed transition-all cursor-pointer">notifications</span>
+<span class="material-symbols-outlined hover:text-primary dark:hover:text-primary-fixed transition-all cursor-pointer">history_edu</span>
+<span class="material-symbols-outlined hover:text-primary dark:hover:text-primary-fixed transition-all cursor-pointer">account_circle</span>
+</div>
+</nav>
+<!-- SideNavBar (Desktop) -->
+<aside class="hidden md:flex bg-surface-container-low dark:bg-on-secondary-fixed text-primary dark:text-inverse-primary font-label-md text-label-md font-body-md text-body-md fixed left-0 top-0 h-full w-[260px] border-r border-outline-variant dark:border-on-secondary-fixed-variant flat no shadows flex-col py-md z-40">
+<div class="px-lg mb-xl mt-md">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">RecruitAI Intel</span>
+<div class="text-label-md text-on-surface-variant mt-xs">Enterprise Tier</div>
+</div>
+<nav class="flex-1 px-sm space-y-xs">
+<a class="flex items-center gap-md bg-transparent text-primary dark:text-primary-fixed border-l-[2px] border-primary dark:border-primary-fixed py-sm px-md hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors active:scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-md text-secondary dark:text-secondary-fixed-dim py-sm px-md hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors active:scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">group_work</span>
+                Talent Pipeline
+            </a>
+<a class="flex items-center gap-md text-secondary dark:text-secondary-fixed-dim py-sm px-md hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors active:scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">work_outline</span>
+                Open Requisitions
+            </a>
+<a class="flex items-center gap-md text-secondary dark:text-secondary-fixed-dim py-sm px-md hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors active:scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+                AI Match Analytics
+            </a>
+<a class="flex items-center gap-md text-secondary dark:text-secondary-fixed-dim py-sm px-md hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors active:scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">person_search</span>
+                Candidate Database
+            </a>
+<a class="flex items-center gap-md text-secondary dark:text-secondary-fixed-dim py-sm px-md hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors active:scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+</nav>
+<div class="px-md mt-auto mb-md">
+<button class="w-full bg-primary text-on-primary py-sm px-md rounded border-t border-white/20 hover:opacity-90 transition-opacity font-label-md text-label-md">
+                Source New Talent
+            </button>
+</div>
+<div class="px-sm space-y-xs pb-md">
+<a class="flex items-center gap-md text-secondary dark:text-secondary-fixed-dim py-sm px-md hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+                Help Center
+            </a>
+<a class="flex items-center gap-md text-secondary dark:text-secondary-fixed-dim py-sm px-md hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+                Log Out
+            </a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 md:ml-[260px] p-container-margin w-full max-w-[1200px] mx-auto pt-xl">
+<header class="mb-xl flex justify-between items-end">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Welcome back, Sarah</h1>
+<p class="text-body-lg text-on-surface-variant">Here is a summary of your active applications and insights.</p>
+</div>
+<button class="hidden md:flex items-center gap-xs bg-surface text-on-surface border border-outline-variant py-sm px-md rounded-lg shadow-sm hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">edit_document</span>
+<span class="font-label-md text-label-md">Update Resume</span>
+</button>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Left Column: Active Applications -->
+<div class="lg:col-span-2 space-y-lg">
+<section>
+<div class="flex justify-between items-center mb-md">
+<h2 class="font-title-lg text-title-lg text-on-surface">Active Applications</h2>
+<a class="text-primary font-label-md text-label-md hover:underline" href="#">View All</a>
+</div>
+<div class="space-y-md">
+<!-- Application Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex flex-col sm:flex-row justify-between sm:items-center gap-md transition-shadow hover:shadow-[0_1px_3px_rgba(0,0,0,0.05),_0_1px_2px_rgba(0,0,0,0.1)]">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 bg-surface-container-high rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">domain</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">Senior Product Designer</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Stripe • San Francisco, CA</p>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex flex-col sm:items-end">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary">Status</span>
+<span class="font-body-md text-body-md font-medium text-on-surface">Interview Scheduled</span>
+</div>
+<button class="p-xs text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Application Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex flex-col sm:flex-row justify-between sm:items-center gap-md transition-shadow hover:shadow-[0_1px_3px_rgba(0,0,0,0.05),_0_1px_2px_rgba(0,0,0,0.1)]">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 bg-surface-container-high rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">cloud</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">UX Engineer</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Vercel • Remote</p>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex flex-col sm:items-end">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Status</span>
+<span class="font-body-md text-body-md font-medium text-on-surface">Under Review</span>
+</div>
+<button class="p-xs text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Recommended Jobs -->
+<section class="pt-md">
+<h2 class="font-title-lg text-title-lg text-on-surface mb-md">Recommended Jobs</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex flex-col gap-sm">
+<div class="flex justify-between items-start">
+<div class="font-title-md text-title-md text-on-surface">Frontend Architect</div>
+<span class="material-symbols-outlined text-outline-variant">bookmark_border</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-auto">Figma • New York (Hybrid)</p>
+<div class="flex items-center gap-xs mt-sm">
+<span class="inline-block px-2 py-1 bg-surface-container rounded text-label-sm font-label-sm text-on-surface">React</span>
+<span class="inline-block px-2 py-1 bg-surface-container rounded text-label-sm font-label-sm text-on-surface">TypeScript</span>
+<span class="inline-block px-2 py-1 bg-primary-fixed text-on-primary-fixed rounded text-label-sm font-label-sm flex items-center gap-[2px]"><span class="material-symbols-outlined" style="font-size: 14px;">auto_awesome</span> 92% Match</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex flex-col gap-sm">
+<div class="flex justify-between items-start">
+<div class="font-title-md text-title-md text-on-surface">UI Developer</div>
+<span class="material-symbols-outlined text-outline-variant">bookmark_border</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-auto">Linear • San Francisco</p>
+<div class="flex items-center gap-xs mt-sm">
+<span class="inline-block px-2 py-1 bg-surface-container rounded text-label-sm font-label-sm text-on-surface">CSS</span>
+<span class="inline-block px-2 py-1 bg-surface-container rounded text-label-sm font-label-sm text-on-surface">Animation</span>
+<span class="inline-block px-2 py-1 bg-primary-fixed text-on-primary-fixed rounded text-label-sm font-label-sm flex items-center gap-[2px]"><span class="material-symbols-outlined" style="font-size: 14px;">auto_awesome</span> 88% Match</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: AI Insights Bento -->
+<div class="lg:col-span-1">
+<section class="bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden sticky top-xl flex flex-col h-full max-h-[600px]">
+<div class="bg-surface-container px-md py-sm border-b border-outline-variant flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">psychology</span>
+<h2 class="font-title-md text-title-md text-on-surface">AI Resume Insights</h2>
+</div>
+<div class="p-md flex-1 overflow-y-auto space-y-lg">
+<!-- Score Indicator -->
+<div class="flex items-center gap-md">
+<div class="w-16 h-16 rounded-full border-4 border-primary-container flex items-center justify-center shrink-0">
+<span class="font-headline-md text-headline-md text-on-surface">85</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">Profile Strength</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Top 15% in your field</p>
+</div>
+</div>
+<!-- Feedback Points -->
+<div class="space-y-md">
+<div>
+<h4 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-green-600" style="font-size: 16px;">check_circle</span> Strengths
+                                </h4>
+<ul class="font-body-md text-body-md text-on-surface-variant space-y-xs ml-sm list-disc pl-sm">
+<li>Strong emphasis on design systems.</li>
+<li>Clear metric-driven accomplishments.</li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-tertiary" style="font-size: 16px;">lightbulb</span> Suggestions
+                                </h4>
+<ul class="font-body-md text-body-md text-on-surface-variant space-y-xs ml-sm list-disc pl-sm">
+<li>Add more keywords related to 'React' to boost match rates for Frontend roles.</li>
+<li>Expand on your leadership experience in the recent Vercel role.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="p-md border-t border-outline-variant bg-surface-container-lowest">
+<div class="font-[JetBrains_Mono,monospace] text-[12px] text-outline p-sm bg-surface-container rounded mb-md overflow-x-auto whitespace-nowrap">
+                             Parsed: { "skills": ["UI/UX", "Design Systems"], "experience_years": 6 }
+                         </div>
+<button class="w-full bg-secondary text-on-secondary py-sm px-md rounded-lg border border-outline-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-md text-label-md">
+                            Run Full Analysis
+                        </button>
+</div>
+</section>
+</div>
+</div>
+</main>
+</body></html>

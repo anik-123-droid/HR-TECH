@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RecruitAI Intelligence | Elevate Your Career</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#131b2e",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "outline-variant": "#c3c6d7",
+                        "secondary-container": "#d0e1fb",
+                        "surface": "#faf8ff",
+                        "inverse-primary": "#b4c5ff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-container-high": "#e2e7ff",
+                        "on-primary-fixed": "#00174b",
+                        "on-secondary-container": "#54647a",
+                        "secondary": "#505f76",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "surface-container-highest": "#dae2fd",
+                        "on-tertiary-fixed": "#360f00",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "inverse-surface": "#283044",
+                        "on-primary": "#ffffff",
+                        "background": "#faf8ff",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eaedff",
+                        "inverse-on-surface": "#eef0ff",
+                        "tertiary-container": "#bc4800",
+                        "surface-variant": "#dae2fd",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#f2f3ff",
+                        "tertiary": "#943700",
+                        "surface-dim": "#d2d9f4",
+                        "outline": "#737686",
+                        "surface-bright": "#faf8ff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "primary-container": "#2563eb",
+                        "on-surface-variant": "#434655",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-surface": "#131b2e",
+                        "surface-tint": "#0053db",
+                        "on-tertiary-container": "#ffede6",
+                        "on-error": "#ffffff",
+                        "primary": "#004ac6",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#dbe1ff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-primary-container": "#eeefff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "8px",
+                        "xl": "12px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "xxl": "48px",
+                        "unit": "4px",
+                        "md": "16px",
+                        "container-margin": "32px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "sans": ["Inter", "sans-serif"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "title-md": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-header {
+            background: rgba(250, 248, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.05) 0%, rgba(250, 248, 255, 1) 100%);
+        }
+        .bento-card {
+            background: #ffffff;
+            border: 1px solid #E2E8F0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-card:hover {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+            border-color: #004ac6;
+        }
+        .step-line::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 100%;
+            height: 1px;
+            background: #E2E8F0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-sans selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 glass-header border-b border-outline-variant">
+<nav class="max-w-[1440px] mx-auto flex justify-between items-center px-xl py-md h-20">
+<div class="flex items-center gap-xl">
+<span class="font-headline-md text-headline-md font-black text-on-surface tracking-tighter">RecruitAI Intelligence</span>
+<div class="hidden md:flex gap-lg">
+<a class="text-primary font-bold border-b-2 border-primary pb-2 font-label-md text-label-md transition-all" href="#">Analytics</a>
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all" href="#">Inbox</a>
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all" href="#">Schedule</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded-xl pl-10 pr-4 py-2 text-body-md focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none w-64 transition-all" placeholder="Search opportunities..." type="text"/>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">history_edu</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xs ml-2 cursor-pointer">
+                        JS
+                    </div>
+</div>
+</div>
+</nav>
+</header>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="hero-gradient min-h-[870px] flex flex-col justify-center items-center text-center px-container-margin py-xxl">
+<div class="max-w-4xl mx-auto space-y-md">
+<span class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-md text-label-md border border-primary/20">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                    Next-Gen Talent Acquisition
+                </span>
+<h1 class="font-display-lg text-display-lg md:text-[64px] tracking-tight text-on-background leading-tight">
+                    AI-Powered Career Growth <br/><span class="text-primary">Without the Guesswork.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-secondary max-w-2xl mx-auto pt-sm">
+                    Leverage enterprise-grade matching algorithms to find roles that align with your unique skill signature. RecruitAI analyzes your trajectory to unlock non-obvious career paths.
+                </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-md pt-lg">
+<button class="px-xl py-md bg-primary text-on-primary rounded-xl font-title-md text-title-md hover:bg-on-primary-fixed-variant transition-all shadow-lg shadow-primary/20 flex items-center gap-2">
+                        Upload Resume <span class="material-symbols-outlined">upload</span>
+</button>
+<button class="px-xl py-md bg-surface-container-lowest text-on-surface border border-outline-variant rounded-xl font-title-md text-title-md hover:bg-surface-container-low transition-all">
+                        Sign Up for Free
+                    </button>
+</div>
+<div class="pt-xl flex items-center justify-center gap-xl opacity-50 grayscale hover:grayscale-0 transition-all duration-700">
+<img class="h-6" data-alt="A clean, minimalist monochrome logo of a fictional global technology leader in a modern sans-serif typeface, styled for an enterprise brand wall on a soft white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF4nFr_8EUiq_e4Yx2drLZUAGSOYr3vWqwIQd_qvoNABxA3hMAYRt9x6QyFRw32TVh8Vss980jHluAslLaLa1h6OiH_nr85tbuX15Cf-RleQS7o3z_N9vCpVpVcw4Dkjrbz-FIBKn4j7TJJuSxoOmHq-MbEI4LYF-a5xSstfOkk27vOgBcJ0gBRF9iokmxiCJW_hdxOMNffs_geO9t4QyJa-jbEGmx3DA0bJ5NSDeO9odKi_HaarjCWSGRW09XsGfqn2T2YTwR_10s"/>
+<img class="h-6" data-alt="A sleek minimalist corporate emblem for a top-tier venture capital firm, featuring abstract geometric lines and professional dark grey tones on a pristine white surface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi4GncbnIEbPNsg776Bt4Q90bRWk_yEWu2FDO2QfXB7iSbd_fTIXaUaM7ydFBvQuSW_X2IDqlQ73g-q30RdnksBirG52WZRmiR33TBZWrVYC573lkElkQ0gF_KIFkrCBxbFelki5mExLrZ2bxwgON1GnJKMcmBj0wu1lyK88c4teVucWqGdv48Eph_RAMrd9L3sOgg3wbl-5Q-iwiaTW3S-8jcekA9XKD1rbVa1MIToCKloK3HhIQkW0njUc3LNRYl3iP1Iv76DsYx"/>
+<img class="h-6" data-alt="The sophisticated, modern wordmark logo of a fictional high-performance AI research laboratory, presented in a crisp, high-contrast dark blue color against a soft cream backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVbBV5Cm0B1LqqcJUqa94i5Bxeu9Tov-Iw9HnAHourbfgMMygto7ua9UHRPsaJXYPLqhrRM0raCXZ7d4tyioHIreZh5JQBmXa6wtvFVH4MGUOEGzl4CHFS12i0ihJZbbB3XB4fly72_96qeDE96jazG7lPrc168VCPNFBmHsjquvl3hTp0iwiGM1RmdFxlUHm2Bvqi_XKuOFqJnCZI_39ayetJ3TqhUiSMyTIbYYFiUH7cYfAQ6sVm8UazVVaYpLOQggEo8huq0q17"/>
+<img class="h-6" data-alt="A minimalist tech startup logo featuring a stylized 'S' symbol and clean typography, representing a leading cloud infrastructure company in a professional light-mode UI style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM-4X8-LH3J9x07MDE0FQVZ5w6_5rI4Za-ri8SCg9CRrXuwGaennvf8ANEf8x7hkTUoQLh_uF9chgi21kKX46G5JeA_cZa_mcnpwMmHuXTMP2U1XzAwZIG12fAFYJNEIARJ_Quxh1YM_fE3RNrX5KvfTgFCsootdDWh05NF8zfJs9nGNaMiJM32yAilHf0RF4d5lB5Lgw6Q2krrp8aUvTyrH6Vu8ROND5zd3IYmnAnIVr5aprc_5bcVosTYfuzkGBDldpXXi8vhB5u"/>
+</div>
+</div>
+</section>
+<!-- How it Works -->
+<section class="max-w-[1440px] mx-auto px-container-margin py-xxl border-t border-outline-variant">
+<div class="flex flex-col md:flex-row justify-between items-end mb-xl gap-md">
+<div class="max-w-xl">
+<h2 class="font-headline-lg text-headline-lg text-on-background mb-sm">The Intelligence Loop</h2>
+<p class="font-body-md text-body-md text-secondary">Our multi-stage pipeline ensures your profile is ready for top-tier enterprise requisitions.</p>
+</div>
+<a class="text-primary font-bold flex items-center gap-1 group transition-all" href="#">
+                    View technical methodology 
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg relative">
+<!-- Step 1 -->
+<div class="bento-card p-xl rounded-xl relative overflow-hidden group">
+<div class="mb-lg w-12 h-12 bg-primary-fixed rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">description</span>
+</div>
+<h3 class="font-title-lg text-title-lg mb-sm">Resume Ingestion</h3>
+<p class="font-body-md text-body-md text-secondary mb-xl">Upload PDF or Docx. Our NLP engine extracts over 200 semantic data points beyond just keywords.</p>
+<div class="h-32 bg-surface-container-low rounded-lg p-md flex flex-col gap-sm overflow-hidden">
+<div class="w-full h-2 bg-primary-fixed-dim rounded animate-pulse"></div>
+<div class="w-3/4 h-2 bg-primary-fixed-dim rounded animate-pulse delay-75"></div>
+<div class="w-5/6 h-2 bg-primary-fixed-dim rounded animate-pulse delay-150"></div>
+<div class="w-1/2 h-2 bg-primary-fixed-dim rounded animate-pulse delay-300"></div>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="bento-card p-xl rounded-xl relative overflow-hidden group">
+<div class="mb-lg w-12 h-12 bg-tertiary-fixed rounded-lg flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+<h3 class="font-title-lg text-title-lg mb-sm">AI Analysis</h3>
+<p class="font-body-md text-body-md text-secondary mb-xl">We map your experience to the global talent graph, identifying skill gaps and latent potential.</p>
+<div class="h-32 bg-surface-container-low rounded-lg flex items-center justify-center">
+<div class="relative w-24 h-24">
+<div class="absolute inset-0 border-4 border-tertiary-fixed rounded-full"></div>
+<div class="absolute inset-0 border-4 border-tertiary border-t-transparent rounded-full animate-spin"></div>
+<div class="absolute inset-0 flex items-center justify-center font-bold text-tertiary text-sm">84%</div>
+</div>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="bento-card p-xl rounded-xl relative overflow-hidden group">
+<div class="mb-lg w-12 h-12 bg-secondary-fixed rounded-lg flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">handshake</span>
+</div>
+<h3 class="font-title-lg text-title-lg mb-sm">Smart Matching</h3>
+<p class="font-body-md text-body-md text-secondary mb-xl">Instant connections to high-intent employers. No spam, just high-relevance career matches.</p>
+<div class="h-32 bg-surface-container-low rounded-lg p-md space-y-md">
+<div class="flex items-center gap-sm bg-white p-2 rounded border border-outline-variant shadow-sm">
+<div class="w-8 h-8 bg-blue-500 rounded flex items-center justify-center text-white text-xs">V</div>
+<div class="flex-1">
+<div class="h-2 w-20 bg-on-surface-variant/20 rounded mb-1"></div>
+<div class="h-1.5 w-12 bg-on-surface-variant/10 rounded"></div>
+</div>
+<span class="text-[10px] bg-green-100 text-green-700 px-1 rounded">MATCH</span>
+</div>
+<div class="flex items-center gap-sm bg-white p-2 rounded border border-outline-variant shadow-sm translate-x-4">
+<div class="w-8 h-8 bg-slate-800 rounded flex items-center justify-center text-white text-xs">A</div>
+<div class="flex-1">
+<div class="h-2 w-24 bg-on-surface-variant/20 rounded mb-1"></div>
+<div class="h-1.5 w-10 bg-on-surface-variant/10 rounded"></div>
+</div>
+<span class="text-[10px] bg-green-100 text-green-700 px-1 rounded">92%</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Skill Verification -->
+<section class="bg-surface-container-low py-xxl">
+<div class="max-w-[1440px] mx-auto px-container-margin grid md:grid-cols-2 gap-xxl items-center">
+<div class="order-2 md:order-1">
+<div class="bg-white rounded-xl border border-outline-variant p-xl shadow-xl space-y-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 p-lg text-primary/10">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-background relative z-10">Skill Verification Badge</h4>
+<p class="font-body-md text-body-md text-secondary relative z-10">Standardize your expertise with our proprietary AI assessments. Validated skills increase interview rates by 340%.</p>
+<div class="space-y-md relative z-10">
+<div class="flex items-center justify-between p-md bg-surface-container-lowest border border-outline-variant rounded-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-primary-container rounded-full flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">terminal</span>
+</div>
+<div>
+<p class="font-title-md text-title-md">Full-Stack Development</p>
+<p class="font-label-md text-label-md text-secondary">Advanced Proficiency</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex items-center justify-between p-md bg-surface-container-lowest border border-outline-variant rounded-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-secondary-container rounded-full flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">data_object</span>
+</div>
+<div>
+<p class="font-title-md text-title-md">System Architecture</p>
+<p class="font-label-md text-label-md text-secondary">Intermediate (Testing in progress)</p>
+</div>
+</div>
+<div class="w-24 h-2 bg-surface-container-high rounded overflow-hidden">
+<div class="w-2/3 h-full bg-secondary"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="order-1 md:order-2 space-y-md">
+<span class="font-label-md text-label-md text-primary tracking-widest uppercase">Verified by RecruitAI</span>
+<h2 class="font-headline-lg text-headline-lg text-on-background">Proof of Competence for Global Hiring</h2>
+<p class="font-body-lg text-body-lg text-secondary">Stop explaining your background. Our verification engine provides a neutral, quantitative assessment of your technical and soft skills that top recruiters trust implicitly.</p>
+<ul class="space-y-md pt-md">
+<li class="flex items-start gap-md">
+<span class="material-symbols-outlined text-primary mt-1">task_alt</span>
+<div>
+<p class="font-title-md text-title-md">Adaptive Testing</p>
+<p class="font-body-md text-body-md text-secondary">Our questions adjust in real-time to find the edge of your knowledge.</p>
+</div>
+</li>
+<li class="flex items-start gap-md">
+<span class="material-symbols-outlined text-primary mt-1">task_alt</span>
+<div>
+<p class="font-title-md text-title-md">Skill Portability</p>
+<p class="font-body-md text-body-md text-secondary">Share your verified badges on LinkedIn or directly to prospective employers.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Application Tracking (Bento Grid) -->
+<section class="max-w-[1440px] mx-auto px-container-margin py-xxl">
+<div class="text-center mb-xxl space-y-md">
+<h2 class="font-headline-lg text-headline-lg text-on-background">Your Career, Centralized</h2>
+<p class="font-body-lg text-body-lg text-secondary max-w-2xl mx-auto">Track every application, interview stage, and feedback loop in one intelligent dashboard.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<!-- Main Tracking Card -->
+<div class="md:col-span-8 bento-card p-xl rounded-xl">
+<div class="flex items-center justify-between mb-lg">
+<h4 class="font-title-lg text-title-lg">Active Requisitions</h4>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container-high rounded-full text-xs font-bold text-secondary">3 Active</span>
+<span class="px-3 py-1 bg-surface-container-high rounded-full text-xs font-bold text-secondary">12 Total</span>
+</div>
+</div>
+<div class="space-y-md">
+<div class="flex items-center justify-between p-md hover:bg-surface-container-low rounded-lg border border-transparent hover:border-outline-variant transition-all cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-on-background/5 flex items-center justify-center">
+<img class="w-8 h-8 rounded" data-alt="A stylized minimalist logotype for a modern fintech company, featuring a blue gradient geometric icon on a white square background with soft shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6r5iMkwHB5HUvEn9IFNuVCZtgHdBIXFsEw6vs9S6Nh-QrD4d8KqjqQJY7FrznbsB2-lE-8Oe9pSyrmkBqFYC3XQPn1jptQtWjsPFz1SUaAZINQTFuk5CQUamWCtJ7lTfjda7wAmz2-HokgSUTC3---Zp5rD4pSxWrDdIKSrTuTd893PU1bFBmljI-1TuRgrUrSsCeUoxJtg5K3FYP0iBC-n0lIUq_miTnz-DlBAsosJjcDJHY8sDK3HMgTHQ7TFug9pPl4zVaPxEu"/>
+</div>
+<div>
+<p class="font-title-md text-title-md group-hover:text-primary transition-colors">Senior Product Designer</p>
+<p class="font-label-md text-label-md text-secondary">Nebula Financial • Applied 2d ago</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<div class="hidden lg:block">
+<p class="font-label-md text-label-md text-secondary text-right mb-1">Status</p>
+<div class="flex gap-1">
+<div class="w-6 h-1.5 bg-primary rounded-full"></div>
+<div class="w-6 h-1.5 bg-primary rounded-full"></div>
+<div class="w-6 h-1.5 bg-surface-container-highest rounded-full"></div>
+<div class="w-6 h-1.5 bg-surface-container-highest rounded-full"></div>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-md hover:bg-surface-container-low rounded-lg border border-transparent hover:border-outline-variant transition-all cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-on-background/5 flex items-center justify-center">
+<img class="w-8 h-8 rounded" data-alt="The elegant, abstract circular logo for a fictional green energy corporation, using vibrant shades of emerald and teal against a minimalist white canvas." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5FwACHXuxFbT_mjMkMQjn96cs7PiABojVlzk0boRkmFAB1Ev3w2wCUl48b2Po72Do4hQ_cAS6B2fLxvKp4oENfVRljcgE2CvPVQw1vrMG1nkSup8mwLyJTVwJp4iRf3-DDXp_XE67i8Fz_l4jKizkeVpa1OMdccJP-g_v4mQybRw3Z738SltMkgvxWFMGrdcj6gQTWhQwKMmgGnfulEubKTqaS-Nvuam9lWtvizq8zCb_7fiu2P1BZQdE9l6RB_uIAl9rgW-Tculw"/>
+</div>
+<div>
+<p class="font-title-md text-title-md group-hover:text-primary transition-colors">Staff Engineer (AI Systems)</p>
+<p class="font-label-md text-label-md text-secondary">EcoLogic Systems • Interview Scheduled</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<div class="hidden lg:block text-right">
+<p class="font-label-md text-label-md text-on-tertiary-fixed-variant bg-tertiary-fixed px-2 py-0.5 rounded">Stage 3: Technical</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Insights Card -->
+<div class="md:col-span-4 bento-card p-xl rounded-xl bg-on-background text-white">
+<h4 class="font-title-lg text-title-lg mb-md text-primary-fixed">Match Analytics</h4>
+<p class="font-body-md text-body-md text-outline-variant mb-xl">Our AI suggests you have a 89% affinity for "Growth Stage" startups in the B2B SaaS sector.</p>
+<div class="space-y-lg">
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-label-md text-label-md text-outline-variant">Market Demand</span>
+<span class="font-label-md text-label-md text-primary-fixed">High</span>
+</div>
+<div class="w-full h-1 bg-white/10 rounded-full">
+<div class="w-[85%] h-full bg-primary-fixed rounded-full"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-label-md text-label-md text-outline-variant">Salary Alignment</span>
+<span class="font-label-md text-label-md text-primary-fixed">92%</span>
+</div>
+<div class="w-full h-1 bg-white/10 rounded-full">
+<div class="w-[92%] h-full bg-primary-fixed rounded-full"></div>
+</div>
+</div>
+<div class="pt-xl border-t border-white/10">
+<button class="w-full py-md bg-white/10 hover:bg-white/20 rounded-xl font-title-md text-title-md transition-all">
+                                Unlock Pro Insights
+                            </button>
+</div>
+</div>
+</div>
+<!-- Secondary Small Cards -->
+<div class="md:col-span-4 bento-card p-xl rounded-xl">
+<span class="material-symbols-outlined text-primary mb-md" style="font-variation-settings: 'FILL' 1;">insights</span>
+<h5 class="font-title-md text-title-md mb-xs">Role Forecasting</h5>
+<p class="font-body-md text-body-md text-secondary">See roles before they go public via our predictive hiring index.</p>
+</div>
+<div class="md:col-span-4 bento-card p-xl rounded-xl">
+<span class="material-symbols-outlined text-primary mb-md" style="font-variation-settings: 'FILL' 1;">auto_graph</span>
+<h5 class="font-title-md text-title-md mb-xs">Salary Benchmarking</h5>
+<p class="font-body-md text-body-md text-secondary">Real-time data on compensation packages for your specific skill set.</p>
+</div>
+<div class="md:col-span-4 bento-card p-xl rounded-xl">
+<span class="material-symbols-outlined text-primary mb-md" style="font-variation-settings: 'FILL' 1;">group</span>
+<h5 class="font-title-md text-title-md mb-xs">Talent Community</h5>
+<p class="font-body-md text-body-md text-secondary">Private access to peer mentorship and exclusive tech summits.</p>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="max-w-[1440px] mx-auto px-container-margin py-xxl mb-xxl">
+<div class="bg-primary p-xxl rounded-[2rem] text-center text-on-primary relative overflow-hidden">
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+
+</div>
+<div class="relative z-10 max-w-3xl mx-auto space-y-lg">
+<h2 class="font-display-lg text-display-lg text-white">Your future is ready. <br/>Are you?</h2>
+<p class="font-body-lg text-body-lg text-primary-fixed/80">Join 50,000+ elite candidates who have already transformed their career search with RecruitAI Intelligence.</p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-md pt-lg">
+<button class="px-xl py-md bg-white text-primary rounded-xl font-title-md text-title-md hover:shadow-xl transition-all w-full sm:w-auto">
+                            Get Started Now
+                        </button>
+<button class="px-xl py-md bg-primary-container text-white border border-white/20 rounded-xl font-title-md text-title-md hover:bg-primary/90 transition-all w-full sm:w-auto">
+                            Explore Companies
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low border-t border-outline-variant py-xxl">
+<div class="max-w-[1440px] mx-auto px-container-margin grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-xl">
+<div class="col-span-2">
+<span class="font-headline-md text-headline-md font-black text-on-surface tracking-tighter mb-md block">RecruitAI Intel</span>
+<p class="font-body-md text-body-md text-secondary max-w-xs">The world's most advanced AI recruitment platform for high-performance talent.</p>
+</div>
+<div>
+<h6 class="font-label-md text-label-md text-on-surface font-bold mb-md">Product</h6>
+<ul class="space-y-sm text-body-md text-secondary">
+<li><a class="hover:text-primary transition-colors" href="#">Features</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Skill Verified</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">AI Insights</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Pricing</a></li>
+</ul>
+</div>
+<div>
+<h6 class="font-label-md text-label-md text-on-surface font-bold mb-md">Company</h6>
+<ul class="space-y-sm text-body-md text-secondary">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Privacy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Terms</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Blog</a></li>
+</ul>
+</div>
+<div>
+<h6 class="font-label-md text-label-md text-on-surface font-bold mb-md">Resources</h6>
+<ul class="space-y-sm text-body-md text-secondary">
+<li><a class="hover:text-primary transition-colors" href="#">Documentation</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Guides</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Support</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">API</a></li>
+</ul>
+</div>
+<div>
+<h6 class="font-label-md text-label-md text-on-surface font-bold mb-md">Social</h6>
+<ul class="space-y-sm text-body-md text-secondary">
+<li><a class="hover:text-primary transition-colors" href="#">Twitter</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">LinkedIn</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">GitHub</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto px-container-margin mt-xxl pt-xl border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-md">
+<p class="font-label-md text-label-md text-secondary">© 2024 RecruitAI Intelligence. All rights reserved.</p>
+<div class="flex items-center gap-xl">
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+<span class="font-label-md text-label-md text-secondary">System Operational</span>
+</div>
+<p class="font-label-md text-label-md text-secondary">Enterprise Tier v4.2.0</p>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions and subtle effects
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.bento-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+            });
+
+            // Smooth header visibility
+            let lastScroll = 0;
+            const header = document.querySelector('header');
+            
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+                if (currentScroll <= 0) {
+                    header.classList.remove('shadow-sm');
+                    return;
+                }
+                
+                if (currentScroll > lastScroll) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                    header.classList.add('shadow-sm');
+                }
+                lastScroll = currentScroll;
+            });
+        });
+    </script>
+</body></html>

@@ -140,7 +140,15 @@ export const parseResumeFromPdf = async (file: File): Promise<ParsedResumeData> 
     // Fallback for experience (if section not found but years are mentioned)
     if (!experienceText) {
       const expMatch = fullText.match(/(\d+)\+?\s*(years?|yrs?)/i);
-      experienceText = expMatch ? `${expMatch[1]} Years of general experience` : '';
+      if (expMatch) {
+        experienceText = `${expMatch[1]} Years of general experience. \n\nRaw Text Extract:\n${fullText.slice(0, 800)}`;
+      } else {
+        experienceText = fullText.length > 50 ? fullText : '';
+      }
+    }
+    
+    if (!educationText && fullText.length > 50) {
+      educationText = "Extracted from raw text: " + fullText.slice(0, 500);
     }
 
     // Calculate realistic ATS Score
@@ -160,10 +168,10 @@ export const parseResumeFromPdf = async (file: File): Promise<ParsedResumeData> 
       name,
       email,
       phone,
-      experience: experienceText.slice(0, 300) + (experienceText.length > 300 ? '...' : ''), // Preview of experience
-      education: educationText.slice(0, 300) + (educationText.length > 300 ? '...' : ''),
+      experience: experienceText,
+      education: educationText,
       projects: projectsArray,
-      skills: skillsArray,
+      skills: skillsArray.length > 0 ? skillsArray : fullText.split(/\s+/).filter(w => w.length > 4 && /^[a-zA-Z]+$/.test(w)).slice(0, 20),
       softSkills: softSkillsArray,
       atsScore
     };

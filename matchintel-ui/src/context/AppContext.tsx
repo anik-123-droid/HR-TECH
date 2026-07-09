@@ -70,6 +70,7 @@ export interface CandidateApplication {
   testScore?: number;
   testPenalties?: number;
   testPassed?: boolean;
+  testTerminationReason?: string;
 }
 
 export interface RecruiterJob {
@@ -164,7 +165,7 @@ interface AppContextType {
   applications: CandidateApplication[]; // Shared application list (Candidate sees theirs, Recruiter sees theirs, Admin sees all)
   applyForJob: (jobId: string) => Promise<void>;
   updateApplicationStatus: (appId: string, status: CandidateApplication['status']) => void;
-  submitTestResult: (appId: string, score: number, penalties: number) => void;
+  submitTestResult: (appId: string, score: number, penalties: number, terminationReason?: string) => void;
 
   // Interviews
   interviews: Interview[];
@@ -494,13 +495,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setApplications(prev => prev.map(a => a.id === appId ? { ...a, status } : a));
   };
 
-  const submitTestResult = (appId: string, score: number, penalties: number) => {
+  const submitTestResult = (appId: string, score: number, penalties: number, terminationReason?: string) => {
     setApplications(prev => prev.map(a => a.id === appId ? { 
       ...a, 
       testScore: score, 
       testPenalties: penalties,
       status: 'MCQ Test Completed',
-      testPassed: true // Just saving the score for now
+      testPassed: true, // Just saving the score for now
+      testTerminationReason: terminationReason
     } : a));
   };
 

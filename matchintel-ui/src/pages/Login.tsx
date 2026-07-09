@@ -14,7 +14,7 @@ export default function Login() {
   const [jobTitle, setJobTitle] = useState('');
 
   const navigate = useNavigate();
-  const { login, clearAllData } = useApp();
+  const { login } = useApp();
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => {
@@ -28,7 +28,6 @@ export default function Login() {
           const companyName = role === 'Admin' ? 'TechFlow Inc.' : 'Candidate Portal';
 
           login(userName, userEmail, role === 'Candidate' ? 'Candidate' : 'Admin', companyName, { access: tokenResponse.access_token });
-          clearAllData();
 
           if (role === 'Candidate') {
             fetch('/api/send-email', {
@@ -58,9 +57,6 @@ export default function Login() {
     const companyName = role === 'Admin' ? 'TechFlow Inc.' : 'Candidate Portal';
 
     login(userName, userEmail, role === 'Candidate' ? 'Candidate' : 'Admin', companyName);
-
-    // Always start clean
-    clearAllData();
 
     if (role === 'Candidate') {
       fetch('/api/send-email', {
@@ -109,7 +105,7 @@ export default function Login() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-emerald-700/10 focus:border-emerald-700 focus:bg-white transition-all text-sm font-medium"
-                  placeholder={role === 'Candidate' ? "e.g. John Doe" : "e.g. Jane Smith"}
+                  placeholder={role === 'Candidate' ? "Name" : "Name"}
                   required={mode === 'SignUp'}
                 />
               </div>
@@ -123,7 +119,7 @@ export default function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-emerald-700/10 focus:border-emerald-700 focus:bg-white transition-all text-sm font-medium"
-              placeholder="you@example.com"
+              placeholder="Email"
               required
             />
           </div>
@@ -155,9 +151,8 @@ export default function Login() {
             </div>
             <input
               type="password"
-              defaultValue="password123"
               className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-emerald-700/10 focus:border-emerald-700 focus:bg-white transition-all text-sm font-medium tracking-widest"
-              placeholder="••••••••"
+              placeholder="password"
               required
             />
           </div>

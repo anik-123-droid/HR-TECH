@@ -15,10 +15,12 @@ export default function ProctoredTest() {
   const [penalties, setPenalties] = useState(0);
   const [testTerminated, setTestTerminated] = useState(false);
   const [terminationReason, setTerminationReason] = useState('');
-  
+  const [attemptsLeft, setAttemptsLeft] = useState(3);
+  const violationCooldownRef = useRef<boolean>(false);
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const screenVideoRef = useRef<HTMLVideoElement>(null);
-  
+
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const screenStreamRef = useRef<MediaStream | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -29,6 +31,13 @@ export default function ProctoredTest() {
   // Motion Detection variables
   const prevFrameRef = useRef<ImageData | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const frameCountRef = useRef(0);
+
+  const testActiveRef = useRef(false);
+
+  useEffect(() => {
+    testActiveRef.current = testActive;
+  }, [testActive]);
 
   useEffect(() => {
     // Check if app exists
@@ -37,16 +46,32 @@ export default function ProctoredTest() {
     }
 
     const handleVisibilityChange = () => {
-      if (document.hidden && testActive) {
-        terminateTest("Screen changed or another app opened. Test Terminated.");
+      if (document.hidden && testActiveRef.current) {
+        handleViolation("Screen changed or another app/tab opened.");
       }
     };
     document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Cleanup on unmount ONLY
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       stopMediaTracks();
     };
-  }, [testActive, navigate, appId, applications]);
+  }, []); // Empty dependency array so it only runs on mount/unmount
+
+  useEffect(() => {
+    if (testActive) {
+      if (videoRef.current && mediaStreamRef.current) {
+        videoRef.current.srcObject = mediaStreamRef.current;
+        videoRef.current.play().catch(e => console.error("Error playing camera video:", e));
+      }
+      if (screenVideoRef.current && screenStreamRef.current) {
+        screenVideoRef.current.srcObject = screenStreamRef.current;
+        screenVideoRef.current.play().catch(e => console.error("Error playing screen video:", e));
+      }
+      monitorSecurity();
+    }
+  }, [testActive]);
 
   const stopMediaTracks = () => {
     if (mediaStreamRef.current) mediaStreamRef.current.getTracks().forEach(t => t.stop());
@@ -60,8 +85,7 @@ export default function ProctoredTest() {
       // 1. Get Screen Share
       const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false });
       screenStreamRef.current = screenStream;
-      if (screenVideoRef.current) screenVideoRef.current.srcObject = screenStream;
-      
+
       // Stop test if screen share is stopped manually
       screenStream.getVideoTracks()[0].onended = () => {
         if (testActive) terminateTest("Screen sharing stopped manually.");
@@ -70,10 +94,6 @@ export default function ProctoredTest() {
       // 2. Get Camera & Mic
       const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       mediaStreamRef.current = mediaStream;
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
-        videoRef.current.play(); // ensure video plays to grab frames
-      }
 
       // 3. Setup Audio Detection
       audioContextRef.current = new AudioContext();
@@ -83,12 +103,34 @@ export default function ProctoredTest() {
       analyserRef.current.fftSize = 256;
 
       setTestActive(true);
-      monitorSecurity();
 
     } catch (err) {
       console.error(err);
       alert("Please allow Camera, Microphone, and Screen Sharing to start the test.");
     }
+  };
+
+  const handleViolation = (reason: string) => {
+    if (violationCooldownRef.current || testTerminated) return;
+
+    violationCooldownRef.current = true;
+
+    setAttemptsLeft(prev => {
+      const newAttempts = prev - 1;
+
+      if (newAttempts <= 0) {
+        terminateTest(`Maximum attempts (3/3) exceeded. Final violation: ${reason}`);
+        return 0;
+      } else {
+        alert(`WARNING: ${reason}\n\nAttempt ${3 - newAttempts} of 3. You have ${newAttempts} attempt(s) left. The test will close when 0 attempts are left.`);
+
+        setTimeout(() => {
+          violationCooldownRef.current = false;
+        }, 1000); // 1 second cooldown
+
+        return newAttempts;
+      }
+    });
   };
 
   const terminateTest = (reason: string) => {
@@ -98,19 +140,18 @@ export default function ProctoredTest() {
     stopMediaTracks();
     // Add heavy penalty
     setPenalties(prev => prev + 50);
-    alert(`TEST TERMINATED: ${reason}`);
-    
+
     // Auto submit and redirect after 3 seconds
     setTimeout(() => {
       if (appId) {
-        submitTestResult(appId, score, penalties + 50);
+        submitTestResult(appId, score, penalties + 50, reason);
       }
       navigate('/candidate/dashboard');
-    }, 3000);
+    }, 4000);
   };
 
   const monitorSecurity = () => {
-    if (!testActive) return;
+    if (!testActiveRef.current) return;
 
     // 1. Check Audio Level
     if (analyserRef.current) {
@@ -121,9 +162,8 @@ export default function ProctoredTest() {
         sum += dataArray[i];
       }
       const average = sum / dataArray.length;
-      if (average > 40) { // arbitrary threshold for loud noise
-        terminateTest("Background noise/voice detected.");
-        return;
+      if (average > 90) { // significantly increased threshold to ignore loud fans/wind
+        handleViolation("Background noise/voice detected.");
       }
     }
 
@@ -133,22 +173,33 @@ export default function ProctoredTest() {
       if (ctx && videoRef.current.readyState === videoRef.current.HAVE_ENOUGH_DATA) {
         ctx.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
         const frame = ctx.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height);
-        
-        if (prevFrameRef.current) {
+
+        frameCountRef.current++;
+        if (frameCountRef.current < 60) {
+          // Allow camera to auto-expose and stabilize for first ~1 second
+          prevFrameRef.current = frame;
+        } else if (!prevFrameRef.current) {
+          // Capture base frame once
+          prevFrameRef.current = frame;
+        } else {
           let diffCount = 0;
           for (let i = 0; i < frame.data.length; i += 4) {
             const rDiff = Math.abs(frame.data[i] - prevFrameRef.current.data[i]);
-            const gDiff = Math.abs(frame.data[i+1] - prevFrameRef.current.data[i+1]);
-            const bDiff = Math.abs(frame.data[i+2] - prevFrameRef.current.data[i+2]);
+            const gDiff = Math.abs(frame.data[i + 1] - prevFrameRef.current.data[i + 1]);
+            const bDiff = Math.abs(frame.data[i + 2] - prevFrameRef.current.data[i + 2]);
+            // Increased threshold to 50 to ignore auto-exposure and lighting changes
             if (rDiff > 50 || gDiff > 50 || bDiff > 50) diffCount++;
           }
-          // If more than 15% of pixels changed drastically, trigger motion
-          if (diffCount > (frame.data.length / 4) * 0.15) {
-             terminateTest("Suspicious body/head movement detected.");
-             return;
+          // If more than 10% of pixels change significantly, trigger
+          if (diffCount > (frame.data.length / 4) * 0.10) {
+            handleViolation("Unrecognized object or suspicious movement detected in camera.");
+          }
+
+          // Update the base frame frequently to absorb slow background changes (like curtains moving)
+          if (Math.random() < 0.2) {
+            prevFrameRef.current = frame;
           }
         }
-        prevFrameRef.current = frame;
       }
     }
 
@@ -165,7 +216,7 @@ export default function ProctoredTest() {
     if (selectedOption === (q as any)["Correct Answer"]) {
       setScore(prev => prev + 5);
     }
-    
+
     if (currentQuestionIdx < questions.length - 1) {
       setCurrentQuestionIdx(prev => prev + 1);
       setSelectedOption(null);
@@ -178,7 +229,7 @@ export default function ProctoredTest() {
     setTestActive(false);
     stopMediaTracks();
     if (appId) {
-      submitTestResult(appId, score, penalties);
+      submitTestResult(appId, score, penalties, "Test completed successfully.");
     }
     alert("Test Completed Successfully!");
     navigate('/candidate/dashboard');
@@ -228,15 +279,19 @@ export default function ProctoredTest() {
               </li>
               <li className="flex items-start gap-2">
                 <span className="material-symbols-outlined text-[18px] text-red-500">warning</span>
-                Do not switch tabs or open other apps. The test will terminate.
+                Do not switch tabs or open other apps. (Uses 1 Attempt)
               </li>
               <li className="flex items-start gap-2">
                 <span className="material-symbols-outlined text-[18px] text-red-500">warning</span>
-                Do not talk or make noise. The test will terminate.
+                Do not talk or make noise. (Uses 1 Attempt)
               </li>
               <li className="flex items-start gap-2">
                 <span className="material-symbols-outlined text-[18px] text-red-500">warning</span>
-                Do not move your head or hands aggressively away from the screen.
+                Only your face should be in the camera. No other objects. (Uses 1 Attempt)
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="material-symbols-outlined text-[18px] text-red-500">gavel</span>
+                <strong>You have exactly 3 attempts. Upon the 3rd violation, the test will be immediately closed.</strong>
               </li>
             </ul>
             <button
@@ -255,7 +310,7 @@ export default function ProctoredTest() {
               <span className="text-sm font-bold text-slate-400">Question {currentQuestionIdx + 1} of {questions.length}</span>
               <span className="text-sm font-bold text-emerald-800">Score: {score}</span>
             </div>
-            
+
             <h2 className="text-xl font-semibold text-slate-800 mb-8 leading-relaxed">
               {(questions[currentQuestionIdx] as any).Question}
             </h2>
@@ -267,14 +322,14 @@ export default function ProctoredTest() {
                   onClick={() => handleAnswer(opt)}
                   className={`w-full text-left p-4 rounded-xl border-2 transition-colors font-medium ${selectedOption === opt ? 'border-emerald-800 bg-emerald-50 text-emerald-900' : 'border-slate-100 hover:border-emerald-800 hover:bg-emerald-50 text-slate-700'}`}
                 >
-                  <span className="inline-block w-8 font-bold text-slate-400">{opt}.</span> 
+                  <span className="inline-block w-8 font-bold text-slate-400">{opt}.</span>
                   {(questions[currentQuestionIdx] as any)[`Option ${opt}`]}
                 </button>
               ))}
             </div>
-            
+
             <div className="mt-6 flex justify-end">
-              <button 
+              <button
                 onClick={handleNext}
                 disabled={!selectedOption}
                 className="px-6 py-3 bg-emerald-800 text-white font-bold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-emerald-900 transition-colors shadow-sm"
@@ -292,20 +347,25 @@ export default function ProctoredTest() {
                 <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" /> REC
               </div>
             </div>
-            
+
             <div className="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border-2 border-slate-800 relative aspect-video">
               <video ref={screenVideoRef} autoPlay playsInline muted className="w-full h-full object-contain" />
               <div className="absolute top-2 left-2 bg-black/50 px-2 py-1 rounded text-white text-[10px] font-bold">
                 SCREEN SHARE
               </div>
             </div>
-            
+
             <div className="mt-auto bg-amber-50 border border-amber-200 rounded-xl p-4">
-              <div className="flex items-center gap-2 text-amber-700 font-bold mb-1">
-                <span className="material-symbols-outlined text-[18px]">gavel</span>
-                Proctoring Active
+              <div className="flex justify-between items-center mb-1">
+                <div className="flex items-center gap-2 text-amber-700 font-bold">
+                  <span className="material-symbols-outlined text-[18px]">gavel</span>
+                  Proctoring Active
+                </div>
+                <div className="text-sm font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded">
+                  Attempts: {attemptsLeft}/3
+                </div>
               </div>
-              <p className="text-[11px] text-amber-600">Any violation of the rules will result in immediate termination of the test and point deductions.</p>
+              <p className="text-[11px] text-amber-600 mt-2">Violations like noise, tab switches, or unrecognized objects will consume attempts. Test closes on 0 attempts.</p>
             </div>
           </div>
         </div>

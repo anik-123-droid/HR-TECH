@@ -3,7 +3,29 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 export default function RecruiterCandidates() {
   const navigate = useNavigate();
-  const { jobs, applications, updateJob, globalCandidates } = useApp();
+  const { jobs, applications, updateJob, globalCandidates, createJobRequisition } = useApp();
+  const [showModal, setShowModal] = useState(false);
+  const [title, setTitle] = useState('');
+  const [dept, setDept] = useState('Engineering');
+  const [location, setLocation] = useState('Remote');
+
+  const handleCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!title.trim()) return;
+
+    await createJobRequisition({
+      title: title.trim(),
+      dept,
+      location,
+      mode: 'Remote',
+      salary: '$100k - $150k',
+      description: `We are looking for a ${title.trim()} to join our ${dept} team.`
+    });
+
+    setTitle('');
+    setShowModal(false);
+    alert(`🎉 New Requisition Created: "${title}"\n\nAI is now sourcing matching candidates from the global talent pool.`);
+  };
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'requisitions' | 'talent'>('requisitions');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -84,7 +106,7 @@ export default function RecruiterCandidates() {
           </button>
           {activeTab === 'requisitions' && (
             <button 
-              onClick={() => alert('Create New Req clicked')}
+              onClick={() => setShowModal(true)}
               className="px-6 py-3 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-[14px] font-bold transition-all shadow-sm flex items-center gap-2 shrink-0"
             >
               <span className="material-symbols-outlined text-[18px]">add</span>
@@ -201,6 +223,86 @@ export default function RecruiterCandidates() {
         </div>
       )}
 
+
+      {/* Create Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-emerald-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center font-bold">
+                  <span className="material-symbols-outlined text-[18px]">add</span>
+                </div>
+                <h3 className="font-display text-lg font-bold text-emerald-900">New Job Requisition</h3>
+              </div>
+              <button onClick={() => setShowModal(false)} className="text-slate-400 hover:text-slate-600 cursor-pointer">
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+
+            <form onSubmit={handleCreate} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Job Title</label>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Job Title"
+                  required
+                  className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 outline-none transition-all"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Department</label>
+                  <input
+                    type="text"
+                    value={dept}
+                    onChange={(e) => setDept(e.target.value)}
+                    placeholder="Department"
+                    required
+                    className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 outline-none transition-all bg-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Location</label>
+                  <input
+                    type="text"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    placeholder="e.g. Remote"
+                    required
+                    className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 outline-none transition-all bg-white"
+                  />
+                </div>
+              </div>
+
+              <div className="p-3 bg-indigo-50/60 rounded-xl border border-indigo-100 flex items-start gap-2.5 text-xs text-indigo-900 mt-2">
+                <span className="material-symbols-outlined text-[18px] text-indigo-600 shrink-0 mt-0.5">auto_awesome</span>
+                <span>When created, RecruitAI Intelligence engine will immediately match candidates from your talent pool.</span>
+              </div>
+
+              <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="px-4 py-2.5 border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs rounded-xl transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center gap-1.5"
+                >
+                  <span className="material-symbols-outlined text-[16px]">check</span>
+                  Create & Match AI
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

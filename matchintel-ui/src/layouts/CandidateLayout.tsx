@@ -1,13 +1,25 @@
-import { useState } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import PageTransition from '../components/ui/PageTransition';
 
 export default function CandidateLayout() {
   const location = useLocation();
   const currentPath = location.pathname;
-  const { currentUser } = useApp();
+  const navigate = useNavigate();
+  const { currentUser, candidateProfile } = useApp();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const isTestRoute = currentPath.includes('/candidate/test/');
+
+  // Enforce mandatory resume upload
+  useEffect(() => {
+    if (currentUser.role === 'Candidate' && candidateProfile && !candidateProfile.resumeParsed) {
+      if (currentPath !== '/candidate/resume-upload' && currentPath !== '/login') {
+        navigate('/candidate/resume-upload', { replace: true });
+      }
+    }
+  }, [currentPath, candidateProfile, currentUser, navigate]);
 
   const navItems = [
     { to: '/candidate/dashboard', icon: 'dashboard', label: 'Dashboard' },
@@ -69,8 +81,13 @@ export default function CandidateLayout() {
                   <Link
                     key={item.to}
                     to={item.to}
-                    onClick={() => setIsSidebarOpen(false)}
+                    onClick={(e) => {
+                      if (isTestRoute) e.preventDefault();
+                      else setIsSidebarOpen(false);
+                    }}
                     className={`flex items-center justify-between px-3.5 py-3 rounded-2xl text-[14px] font-semibold transition-all group ${
+                      isTestRoute ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''
+                    } ${
                       isActive
                         ? 'bg-emerald-800 text-white shadow-[0_4px_14px_rgba(37,99,235,0.3)]'
                         : 'text-slate-500 hover:text-emerald-900'
@@ -95,7 +112,15 @@ export default function CandidateLayout() {
 
         {/* Sign Out */}
         <div className="px-3 pb-3 border-t border-slate-100 pt-2 mt-auto">
-          <Link to="/login" className="flex items-center gap-2.5 px-3 py-2 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg text-[13px] font-medium transition-colors">
+          <Link 
+            to="/login" 
+            onClick={(e) => isTestRoute && e.preventDefault()}
+            className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium transition-colors ${
+              isTestRoute 
+                ? 'opacity-50 cursor-not-allowed pointer-events-none text-slate-400' 
+                : 'text-slate-500 hover:text-red-600 hover:bg-red-50'
+            }`}
+          >
             <span className="material-symbols-outlined text-[18px]">logout</span>
             Sign Out
           </Link>
@@ -110,13 +135,14 @@ export default function CandidateLayout() {
           <div className="flex items-center gap-3 w-full max-w-2xl">
             {/* Hamburger Menu for Mobile */}
             <button 
-              onClick={() => setIsSidebarOpen(true)}
-              className="lg:hidden w-10 h-10 flex items-center justify-center text-slate-600 bg-slate-50 rounded-xl border border-slate-200 hover:bg-slate-100 transition-colors shrink-0"
+              onClick={() => !isTestRoute && setIsSidebarOpen(true)}
+              className={`lg:hidden w-10 h-10 flex items-center justify-center rounded-xl border transition-colors shrink-0 ${isTestRoute ? 'opacity-50 cursor-not-allowed text-slate-400 bg-slate-100 border-slate-200' : 'text-slate-600 bg-slate-50 border-slate-200 hover:bg-slate-100'}`}
             >
               <span className="material-symbols-outlined">menu</span>
             </button>
 
-            <div className="relative w-full">
+            {!isTestRoute && (
+              <div className="relative w-full">
               <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[20px] text-slate-400">search</span>
               <input
                 type="text"
@@ -127,10 +153,12 @@ export default function CandidateLayout() {
                 <kbd className="px-1.5 py-0.5 bg-slate-100 text-slate-400 rounded-md text-[11px] font-bold font-sans border border-slate-200">⌘</kbd>
                 <kbd className="px-1.5 py-0.5 bg-slate-100 text-slate-400 rounded-md text-[11px] font-bold font-sans border border-slate-200">K</kbd>
               </div>
-            </div>
+              </div>
+            )}
           </div>
 
-          <div className="flex items-center gap-4 lg:gap-6 flex-1 justify-end shrink-0 pl-4">
+          {!isTestRoute && (
+            <div className="flex items-center gap-4 lg:gap-6 flex-1 justify-end shrink-0 pl-4">
             <button className="relative w-11 h-11 shrink-0 rounded-full border-2 border-slate-100 flex items-center justify-center text-slate-600 hover:text-emerald-900 hover:bg-slate-50 transition-colors cursor-pointer group">
               <span className="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform">notifications</span>
               <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-emerald-800 rounded-full border-2 border-white"></span>
@@ -144,7 +172,8 @@ export default function CandidateLayout() {
                 {initials}
               </div>
             </div>
-          </div>
+            </div>
+          )}
         </header>
 
         {/* Main Application Area */}

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 
 export default function RecruiterJobs() {
-  const { jobs, applications, createJobRequisition } = useApp();
+  const { jobs, applications, createJobRequisition, updateJob } = useApp();
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState('');
   const [dept, setDept] = useState('Engineering');
@@ -12,7 +12,7 @@ export default function RecruiterJobs() {
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
-    
+
     await createJobRequisition({
       title: title.trim(),
       dept,
@@ -21,7 +21,7 @@ export default function RecruiterJobs() {
       salary: '$100k - $150k',
       description: `We are looking for a ${title.trim()} to join our ${dept} team.`
     });
-    
+
     setTitle('');
     setShowModal(false);
     alert(`🎉 New Requisition Created: "${title}"\n\nAI is now sourcing matching candidates from the global talent pool.`);
@@ -51,7 +51,7 @@ export default function RecruiterJobs() {
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[13px] font-bold rounded-xl transition-all shadow-md cursor-pointer"
+          className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[13px] font-bold rounded-xl transition-all shadow-md cursor-pointer"
         >
           <span className="material-symbols-outlined text-[18px]">add</span>
           New Requisition
@@ -66,7 +66,7 @@ export default function RecruiterJobs() {
             <span className="material-symbols-outlined text-[18px] text-indigo-500">work</span>
           </div>
           <div className="flex items-baseline gap-2">
- <span className=" text-3xl font-extrabold text-emerald-900">{jobs.filter(j => j.status === 'Active').length}</span>
+            <span className=" text-3xl font-extrabold text-emerald-900">{jobs.filter(j => j.status === 'Active').length}</span>
             <span className="text-[12px] font-semibold text-indigo-600">Active pipelines</span>
           </div>
         </div>
@@ -76,7 +76,7 @@ export default function RecruiterJobs() {
             <span className="material-symbols-outlined text-[18px] text-emerald-700">groups</span>
           </div>
           <div className="flex items-baseline gap-2">
- <span className=" text-3xl font-extrabold text-emerald-800">
+            <span className=" text-3xl font-extrabold text-emerald-800">
               {jobStats.reduce((acc, j) => acc + (j.candidatesCount || 0), 0)}
             </span>
             <span className="text-[12px] font-semibold text-green-800">+18% vs manual</span>
@@ -88,7 +88,7 @@ export default function RecruiterJobs() {
             <span className="material-symbols-outlined text-[18px] text-green-700">auto_awesome</span>
           </div>
           <div className="flex items-baseline gap-2">
- <span className=" text-3xl font-extrabold text-emerald-900">
+            <span className=" text-3xl font-extrabold text-emerald-900">
               {jobStats.reduce((acc, j) => acc + (j.aiMatchesCount || 0), 0)}
             </span>
             <span className="text-[12px] font-semibold text-green-800">High precision</span>
@@ -127,7 +127,7 @@ export default function RecruiterJobs() {
           </p>
           <button
             onClick={() => setShowModal(true)}
-            className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-2 mx-auto cursor-pointer"
+            className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-2 mx-auto cursor-pointer"
           >
             <span className="material-symbols-outlined text-[18px]">add</span>
             Create First Requisition
@@ -141,12 +141,15 @@ export default function RecruiterJobs() {
               <div key={card.id} className="border border-slate-200 rounded-2xl p-5 hover:border-indigo-300 hover:shadow-md transition-all bg-white shadow-xs cursor-pointer">
                 <div className="flex items-start justify-between mb-2">
                   <h3 className="font-display text-[15px] font-bold text-emerald-900 leading-snug">{card.title}</h3>
-                  <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full text-emerald-900 bg-emerald-50 border border-emerald-200">
-                    Sourcing
-                  </span>
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full text-emerald-900 bg-emerald-50 border border-emerald-200">
+                      Sourcing
+                    </span>
+                    <button onClick={(e) => { e.stopPropagation(); updateJob(card.id, { status: 'Paused' }); }} className="text-[10px] text-red-600 font-bold hover:underline">Deactivate</button>
+                  </div>
                 </div>
                 <p className="text-[13px] font-medium text-slate-500 mb-4">{card.dept} • <span className="text-slate-700">{card.location}</span></p>
-                
+
                 <div className="flex items-center justify-between border-t border-slate-100 pt-3">
                   <div className="flex items-center gap-1.5 text-slate-600 text-xs font-semibold">
                     <span className="material-symbols-outlined text-[16px] text-slate-400">group</span>
@@ -167,12 +170,15 @@ export default function RecruiterJobs() {
               <div key={card.id} className="border border-slate-200 rounded-2xl p-5 hover:border-amber-300 hover:shadow-md transition-all bg-white shadow-xs cursor-pointer">
                 <div className="flex items-start justify-between mb-2">
                   <h3 className="font-display text-[15px] font-bold text-emerald-900 leading-snug">{card.title}</h3>
-                  <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full text-amber-700 bg-amber-50 border border-amber-200">
-                    Interviewing
-                  </span>
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full text-amber-700 bg-amber-50 border border-amber-200">
+                      Interviewing
+                    </span>
+                    <button onClick={(e) => { e.stopPropagation(); updateJob(card.id, { status: 'Paused' }); }} className="text-[10px] text-red-600 font-bold hover:underline">Deactivate</button>
+                  </div>
                 </div>
                 <p className="text-[13px] font-medium text-slate-500 mb-4">{card.dept} • <span className="text-slate-700">{card.location}</span></p>
-                
+
                 <div className="flex items-center justify-between border-t border-slate-100 pt-3">
                   <div className="flex items-center gap-1.5 text-slate-600 text-xs font-semibold">
                     <span className="material-symbols-outlined text-[16px] text-slate-400">group</span>
@@ -198,7 +204,7 @@ export default function RecruiterJobs() {
                   </span>
                 </div>
                 <p className="text-[13px] font-medium text-slate-500 mb-4">{card.dept} • <span className="text-slate-700">{card.location}</span></p>
-                
+
                 <div className="flex items-center justify-between border-t border-slate-100 pt-3">
                   <div className="flex items-center gap-1.5 text-slate-600 text-xs font-semibold">
                     <span className="material-symbols-outlined text-[16px] text-slate-400">verified</span>
@@ -238,39 +244,34 @@ export default function RecruiterJobs() {
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="e.g. Senior AI Research Engineer"
+                  placeholder="Jon Title"
                   required
-                  className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-600 outline-none transition-all"
+                  className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 outline-none transition-all"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Department</label>
-                  <select
+                  <input
+                    type="text"
                     value={dept}
                     onChange={(e) => setDept(e.target.value)}
-                    className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-600 outline-none transition-all bg-white"
-                  >
-                    <option value="Engineering">Engineering</option>
-                    <option value="Product & Design">Product & Design</option>
-                    <option value="Data Science">Data Science</option>
-                    <option value="Marketing & Growth">Marketing & Growth</option>
-                    <option value="Sales & Ops">Sales & Ops</option>
-                  </select>
+                    placeholder="Department"
+                    required
+                    className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 outline-none transition-all bg-white"
+                  />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Location</label>
-                  <select
+                  <input
+                    type="text"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-600 outline-none transition-all bg-white"
-                  >
-                    <option value="Remote">Remote</option>
-                    <option value="Hybrid (SF)">Hybrid (SF)</option>
-                    <option value="Hybrid (NY)">Hybrid (NY)</option>
-                    <option value="On-site">On-site</option>
-                  </select>
+                    placeholder="e.g. Remote"
+                    required
+                    className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 outline-none transition-all bg-white"
+                  />
                 </div>
               </div>
 
@@ -289,7 +290,7 @@ export default function RecruiterJobs() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center gap-1.5"
+                  className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center gap-1.5"
                 >
                   <span className="material-symbols-outlined text-[16px]">check</span>
                   Create & Match AI

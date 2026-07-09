@@ -207,7 +207,7 @@ export default function SuperAdminGlobalCandidates() {
 
                       <h1 className="text-4xl md:text-5xl font-bold text-slate-900 uppercase tracking-wide pr-32">{p.name}</h1>
                       <div className="text-[14px] md:text-[16px] text-emerald-900 mt-2 font-medium tracking-widest uppercase">
-                        {p.title || 'Professional Candidate'}
+                        {p.title || 'Candidate Profile'}
                       </div>
                       <div className="flex flex-wrap items-center justify-center gap-4 mt-4 text-[13px] text-slate-500 font-sans font-medium">
                         <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">mail</span> {p.email}</span>
@@ -223,7 +223,7 @@ export default function SuperAdminGlobalCandidates() {
                     <div className="mb-8">
                       <h4 className="text-[14px] font-bold text-emerald-800 uppercase tracking-[0.2em] border-b border-slate-200 pb-2 mb-4">Professional Summary</h4>
                       <p className="text-[14px] leading-relaxed text-slate-700 whitespace-pre-wrap font-sans">
-                        {p.bio || 'Experienced professional with a proven track record of success.'}
+                        {p.bio || 'Summary not provided.'}
                       </p>
                     </div>
 
@@ -234,7 +234,7 @@ export default function SuperAdminGlobalCandidates() {
                         {p.experience ? p.experience.split('\n').map((line: string, i: number) => (
                           <div key={i} className="mb-2">{line}</div>
                         )) : (
-                          <div className="italic text-slate-400">Experience details not available.</div>
+                          <div className="italic text-slate-400">Experience not provided.</div>
                         )}
                       </div>
                     </div>

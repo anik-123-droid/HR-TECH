@@ -180,9 +180,17 @@ export default function RecruiterAiScreening() {
       <td className="px-5 py-3">
         <span className={`text-[12px] font-semibold ${c.status === 'Approved' ? 'text-green-800' : c.status === 'Pending' ? 'text-emerald-800' : 'text-red-600'}`}>{c.status}</span>
         {app?.testScore !== undefined && (
-          <div className="mt-1 flex items-center gap-1 bg-amber-50 text-amber-700 px-2 py-0.5 rounded text-[10px] font-bold border border-amber-200">
-            <span className="material-symbols-outlined text-[12px]">quiz</span>
-            Test: {app.testScore}/100 {app.testPenalties ? `(-${app.testPenalties} penalty)` : ''}
+          <div className="mt-1 flex flex-col gap-1 w-fit">
+            <div className="flex items-center gap-1 bg-amber-50 text-amber-700 px-2 py-0.5 rounded text-[10px] font-bold border border-amber-200">
+              <span className="material-symbols-outlined text-[12px]">quiz</span>
+              Test: {app.testScore}/100 {app.testPenalties ? `(-${app.testPenalties} penalty)` : ''}
+            </div>
+            {app.testTerminationReason && (
+              <div className="flex items-center gap-1 bg-red-50 text-red-700 px-2 py-0.5 rounded text-[10px] font-bold border border-red-200 truncate max-w-[120px]" title={app.testTerminationReason}>
+                <span className="material-symbols-outlined text-[12px]">gavel</span>
+                {app.testTerminationReason.includes('successfully') ? 'Completed' : 'Terminated'}
+              </div>
+            )}
           </div>
         )}
       </td>
@@ -424,7 +432,7 @@ export default function RecruiterAiScreening() {
                     <div className="text-center border-b-[3px] border-emerald-800 pb-6 mb-8">
                       <h1 className="text-4xl md:text-5xl font-bold text-slate-900 uppercase tracking-wide">{p.name}</h1>
                       <div className="text-[14px] md:text-[16px] text-emerald-900 mt-2 font-medium tracking-widest uppercase">
-                        {p.title || 'Professional Candidate'}
+                        {p.title || 'Candidate Profile'}
                       </div>
                       <div className="flex flex-wrap items-center justify-center gap-4 mt-4 text-[13px] text-slate-500 font-sans font-medium">
                         <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">mail</span> {p.email}</span>
@@ -440,7 +448,7 @@ export default function RecruiterAiScreening() {
                     <div className="mb-8">
                       <h4 className="text-[14px] font-bold text-emerald-800 uppercase tracking-[0.2em] border-b border-slate-200 pb-2 mb-4">Professional Summary</h4>
                       <p className="text-[14px] leading-relaxed text-slate-700 whitespace-pre-wrap font-sans">
-                        {p.bio || 'Experienced professional with a proven track record of success. Highly skilled in driving results, collaborating with cross-functional teams, and delivering high-quality solutions.'}
+                        {p.bio || 'Summary not provided.'}
                       </p>
                     </div>
 

@@ -20,6 +20,8 @@ export interface CandidateProfile {
   title: string;
   location: string;
   preferredLocation?: string;
+  expectedSalary?: string;
+  noticePeriod?: string;
   dob?: string;
   gender?: string;
   currentCompany: string;
@@ -201,7 +203,9 @@ const DEFAULT_CANDIDATE_PROFILE: CandidateProfile = {
   title: '',
   location: 'Bangalore, India',
   preferredLocation: '',
-  dob: '',
+  expectedSalary: 'Not Specified',
+  noticePeriod: 'Not Specified',
+  dob: '1995-08-15',
   gender: '',
   currentCompany: 'TechFlow Inc',
   readinessScore: 0,

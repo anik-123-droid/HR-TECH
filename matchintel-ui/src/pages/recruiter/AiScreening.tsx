@@ -435,10 +435,12 @@ export default function RecruiterAiScreening() {
                         {p.title || 'Candidate Profile'}
                       </div>
                       <div className="flex flex-wrap items-center justify-center gap-4 mt-4 text-[13px] text-slate-500 font-sans font-medium">
-                        <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">mail</span> {p.email}</span>
-                        <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">call</span> {p.phone || '+1 (555) 123-4567'}</span>
-                        <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">location_on</span> {p.location || 'San Francisco, CA'}</span>
+                        {p.email && <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">mail</span> {p.email}</span>}
+                        {p.phone && <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">call</span> {p.phone}</span>}
+                        {p.location && <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">location_on</span> {p.location}</span>}
                         {p.preferredLocation && <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">map</span> Prefers: {p.preferredLocation}</span>}
+                        {p.expectedSalary && <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">payments</span> Exp. Salary: {p.expectedSalary}</span>}
+                        {p.noticePeriod && <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">schedule</span> Notice Period: {p.noticePeriod}</span>}
                         {p.gender && <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">person</span> {p.gender}</span>}
                         {p.dob && <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">cake</span> DOB: {p.dob}</span>}
                       </div>

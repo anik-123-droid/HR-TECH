@@ -88,8 +88,12 @@ export default function CandidateDashboard() {
   };
 
   const confirmApply = async () => {
-    if (selectedJob) {
-      // In a real app we would update the master profile with formData here
+    if (selectedJob && candidateProfile) {
+      updateCandidateProfile({
+        ...candidateProfile,
+        expectedSalary: formData.expectedSalary,
+        noticePeriod: formData.noticePeriod
+      });
       await applyForJob(selectedJob.id);
       alert(`✅ Successfully applied for: ${selectedJob.title}`);
       setApplyModalOpen(false);

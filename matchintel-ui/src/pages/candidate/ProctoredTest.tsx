@@ -8,6 +8,7 @@ export default function ProctoredTest() {
   const { appId } = useParams();
   const { submitTestResult, applications } = useApp();
 
+  const [isFocused, setIsFocused] = useState(true);
   const [testActive, setTestActive] = useState(false);
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -50,11 +51,68 @@ export default function ProctoredTest() {
         handleViolation("Screen changed or another app/tab opened.");
       }
     };
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!testActiveRef.current) return;
+      
+      // Block print screen
+      if (e.key === "PrintScreen") {
+        navigator.clipboard.writeText('');
+        handleViolation("Screenshot attempted.");
+      }
+      // Block copy (Ctrl+C)
+      if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) {
+        e.preventDefault();
+        handleViolation("Copying text is not allowed.");
+      }
+      // Block DevTools (F12, Ctrl+Shift+I)
+      if (e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === 'i' || e.key === 'I'))) {
+        e.preventDefault();
+        handleViolation("Developer tools are not allowed.");
+      }
+    };
+    
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (testActiveRef.current) {
+        e.preventDefault();
+        e.returnValue = ''; // Required for Chrome to show a prompt
+      }
+    };
+
+    const handleBlur = () => {
+      if (testActiveRef.current) {
+        setIsFocused(false);
+        handleViolation("Window lost focus. Screenshots or changing tabs/URLs is not allowed.");
+      }
+    };
+
+    const handleFocus = () => {
+      if (testActiveRef.current) {
+        setIsFocused(true);
+      }
+    };
+    
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement && testActiveRef.current) {
+        handleViolation("Exited fullscreen mode.");
+      }
+    };
+
     document.addEventListener("visibilitychange", handleVisibilityChange);
+    document.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("blur", handleBlur);
+    window.addEventListener("focus", handleFocus);
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
 
     // Cleanup on unmount ONLY
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+      document.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("blur", handleBlur);
+      window.removeEventListener("focus", handleFocus);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
       stopMediaTracks();
     };
   }, []); // Empty dependency array so it only runs on mount/unmount
@@ -103,6 +161,14 @@ export default function ProctoredTest() {
       analyserRef.current.fftSize = 256;
 
       setTestActive(true);
+      
+      try {
+        if (document.documentElement.requestFullscreen) {
+          await document.documentElement.requestFullscreen();
+        }
+      } catch (e) {
+        console.warn("Fullscreen request failed", e);
+      }
 
     } catch (err) {
       console.error(err);
@@ -249,7 +315,41 @@ export default function ProctoredTest() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col relative">
+    <div 
+      className="min-h-screen bg-slate-50 flex flex-col relative select-none"
+      onContextMenu={(e) => {
+        if (testActiveRef.current) {
+          e.preventDefault();
+          handleViolation("Right-click is disabled.");
+        }
+      }}
+      onCopy={(e) => {
+        if (testActiveRef.current) {
+          e.preventDefault();
+          handleViolation("Copying text is not allowed.");
+        }
+      }}
+    >
+      {/* Blur Overlay - Hides everything if focus is lost */}
+      {!isFocused && testActive && (
+        <div className="absolute inset-0 z-50 bg-slate-900/95 flex flex-col items-center justify-center backdrop-blur-xl">
+           <span className="material-symbols-outlined text-red-500 text-6xl mb-4">warning</span>
+           <h2 className="text-4xl font-bold text-white mb-4">Focus Lost!</h2>
+           <p className="text-slate-300 text-lg mb-8 text-center max-w-md">You must keep this window active at all times. Taking screenshots, editing the URL, or opening other apps is strictly prohibited.</p>
+           <button 
+             onClick={() => {
+               setIsFocused(true);
+               if (document.documentElement.requestFullscreen) {
+                 document.documentElement.requestFullscreen().catch(() => {});
+               }
+             }} 
+             className="px-8 py-3 bg-blue-600 hover:bg-blue-700 transition-colors text-white rounded-lg font-medium"
+           >
+             Resume Test
+           </button>
+        </div>
+      )}
+
       {/* Hidden canvas for motion detection */}
       <canvas ref={canvasRef} width="320" height="240" className="hidden" />
 

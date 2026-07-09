@@ -445,8 +445,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         const eduMatch = candidateProfile.education ? 100 : 50;
         const confidenceScore = 90;
         
-        // Use the deterministic ATS score (readinessScore) as the overall match score
-        const overallMatch = candidateProfile.readinessScore || 85;
+        // Calculate true AI Match Score based on specific job requirements
+        const overallMatch = Math.round(
+          (skillMatch * 0.6) + 
+          (expMatch * 0.3) + 
+          (eduMatch * 0.1)
+        );
 
         const bgColors = ['bg-emerald-800', 'bg-purple-600', 'bg-emerald-900', 'bg-emerald-800', 'bg-amber-600'];
         

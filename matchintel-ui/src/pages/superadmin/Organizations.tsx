@@ -125,7 +125,6 @@ export default function SuperAdminOrganizations() {
             <tr className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-100">
               <th className="text-left px-5 py-2.5">Organization</th>
               <th className="text-left px-5 py-2.5">Plan</th>
-              <th className="text-left px-5 py-2.5">Tokens Usage</th>
               <th className="text-left px-5 py-2.5">Candidates</th>
               <th className="text-left px-5 py-2.5">Status</th>
               <th className="text-right px-5 py-2.5"></th>
@@ -133,7 +132,7 @@ export default function SuperAdminOrganizations() {
           </thead>
           <tbody>
             {filteredAgencies.length === 0 ? (
-              <tr><td colSpan={6} className="text-center py-8 text-slate-500 text-[14px]">No organizations match your search.</td></tr>
+              <tr><td colSpan={5} className="text-center py-8 text-slate-500 text-[14px]">No organizations match your search.</td></tr>
             ) : filteredAgencies.map(a => (
               <tr key={a.id} className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors cursor-pointer" onClick={() => handleManage(a)}>
                 <td className="px-5 py-3">
@@ -145,7 +144,6 @@ export default function SuperAdminOrganizations() {
                   </div>
                 </td>
                 <td className="px-5 py-3"><span className="text-[11px] font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded">{a.plan}</span></td>
-                <td className="px-5 py-3 text-[13px] font-semibold text-emerald-900">{a.tokens}</td>
                 <td className="px-5 py-3 text-[13px] text-slate-600">{a.candidates}</td>
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-1.5">
@@ -197,11 +195,7 @@ export default function SuperAdminOrganizations() {
                 </div>
               </div>
               
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[12px] font-bold text-slate-700 mb-1">Tokens Usage</label>
-                  <input type="text" value={formData.tokens} onChange={e => setFormData({ ...formData, tokens: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" placeholder="e.g. 500,000" />
-                </div>
+              <div className="grid grid-cols-1 gap-4">
                 <div>
                   <label className="block text-[12px] font-bold text-slate-700 mb-1">Candidates</label>
                   <input type="text" value={formData.candidates} onChange={e => setFormData({ ...formData, candidates: e.target.value })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" placeholder="e.g. 150" />

@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 export interface User {
   name: string;
   email: string;
-  role: 'Candidate' | 'Admin' | 'SuperAdmin';
+  role: 'Candidate' | 'Admin' | 'Recruiter' | 'OrgAdmin' | 'SuperAdmin';
   company?: string;
   avatar?: string;
   googleAccessToken?: string;
@@ -115,7 +115,6 @@ export interface ClientAccount {
   name: string;
   industry: string;
   activeRoles: number;
-  pipeline: number;
   contactName: string;
   contactEmail: string;
   status: 'Account Healthy' | 'Action Required' | 'Onboarding';
@@ -147,7 +146,7 @@ export interface Interview {
 
 interface AppContextType {
   currentUser: User;
-  login: (name: string, email: string, role: 'Candidate' | 'Admin' | 'SuperAdmin', company?: string, googleTokens?: { access?: string, refresh?: string }) => void;
+  login: (name: string, email: string, role: 'Candidate' | 'Admin' | 'Recruiter' | 'OrgAdmin' | 'SuperAdmin', company?: string, googleTokens?: { access?: string, refresh?: string }) => void;
   logout: () => void;
   isDemoLoaded: boolean;
   loadSampleData: () => void;
@@ -273,7 +272,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         name: 'TechCorp Solutions',
         industry: 'Enterprise Tech',
         activeRoles: 5,
-        pipeline: 24,
         contactName: 'Sarah Jenkins',
         contactEmail: 'sarah@techcorp.com',
         status: 'Account Healthy',
@@ -285,7 +283,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         name: 'HealthAI',
         industry: 'HealthTech',
         activeRoles: 2,
-        pipeline: 8,
         contactName: 'Dr. Alan Smith',
         contactEmail: 'alan@healthai.io',
         status: 'Action Required',
@@ -328,7 +325,26 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, []);
 
   // Auth Methods
-  const login = (name: string, email: string, role: 'Candidate' | 'Admin' | 'SuperAdmin', company?: string, googleTokens?: { access?: string, refresh?: string }) => {
+  const login = async (name: string, email: string, role: 'Candidate' | 'Admin' | 'Recruiter' | 'OrgAdmin' | 'SuperAdmin', company?: string, googleTokens?: { access?: string, refresh?: string }) => {
+    try {
+      // Try to hit the backend
+      const response = await fetch('http://localhost:8000/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          username: email,
+          password: 'password123', // In a real app, this comes from a form parameter
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('recruitai_token', data.access_token);
+      }
+    } catch (e) {
+      console.warn("Backend auth failed or unreachable, falling back to mock login state.");
+    }
+
     setCurrentUser({ 
       name, 
       email, 
@@ -363,8 +379,27 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // --- CANDIDATE WORKFLOW ---
 
-  const parseResume = async (_file: File): Promise<void> => {
-    return new Promise((resolve) => {
+  const parseResume = async (file: File): Promise<void> => {
+    return new Promise(async (resolve) => {
+      // Attempt real secure file upload (Layer 4)
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        
+        const token = localStorage.getItem('recruitai_token');
+        const res = await fetch('http://localhost:8000/api/v1/candidates/upload-resume', {
+          method: 'POST',
+          headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+          body: formData
+        });
+        
+        if (!res.ok) {
+          console.warn("Real upload failed, using mock AI simulation");
+        }
+      } catch (err) {
+        console.warn("Backend unreachable for resume upload", err);
+      }
+
       // Simulate AI processing delay
       setTimeout(() => {
         // AI Extraction logic simulated
@@ -520,8 +555,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return new Promise((resolve) => {
       setTimeout(() => {
         // Parse JD logic simulation
-        const extractedSkills = jobData.description.match(/(React|Node\.js|Python|TypeScript|AWS|Docker|Kubernetes)/gi) || ['General Software Engineering'];
-        const uniqueSkills = Array.from(new Set(extractedSkills.map((s: string) => s.trim())));
+        const providedSkills = jobData.skills && jobData.skills.length > 0 ? jobData.skills : null;
+        const defaultSkills = jobData.title ? [jobData.title] : ['General Skills'];
+        const extractedSkills = (jobData.description || '').match(/(React|Node\.js|Python|TypeScript|AWS|Docker|Kubernetes|Java|C\+\+|SQL|Excel|Sales|Marketing|Design|Figma)/gi) || defaultSkills;
+        const uniqueSkills = providedSkills || Array.from(new Set(extractedSkills.map((s: string) => s.trim())));
         
         const newJob: RecruiterJob = {
           id: `job_${Date.now()}`,

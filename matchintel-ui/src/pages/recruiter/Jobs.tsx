@@ -8,6 +8,7 @@ export default function RecruiterJobs() {
   const [title, setTitle] = useState('');
   const [dept, setDept] = useState('Engineering');
   const [location, setLocation] = useState('Remote');
+  const [skillsInput, setSkillsInput] = useState('');
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,10 +20,12 @@ export default function RecruiterJobs() {
       location,
       mode: 'Remote',
       salary: '$100k - $150k',
-      description: `We are looking for a ${title.trim()} to join our ${dept} team.`
+      description: `We are looking for a ${title.trim()} to join our ${dept} team.`,
+      skills: skillsInput.split(',').map(s => s.trim()).filter(Boolean)
     });
 
     setTitle('');
+    setSkillsInput('');
     setShowModal(false);
     alert(`🎉 New Requisition Created: "${title}"\n\nAI is now sourcing matching candidates from the global talent pool.`);
   };
@@ -273,6 +276,17 @@ export default function RecruiterJobs() {
                     className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 outline-none transition-all bg-white"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Required Skills (Comma Separated)</label>
+                <input
+                  type="text"
+                  value={skillsInput}
+                  onChange={(e) => setSkillsInput(e.target.value)}
+                  placeholder="e.g. Sales, Marketing, Negotiation"
+                  className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 outline-none transition-all bg-white"
+                />
               </div>
 
               <div className="p-3 bg-indigo-50/60 rounded-xl border border-indigo-100 flex items-start gap-2.5 text-xs text-indigo-900 mt-2">

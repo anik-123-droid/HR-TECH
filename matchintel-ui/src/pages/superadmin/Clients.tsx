@@ -14,7 +14,6 @@ export default function RecruiterClients() {
     name: '',
     industry: '',
     activeRoles: 0,
-    pipeline: 0,
     contactName: '',
     contactEmail: '',
     status: 'Account Healthy',
@@ -27,12 +26,11 @@ export default function RecruiterClients() {
       name: c.name,
       industry: c.industry,
       activeRoles: c.activeRoles || 0,
-      pipeline: c.pipeline || 0,
       contact: c.contactName,
       email: c.contactEmail,
       status: c.status === 'Account Healthy' ? 'Healthy' : c.status === 'Action Required' ? 'At Risk' : 'Onboarding',
       statusColor: c.status === 'Account Healthy' ? 'text-green-800' : c.status === 'Action Required' ? 'text-red-500' : 'text-emerald-800',
-      revenue: new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(c.revenue || 0),
+      revenue: new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(c.revenue || 0),
       rawRevenue: c.revenue || 0,
       rawStatus: c.status
     }));
@@ -56,7 +54,6 @@ export default function RecruiterClients() {
       name: '',
       industry: 'Enterprise Tech',
       activeRoles: 0,
-      pipeline: 0,
       contactName: '',
       contactEmail: '',
       status: 'Onboarding',
@@ -79,7 +76,6 @@ export default function RecruiterClients() {
         name: formData.name.trim(),
         industry: formData.industry,
         activeRoles: formData.activeRoles,
-        pipeline: formData.pipeline,
         contactName: formData.contactName,
         contactEmail: formData.contactEmail,
         status: formData.status as any,
@@ -91,8 +87,8 @@ export default function RecruiterClients() {
   };
 
   const handleExport = () => {
-    const csv = 'Client,Industry,Active Roles,Pipeline,Contact,Revenue,Status\n' +
-      clients.map(c => `${c.name},${c.industry},${c.activeRoles},${c.pipeline},${c.contact},${c.revenue},${c.status}`).join('\n');
+    const csv = 'Client,Industry,Active Roles,Contact,Revenue,Status\n' +
+      clients.map(c => `${c.name},${c.industry},${c.activeRoles},${c.contact},${c.revenue},${c.status}`).join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -108,7 +104,6 @@ export default function RecruiterClients() {
       name: client.name,
       industry: client.industry,
       activeRoles: client.activeRoles,
-      pipeline: client.pipeline,
       contactName: client.contact,
       contactEmail: client.email,
       status: client.rawStatus,
@@ -148,7 +143,7 @@ export default function RecruiterClients() {
         <div className="border border-slate-200 rounded-xl p-4">
           <div className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1">Revenue (YTD)</div>
  <div className=" text-3xl font-bold text-green-800">
-            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(allClients.reduce((sum, c) => sum + c.rawRevenue, 0))}
+            {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(allClients.reduce((sum, c) => sum + c.rawRevenue, 0))}
           </div>
         </div>
       </div>
@@ -178,7 +173,6 @@ export default function RecruiterClients() {
               <th className="text-left px-5 py-2.5">Client</th>
               <th className="text-left px-5 py-2.5">Industry</th>
               <th className="text-left px-5 py-2.5">Active Roles</th>
-              <th className="text-left px-5 py-2.5">Pipeline</th>
               <th className="text-left px-5 py-2.5">Primary Contact</th>
               <th className="text-left px-5 py-2.5">Revenue</th>
               <th className="text-left px-5 py-2.5">Status</th>
@@ -200,7 +194,6 @@ export default function RecruiterClients() {
                 </td>
                 <td className="px-5 py-3"><span className="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">{c.industry}</span></td>
                 <td className="px-5 py-3 text-[13px] font-semibold text-emerald-900">{c.activeRoles}</td>
-                <td className="px-5 py-3 text-[13px] text-slate-600">{c.pipeline}</td>
                 <td className="px-5 py-3">
                   <div className="text-[13px] text-emerald-900">{c.contact}</div>
                   <div className="text-[11px] text-slate-500">{c.email}</div>
@@ -253,17 +246,13 @@ export default function RecruiterClients() {
                 </div>
               </div>
               
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[12px] font-bold text-slate-700 mb-1">Active Roles</label>
                   <input type="number" value={formData.activeRoles} onChange={e => setFormData({ ...formData, activeRoles: parseInt(e.target.value) || 0 })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" />
                 </div>
                 <div>
-                  <label className="block text-[12px] font-bold text-slate-700 mb-1">Pipeline Size</label>
-                  <input type="number" value={formData.pipeline} onChange={e => setFormData({ ...formData, pipeline: parseInt(e.target.value) || 0 })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" />
-                </div>
-                <div>
-                  <label className="block text-[12px] font-bold text-slate-700 mb-1">Revenue ($)</label>
+                  <label className="block text-[12px] font-bold text-slate-700 mb-1">Revenue (₹)</label>
                   <input type="number" value={formData.revenue} onChange={e => setFormData({ ...formData, revenue: parseInt(e.target.value) || 0 })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" />
                 </div>
               </div>

@@ -26,15 +26,16 @@ import RecruiterInterviews from './pages/recruiter/Interviews';
 import SuperAdminDashboard from './pages/superadmin/Dashboard';
 import SuperAdminClients from './pages/superadmin/Clients';
 import SuperAdminGlobalCandidates from './pages/superadmin/GlobalCandidates';
-import SuperAdminOrganizations from './pages/superadmin/Organizations';
 import SuperAdminBilling from './pages/superadmin/Billing';
-import SuperAdminAiTokenUsage from './pages/superadmin/AiTokenUsage';
+import CookieConsent from './components/CookieConsent';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="/login" element={<Login />} />
+    <>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+
       <Route path="/:superadminName" element={<SuperAdminLogin />} />
       
       {/* Candidate Routes */}
@@ -63,12 +64,12 @@ function App() {
         <Route path="dashboard" element={<SuperAdminDashboard />} />
         <Route path="global-candidates" element={<SuperAdminGlobalCandidates />} />
         <Route path="clients" element={<SuperAdminClients />} />
-        <Route path="organizations" element={<SuperAdminOrganizations />} />
         <Route path="billing" element={<SuperAdminBilling />} />
-        <Route path="ai-usage" element={<SuperAdminAiTokenUsage />} />
         <Route path="*" element={<div className="p-8"><h1 className="text-title-lg">Under Construction</h1><p className="text-secondary mt-2">This page is currently being built.</p></div>} />
       </Route>
     </Routes>
+    <CookieConsent />
+    </>
   );
 }
 

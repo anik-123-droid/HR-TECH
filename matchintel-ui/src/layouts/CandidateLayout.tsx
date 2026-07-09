@@ -140,21 +140,6 @@ export default function CandidateLayout() {
             >
               <span className="material-symbols-outlined">menu</span>
             </button>
-
-            {!isTestRoute && (
-              <div className="relative w-full">
-              <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[20px] text-slate-400">search</span>
-              <input
-                type="text"
-                placeholder="Search candidates, jobs, clients..."
-                className="w-full pl-12 pr-12 py-3.5 text-[14px] border-2 border-slate-100 rounded-2xl bg-white focus:outline-none focus:border-emerald-700 focus:ring-4 focus:ring-emerald-700/10 transition-all placeholder:text-slate-400 font-medium text-emerald-900"
-              />
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-slate-100 text-slate-400 rounded-md text-[11px] font-bold font-sans border border-slate-200">⌘</kbd>
-                <kbd className="px-1.5 py-0.5 bg-slate-100 text-slate-400 rounded-md text-[11px] font-bold font-sans border border-slate-200">K</kbd>
-              </div>
-              </div>
-            )}
           </div>
 
           {!isTestRoute && (

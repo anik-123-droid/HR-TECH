@@ -44,7 +44,11 @@ async def login(
         subject=user.id, expires_delta=access_token_expires
     )
     
+    from app.crud.audit import log_action
+    await log_action(db, action="login", user_id=user.id, organization_id=user.organization_id)
+    
     return {
+
         "access_token": access_token,
         "token_type": "bearer",
     }

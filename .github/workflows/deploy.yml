@@ -1,0 +1,50 @@
+name: Deploy MatchIntel
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          cd matchintel-api
+          pip install -r requirements.txt
+          pip install bandit safety
+          
+      - name: Run Bandit Security Scan
+        run: |
+          cd matchintel-api
+          bandit -r app/
+          
+      - name: Run Safety Check (Dependencies)
+        run: |
+          cd matchintel-api
+          safety check
+          
+  build-and-deploy:
+    needs: security-audit
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Build Docker Image
+        run: |
+          cd matchintel-api
+          docker build -t matchintel-api:latest .
+          
+      # Add steps for pushing to ECR/DockerHub and triggering ECS/VPS deployment here

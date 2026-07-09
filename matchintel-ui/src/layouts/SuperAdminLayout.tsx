@@ -13,9 +13,7 @@ export default function SuperAdminLayout() {
     { to: '/super-admin/dashboard', icon: 'space_dashboard', label: 'Dashboard' },
     { to: '/super-admin/global-candidates', icon: 'groups', label: 'Global Talent Pool' },
     { to: '/super-admin/clients', icon: 'domain', label: 'Client Accounts' },
-    { to: '/super-admin/organizations', icon: 'corporate_fare', label: 'Organizations' },
     { to: '/super-admin/billing', icon: 'payments', label: 'Billing & Plans' },
-    { to: '/super-admin/ai-usage', icon: 'memory', label: 'AI Token Usage' },
   ];
 
   const initials = currentUser.name
@@ -30,9 +28,7 @@ export default function SuperAdminLayout() {
       case '/super-admin/dashboard': return 'Dashboard';
       case '/super-admin/global-candidates': return 'Global Talent Pool';
       case '/super-admin/clients': return 'Client Accounts';
-      case '/super-admin/organizations': return 'Organizations';
       case '/super-admin/billing': return 'Billing & Plans';
-      case '/super-admin/ai-usage': return 'AI Token Usage';
       default: return 'Platform Analytics';
     }
   };

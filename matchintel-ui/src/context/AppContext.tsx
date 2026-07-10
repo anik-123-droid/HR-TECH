@@ -85,6 +85,7 @@ export interface RecruiterJob {
   status: 'Draft' | 'Active' | 'Paused' | 'Filled';
   postedDate: string;
   urgent: boolean;
+  clientId?: string;
   
   // Parsed JD fields
   description: string;
@@ -170,7 +171,7 @@ interface AppContextType {
 
   // Interviews
   interviews: Interview[];
-  scheduleInterview: (interview: Omit<Interview, 'id' | 'status' | 'meetLink'>) => void;
+  scheduleInterview: (interview: Omit<Interview, 'id' | 'status' | 'meetLink'>) => Interview;
   updateInterviewStatus: (id: string, status: Interview['status']) => void;
 
   // Jobs
@@ -379,65 +380,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // --- CANDIDATE WORKFLOW ---
 
-  const parseResume = async (file: File): Promise<void> => {
-    return new Promise(async (resolve) => {
-      // Attempt real secure file upload (Layer 4)
-      try {
-        const formData = new FormData();
-        formData.append("file", file);
-        
-        const token = localStorage.getItem('recruitai_token');
-        const res = await fetch('http://localhost:8000/api/v1/candidates/upload-resume', {
-          method: 'POST',
-          headers: token ? { 'Authorization': `Bearer ${token}` } : {},
-          body: formData
-        });
-        
-        if (!res.ok) {
-          console.warn("Real upload failed, using mock AI simulation");
-        }
-      } catch (err) {
-        console.warn("Backend unreachable for resume upload", err);
-      }
-
-      // Simulate AI processing delay
-      setTimeout(() => {
-        // AI Extraction logic simulated
-        const updatedProfile: CandidateProfile = {
-          ...candidateProfile,
-          name: currentUser.name,
-          email: currentUser.email,
-          phone: '+1 (555) 123-4567',
-          title: 'Senior Software Engineer',
-          location: 'San Francisco, CA',
-          currentCompany: 'Tech Innovations LLC',
-          experience: '6 Years',
-          education: 'B.S. Computer Science, UC Berkeley',
-          skills: ['React', 'TypeScript', 'Node.js', 'AWS', 'GraphQL'],
-          certifications: ['AWS Certified Developer'],
-          projects: ['Enterprise E-commerce Platform', 'Real-time Analytics Dashboard'],
-          resumeSummary: 'Experienced full-stack engineer specializing in React and Node.js. Proven track record of delivering scalable cloud applications.',
-          resumeScore: 92,
-          aiConfidence: 96,
-          missingSkills: ['Kubernetes'],
-          careerSuggestions: ['Lead Frontend Engineer', 'Engineering Manager'],
-          resumeParsed: true,
-          resumeVersion: candidateProfile.resumeVersion + 1,
-          readinessScore: 85
-        };
-        
-        setCandidateProfile(updatedProfile);
-        
-        // Also update the global candidates repo if they don't exist
-        setGlobalCandidates(prev => {
-          const exists = prev.find(p => p.id === updatedProfile.id);
-          if (exists) return prev.map(p => p.id === updatedProfile.id ? updatedProfile : p);
-          return [updatedProfile, ...prev];
-        });
-
-        resolve();
-      }, 3000); // 3 second delay for dramatic effect
-    });
+  const parseResume = async (_file: File): Promise<void> => {
+    console.log('Use parseResumeFromPdf from utils/pdfParser.ts instead of this mock function.', _file.name);
   };
 
   const updateCandidateProfile = (updates: Partial<CandidateProfile>) => {
@@ -489,6 +433,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
         const bgColors = ['bg-emerald-800', 'bg-purple-600', 'bg-emerald-900', 'bg-emerald-800', 'bg-amber-600'];
         
+        // Use real readiness score from the parsed resume, fallback to 0 instead of fake 85
+        const realAtsScore = candidateProfile.readinessScore || 0;
+
         const newApp: CandidateApplication = {
           id: `app_${Date.now()}`,
           candidateId: candidateProfile.id,
@@ -502,7 +449,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           logoBg: bgColors[Math.floor(Math.random() * bgColors.length)],
           
           matchScore: overallMatch,
-          resumeScore: candidateProfile.resumeScore || 85,
+          resumeScore: realAtsScore,
           confidenceScore: confidenceScore,
           skillMatch,
           experienceMatch: expMatch,
@@ -513,17 +460,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
         setApplications(prev => [newApp, ...prev]);
 
+        // Determine if there is a legitimate risk (missing more than 50% of required skills)
+        const isMajorMismatch = jobSkills.length > 0 && missingSkills.length > Math.ceil(jobSkills.length / 2);
+
         // Automatically trigger AI Screening generation for the recruiter
         const newScreening: AiScreeningItem = {
           id: `scr_${Date.now()}`,
           applicationId: newApp.id,
           candidateName: newApp.candidateName,
           role: newApp.role,
-          aiScore: newApp.matchScore,
-          recommendation: newApp.matchScore >= 90 ? 'Strong Hire' : newApp.matchScore >= 75 ? 'Recommend' : 'Proceed with Caution',
+          aiScore: newApp.matchScore, // Restore Job Match Score for categorizing into Best/Average/Worst
+          recommendation: newApp.matchScore >= 75 ? 'Strong Hire' : newApp.matchScore >= 50 ? 'Recommend' : 'Proceed with Caution',
           summary: newApp.reasonForMatch,
           strengths: ['Verified skills match', 'Solid experience timeline'],
-          risks: newApp.missingSkills.length > 0 ? ['Lacks experience in ' + newApp.missingSkills[0]] : [],
+          risks: isMajorMismatch && missingSkills.length > 0 ? ['Lacks experience in ' + missingSkills[0]] : [],
           status: 'Pending'
         };
 
@@ -570,6 +520,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           status: 'Active',
           postedDate: new Date().toISOString(),
           urgent: jobData.urgent || false,
+          clientId: jobData.clientId,
           
           description: jobData.description,
           requiredSkills: uniqueSkills as string[],
@@ -625,9 +576,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       ...interview,
       id: `int_${Date.now()}`,
       status: 'Scheduled',
-      meetLink: `https://meet.google.com/abc-defg-hij`
+      meetLink: `https://meet.jit.si/VenikaHR-${Math.random().toString(36).substring(2, 10)}`
     };
     setInterviews(prev => [newInterview, ...prev]);
+    return newInterview;
   };
 
   const updateInterviewStatus = (id: string, status: Interview['status']) => {

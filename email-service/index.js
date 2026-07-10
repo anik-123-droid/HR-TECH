@@ -30,8 +30,8 @@ app.post('/api/send-email/status-update', async (req, res) => {
     candidate_name, 
     status, 
     job_role = "Software Engineer", 
-    company_name = "MatchIntel",
-    action_url = "https://matchintel.ai/dashboard",
+    company_name = "Venika HR-TECH",
+    action_url = "https://ai-hr-tech.vercel.app/candidate/dashboard",
     admin_email,
     admin_name
   } = req.body;
@@ -51,14 +51,14 @@ app.post('/api/send-email/status-update', async (req, res) => {
     });
 
     // Determine subject based on status
-    let subject = "Application Update - MatchIntel";
-    if (status === "approved") subject = "Application Approved! - MatchIntel";
-    else if (status === "interview_scheduled") subject = "Interview Scheduled - MatchIntel";
-    else if (status === "mcq_test") subject = "Action Required: MCQ Assessment - MatchIntel";
+    let subject = "Application Update - Venika HR-TECH";
+    if (status === "approved") subject = "Application Approved! - Venika HR-TECH";
+    else if (status === "interview_scheduled") subject = "Interview Scheduled - Venika HR-TECH";
+    else if (status === "mcq_test") subject = "Action Required: MCQ Assessment - Venika HR-TECH";
 
     // Mail options
     const mailOptions = {
-      from: `"${admin_name || 'MatchIntel Recruiting'}" <${process.env.EMAIL_USER}>`,
+      from: `"${admin_name || 'Venika HR-TECH Recruiting'}" <${process.env.EMAIL_USER}>`,
       replyTo: admin_email || process.env.EMAIL_USER,
       to: candidate_email,
       subject: subject,

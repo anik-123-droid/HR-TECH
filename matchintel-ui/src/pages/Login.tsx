@@ -38,8 +38,8 @@ export default function Login() {
                 candidate_name: userName,
                 status: mode === 'SignUp' ? 'welcome' : 'signin',
                 job_role: "Portal Access",
-                company_name: "MatchIntel",
-                action_url: "https://matchintel.ai/candidate/dashboard"
+                company_name: "Venika HR-TECH",
+                action_url: "https://ai-hr-tech.vercel.app/candidate/dashboard"
               })
             }).catch(e => console.error("Email error:", e));
           }
@@ -67,8 +67,8 @@ export default function Login() {
           candidate_name: userName,
           status: mode === 'SignUp' ? 'welcome' : 'signin',
           job_role: "Portal Access",
-          company_name: "MatchIntel",
-          action_url: "https://matchintel.ai/candidate/dashboard"
+          company_name: "Venika HR-TECH",
+          action_url: "https://ai-hr-tech.vercel.app/candidate/dashboard"
         })
       }).catch(e => console.error("Email error:", e));
     }

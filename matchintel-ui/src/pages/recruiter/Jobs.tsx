@@ -3,12 +3,13 @@ import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 
 export default function RecruiterJobs() {
-  const { jobs, applications, createJobRequisition, updateJob } = useApp();
+  const { jobs, applications, createJobRequisition, updateJob, clients } = useApp();
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState('');
   const [dept, setDept] = useState('Engineering');
   const [location, setLocation] = useState('Remote');
   const [skillsInput, setSkillsInput] = useState('');
+  const [clientId, setClientId] = useState('');
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,7 +22,8 @@ export default function RecruiterJobs() {
       mode: 'Remote',
       salary: '$100k - $150k',
       description: `We are looking for a ${title.trim()} to join our ${dept} team.`,
-      skills: skillsInput.split(',').map(s => s.trim()).filter(Boolean)
+      skills: skillsInput.split(',').map(s => s.trim()).filter(Boolean),
+      clientId: clientId || (clients.length > 0 ? clients[0].id : undefined)
     });
 
     setTitle('');
@@ -276,6 +278,20 @@ export default function RecruiterJobs() {
                     className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 outline-none transition-all bg-white"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Client Account</label>
+                <select
+                  value={clientId}
+                  onChange={(e) => setClientId(e.target.value)}
+                  className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 outline-none transition-all bg-white"
+                >
+                  <option value="">Select a Client (Optional)</option>
+                  {clients.map(c => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
+                  ))}
+                </select>
               </div>
 
               <div>

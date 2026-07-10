@@ -20,8 +20,8 @@ export default function SuperAdminGlobalCandidates() {
           candidate_name: candidate.name,
           status: statusType,
           job_role: candidate.title || 'Professional Candidate',
-          company_name: 'MatchIntel',
-          action_url: 'https://matchintel.ai/dashboard'
+          company_name: 'Venika HR-TECH',
+          action_url: 'https://ai-hr-tech.vercel.app/candidate/dashboard'
         }),
       });
 

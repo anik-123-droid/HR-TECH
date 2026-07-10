@@ -1,5 +1,4 @@
 {
-  "outputDirectory": "matchintel-ui/dist",
   "rewrites": [
     {
       "source": "/((?!api/.*).*)",

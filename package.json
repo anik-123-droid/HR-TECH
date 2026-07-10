@@ -5,6 +5,7 @@
     "build": "cd matchintel-ui && npm install && npm run build"
   },
   "dependencies": {
+    "nodemailer": "^9.0.3",
     "xlsx": "^0.18.5"
   }
 }

@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 export default function RecruiterCandidates() {
   const navigate = useNavigate();
-  const { jobs, applications, updateJob, globalCandidates, createJobRequisition } = useApp();
+  const { jobs, applications, updateJob, globalCandidates, createJobRequisition, clients } = useApp();
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState('');
   const [dept, setDept] = useState('Engineering');
   const [location, setLocation] = useState('Remote');
+  const [clientId, setClientId] = useState('');
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +20,8 @@ export default function RecruiterCandidates() {
       location,
       mode: 'Remote',
       salary: '$100k - $150k',
-      description: `We are looking for a ${title.trim()} to join our ${dept} team.`
+      description: `We are looking for a ${title.trim()} to join our ${dept} team.`,
+      clientId: clientId || (clients.length > 0 ? clients[0].id : undefined)
     });
 
     setTitle('');
@@ -168,7 +170,7 @@ export default function RecruiterCandidates() {
                   )}
                 </div>
                 <button 
-                  onClick={() => navigate('/recruiter/ai-screening')}
+                  onClick={() => navigate(`/recruiter/ai-screening?jobId=${req.id}`)}
                   className="px-5 py-2.5 bg-white border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 rounded-xl text-[13px] font-bold transition-all shadow-sm whitespace-nowrap"
                 >
                   View Candidates
@@ -276,6 +278,20 @@ export default function RecruiterCandidates() {
                     className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 outline-none transition-all bg-white"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Client Account</label>
+                <select
+                  value={clientId}
+                  onChange={(e) => setClientId(e.target.value)}
+                  className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 outline-none transition-all bg-white"
+                >
+                  <option value="">Select a Client (Optional)</option>
+                  {clients.map(c => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
+                  ))}
+                </select>
               </div>
 
               <div className="p-3 bg-indigo-50/60 rounded-xl border border-indigo-100 flex items-start gap-2.5 text-xs text-indigo-900 mt-2">

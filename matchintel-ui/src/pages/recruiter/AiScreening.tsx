@@ -1,9 +1,12 @@
 import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 
 export default function RecruiterAiScreening() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const targetJobId = searchParams.get('jobId');
+
   const { aiScreenings, updateScreeningStatus, updateApplicationStatus, globalCandidates, candidateProfile: localCandidateProfile, applications, currentUser } = useApp();
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -41,8 +44,8 @@ export default function RecruiterAiScreening() {
           candidate_name: candidate.name,
           status: statusType,
           job_role: candidate.title || 'Professional Candidate',
-          company_name: 'MatchIntel',
-          action_url: 'https://matchintel.ai/dashboard',
+          company_name: 'Venika HR-TECH',
+          action_url: 'https://ai-hr-tech.vercel.app/candidate/dashboard',
           admin_email: currentUser?.email,
           admin_name: currentUser?.name,
           google_access_token: currentUser?.googleAccessToken
@@ -63,6 +66,13 @@ export default function RecruiterAiScreening() {
 
   const queue = useMemo(() => {
     let filtered = aiScreenings;
+
+    if (targetJobId) {
+      // Find all applications for this job to get their IDs
+      const jobApplicationIds = applications.filter(a => a.jobId === targetJobId).map(a => a.id);
+      filtered = filtered.filter(c => jobApplicationIds.includes(c.applicationId));
+    }
+
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       filtered = filtered.filter(c => c.candidateName.toLowerCase().includes(q) || c.role.toLowerCase().includes(q));
@@ -74,12 +84,29 @@ export default function RecruiterAiScreening() {
     if (categoryFilter === 'Average') filtered = filtered.filter(c => c.aiScore >= 75 && c.aiScore < 90);
     if (categoryFilter === 'Worst') filtered = filtered.filter(c => c.aiScore < 75);
     return filtered;
-  }, [searchQuery, statusFilter, categoryFilter, aiScreenings]);
+  }, [searchQuery, statusFilter, categoryFilter, aiScreenings, targetJobId, applications]);
 
   // Buckets for metrics
-  const bestCount = aiScreenings.filter(c => c.aiScore >= 90).length;
-  const averageCount = aiScreenings.filter(c => c.aiScore >= 75 && c.aiScore < 90).length;
-  const worstCount = aiScreenings.filter(c => c.aiScore < 75).length;
+  // Use the pre-filtered queue (ignoring categoryFilter) for counts so buckets remain accurate
+  const queueForCounts = useMemo(() => {
+    let filtered = aiScreenings;
+    if (targetJobId) {
+      const jobApplicationIds = applications.filter(a => a.jobId === targetJobId).map(a => a.id);
+      filtered = filtered.filter(c => jobApplicationIds.includes(c.applicationId));
+    }
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      filtered = filtered.filter(c => c.candidateName.toLowerCase().includes(q) || c.role.toLowerCase().includes(q));
+    }
+    if (statusFilter) {
+      filtered = filtered.filter(c => c.status === statusFilter);
+    }
+    return filtered;
+  }, [searchQuery, statusFilter, aiScreenings, targetJobId, applications]);
+
+  const bestCount = queueForCounts.filter(c => c.aiScore >= 90).length;
+  const averageCount = queueForCounts.filter(c => c.aiScore >= 75 && c.aiScore < 90).length;
+  const worstCount = queueForCounts.filter(c => c.aiScore < 75).length;
 
   const bestCandidates = queue.filter(c => c.aiScore >= 90);
   const averageCandidates = queue.filter(c => c.aiScore >= 75 && c.aiScore < 90);
@@ -111,7 +138,7 @@ export default function RecruiterAiScreening() {
     } else if (action === 'Shortlist') {
       updateScreeningStatus(id, 'Approved');
       updateApplicationStatus(applicationId, 'Shortlisted');
-      if (profile) await handleSendEmail(profile, 'approved');
+      if (profile) await handleSendEmail(profile, 'shortlisted');
     } else if (action === 'Schedule') {
       updateScreeningStatus(id, 'Approved');
       updateApplicationStatus(applicationId, 'Interview Scheduled');
@@ -119,6 +146,7 @@ export default function RecruiterAiScreening() {
       navigate('/recruiter/interviews');
     } else if (action === 'Pass') {
       updateApplicationStatus(applicationId, 'Hired');
+      if (profile) await handleSendEmail(profile, 'hired');
     }
   };
 
@@ -227,7 +255,24 @@ export default function RecruiterAiScreening() {
 
   return (
     <div className="space-y-6 pb-10">
-      
+      {targetJobId && (
+        <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2 text-indigo-900">
+            <span className="material-symbols-outlined text-[18px]">filter_alt</span>
+            <span className="text-[14px] font-bold">Showing candidates filtered by specific Requisition</span>
+          </div>
+          <button 
+            onClick={() => {
+              searchParams.delete('jobId');
+              navigate(`/recruiter/ai-screening?${searchParams.toString()}`);
+            }} 
+            className="px-3 py-1.5 bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50 rounded text-[12px] font-bold transition-colors shadow-sm"
+          >
+            Clear Filter
+          </button>
+        </div>
+      )}
+
       {/* Top Filter Metric Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 animate-fade-in">
         <div 
@@ -235,7 +280,7 @@ export default function RecruiterAiScreening() {
           className={`bg-white border rounded-xl p-4 cursor-pointer transition-all hover:shadow-md ${categoryFilter === 'All' ? 'border-emerald-700 ring-2 ring-emerald-100' : 'border-slate-200'}`}
         >
           <div className="text-[12px] font-bold text-slate-500 uppercase mb-1">Total Screened</div>
- <div className=" text-2xl font-bold text-emerald-900">{aiScreenings.length}</div>
+ <div className=" text-2xl font-bold text-emerald-900">{queueForCounts.length}</div>
         </div>
         <div 
           onClick={() => setCategoryFilter('Best')}

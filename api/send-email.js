@@ -21,6 +21,12 @@ const getEmailTemplate = ({
                      <p>Our platform uses advanced AI to match your unique skills and experience with the most suitable roles. We encourage you to keep your profile and resume updated so that we can provide you with the best possible job recommendations.</p>`;
       ctaText = "Go to Dashboard";
       break;
+    case "applied":
+      headerText = "Application Received!";
+      mainMessage = `<p>Thank you for submitting your application for the <strong>${job_role}</strong> position at <strong>${company_name}</strong>. We have successfully received your profile and resume.</p>
+                     <p>Our talent acquisition team and AI screening systems are currently reviewing your qualifications. We will notify you of any updates or next steps regarding your candidacy.</p>`;
+      ctaText = "View Application Status";
+      break;
     case "signin":
       headerText = "New Sign-in Alert";
       mainMessage = `<p>You have successfully signed in to your <strong>${company_name}</strong> candidate portal. We are thrilled to see you back and actively managing your career journey with us.</p>
@@ -38,7 +44,7 @@ const getEmailTemplate = ({
       const timeText = interview_time ? `<strong>Time:</strong> ${interview_time}<br>` : '';
       const linkText = interview_link ? `<strong>Meeting Link:</strong> <a href="${interview_link}">${interview_link}</a><br>` : '';
       const details = (dateText || timeText || linkText) ? `<div style="background-color: #f8fafc; padding: 16px; border-radius: 8px; margin: 16px 0; border: 1px solid #e2e8f0;">${dateText}${timeText}${linkText}</div>` : '';
-      
+
       headerText = "Interview Scheduled";
       mainMessage = `<p>Congratulations! We are excited to invite you for an interview for the <strong>${job_role}</strong> role at <strong>${company_name}</strong>. Your profile stood out among many applicants, and our hiring managers are eager to learn more about your experience.</p>
                      ${details}
@@ -140,11 +146,11 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const { 
-    candidate_email, 
-    candidate_name, 
-    status, 
-    job_role = "Professional Role", 
+  const {
+    candidate_email,
+    candidate_name,
+    status,
+    job_role = "Professional Role",
     company_name = "Venika HR-TECH",
     action_url = "https://ai-hr-tech.vercel.app",
     admin_email,
@@ -172,6 +178,7 @@ export default async function handler(req, res) {
     else if (status === "mcq_test") subject = "Action Required: MCQ Assessment - Venika HR-TECH";
     else if (status === "mcq_passed") subject = "Assessment Passed! - Venika HR-TECH";
     else if (status === "rejected") subject = "Application Update - Venika HR-TECH";
+    else if (status === "applied") subject = "Application Received - Venika HR-TECH";
     else if (status === "welcome") subject = "Welcome to Venika HR-TECH!";
     else if (status === "signin") subject = "New Sign-in Alert - Venika HR-TECH";
     else if (status === "hired") subject = "Congratulations! You're Hired - Venika HR-TECH";

@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 const EMAIL_USER = "anikkhanpathan685@gmail.com";
-const EMAIL_PASS = "akccfigvfjrauoiz";
+const EMAIL_PASS = "abhzrwzgifmcmnsk";
 
 async function testEmail() {
   const fallbackTransporter = nodemailer.createTransport({

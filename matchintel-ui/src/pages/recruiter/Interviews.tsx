@@ -14,26 +14,52 @@ export default function RecruiterInterviews() {
   const [interviewType, setInterviewType] = useState<'Technical' | 'Cultural' | 'HR' | 'Client'>('Technical');
 
   const allInterviews = useMemo(() => {
-    // Basic date parsing logic mock for tabs
-    const today = allAppInterviews.map(i => ({
-      id: i.id,
-      time: `${i.date} ${i.time}`,
-      candidate: i.candidateName,
-      role: i.jobTitle,
-      type: i.type,
-      interviewer: 'Recruiter',
-      status: i.status,
-      isNext: i.status === 'Scheduled',
-      meetLink: i.meetLink
-    }));
-    return { today, tomorrow: [], week: today }; // Simplified for now since we just use dates directly
+    const todayStr = new Date().toISOString().split('T')[0];
+    
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowStr = tomorrow.toISOString().split('T')[0];
+    
+    const nextWeek = new Date();
+    nextWeek.setDate(nextWeek.getDate() + 7);
+    const nextWeekStr = nextWeek.toISOString().split('T')[0];
+
+    const today: any[] = [];
+    const tmrw: any[] = [];
+    const week: any[] = [];
+
+    allAppInterviews.forEach(i => {
+      const item = {
+        id: i.id,
+        time: `${i.date} ${i.time}`,
+        candidate: i.candidateName,
+        role: i.jobTitle,
+        type: i.type,
+        interviewer: 'Recruiter',
+        status: i.status,
+        isNext: i.status === 'Scheduled',
+        meetLink: i.meetLink
+      };
+
+      if (i.date === todayStr) {
+        today.push(item);
+        week.push(item); // Today is also this week
+      } else if (i.date === tomorrowStr) {
+        tmrw.push(item);
+        week.push(item); // Tomorrow is also this week
+      } else if (i.date > todayStr && i.date <= nextWeekStr) {
+        week.push(item);
+      }
+    });
+
+    return { today, tomorrow: tmrw, week };
   }, [allAppInterviews]);
 
   const interviews = useMemo(() => {
     let items = allInterviews[activeTab] || [];
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
-      items = items.filter(i => i.candidate.toLowerCase().includes(q) || i.role.toLowerCase().includes(q) || i.type.toLowerCase().includes(q));
+      items = items.filter((i: any) => i.candidate.toLowerCase().includes(q) || i.role.toLowerCase().includes(q) || i.type.toLowerCase().includes(q));
     }
     return items;
   }, [activeTab, searchQuery, allInterviews]);
@@ -48,7 +74,7 @@ export default function RecruiterInterviews() {
     
     const app = applications.find(a => a.id === selectedAppId);
     if (app) {
-      scheduleInterview({
+      const newInterview = scheduleInterview({
         candidateId: app.candidateId,
         candidateName: app.candidateName,
         jobId: app.jobId,
@@ -68,11 +94,14 @@ export default function RecruiterInterviews() {
             candidate_name: candidateProfile.name,
             status: 'interview_scheduled',
             job_role: app.role,
-            company_name: 'MatchIntel',
-            action_url: 'https://matchintel.ai/candidate/dashboard',
+            company_name: 'Venika HR-TECH',
+            action_url: newInterview.meetLink,
             admin_email: currentUser?.email,
             admin_name: currentUser?.name,
-            google_access_token: currentUser?.googleAccessToken
+            google_access_token: currentUser?.googleAccessToken,
+            interview_date: interviewDate,
+            interview_time: interviewTime,
+            interview_link: newInterview.meetLink
           })
         }).catch(e => console.error("Email error:", e));
       }
@@ -172,11 +201,11 @@ export default function RecruiterInterviews() {
  <div className=" text-3xl font-bold text-emerald-900">{allInterviews.week.length + allInterviews.today.length + allInterviews.tomorrow.length}</div>
           <span className="text-[12px] text-slate-400">Total sessions</span>
         </div>
-        <div className="border border-slate-200 rounded-xl p-4">
-          <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Completion Rate</div>
- <div className=" text-3xl font-bold text-green-800">{stats.completionRate}%</div>
-          <span className="text-[12px] font-semibold text-green-800">Based on real data</span>
-        </div>
+          <div className="bg-white border border-slate-200 rounded-xl p-6">
+            <div className="text-[11px] font-bold text-slate-500 uppercase mb-2">Completion Rate</div>
+            <div className="text-3xl font-bold text-emerald-900">{stats.completionRate}%</div>
+            <div className="text-[11px] font-semibold text-emerald-700 mt-1">Of scheduled interviews</div>
+          </div>
         <div className="border border-slate-200 rounded-xl p-4">
           <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Avg. Duration</div>
  <div className=" text-3xl font-bold text-emerald-900">{stats.avgDuration}m</div>

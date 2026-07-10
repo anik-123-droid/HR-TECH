@@ -52,7 +52,7 @@ export default function RecruiterLayout() {
           <img src="/logo.png" alt="Venika HR-TECH Logo" className="w-10 h-10 rounded-full object-cover shadow-lg" />
           <div className="flex flex-col leading-tight">
             <span className="font-display text-[18px] font-extrabold text-emerald-900 tracking-tight">Venika HR-TECH</span>
-            <span className="text-[11px] font-bold text-slate-500 tracking-[0.2em] uppercase">Recruiter</span>
+            <span className="text-[11px] font-bold text-slate-500 tracking-[0.2em] uppercase">Admin</span>
           </div>
         </div>
         
@@ -60,7 +60,7 @@ export default function RecruiterLayout() {
         <div className="flex-1 overflow-y-auto px-4 space-y-8 mt-2">
           
           <div>
-            <div className="px-2 mb-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest">Recruiter Portal</div>
+            <div className="px-2 mb-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest">Admin Portal</div>
             <nav className="space-y-1">
               {navItems.map(item => {
                 const isActive = currentPath === item.to || currentPath.startsWith(item.to + '/');
@@ -139,7 +139,7 @@ export default function RecruiterLayout() {
               </div>
               <div className="text-left hidden sm:block">
                 <div className="text-[14px] font-bold text-emerald-900 leading-tight group-hover:text-emerald-800 transition-colors">{currentUser.name}</div>
-                <div className="text-[12px] font-medium text-slate-500">{currentUser.company || 'Recruiter'}</div>
+                <div className="text-[12px] font-medium text-slate-500">{currentUser.company || 'Admin'}</div>
               </div>
             </div>
           </div>

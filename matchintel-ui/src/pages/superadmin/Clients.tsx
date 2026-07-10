@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 import { useApp } from '../../context/AppContext';
 
 export default function RecruiterClients() {
-  const { clients: contextClients, addClient, updateClient, deleteClient } = useApp();
+  const { clients: contextClients, jobs, addClient, updateClient, deleteClient } = useApp();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
 
@@ -25,7 +25,7 @@ export default function RecruiterClients() {
       id: c.id,
       name: c.name,
       industry: c.industry,
-      activeRoles: c.activeRoles || 0,
+      activeRoles: (c.activeRoles || 0) + jobs.filter(j => j.clientId === c.id && j.status === 'Active').length,
       contact: c.contactName,
       email: c.contactEmail,
       status: c.status === 'Account Healthy' ? 'Healthy' : c.status === 'Action Required' ? 'At Risk' : 'Onboarding',
@@ -34,7 +34,7 @@ export default function RecruiterClients() {
       rawRevenue: c.revenue || 0,
       rawStatus: c.status
     }));
-  }, [contextClients]);
+  }, [contextClients, jobs]);
 
   const clients = useMemo(() => {
     let filtered = allClients;
@@ -246,15 +246,9 @@ export default function RecruiterClients() {
                 </div>
               </div>
               
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[12px] font-bold text-slate-700 mb-1">Active Roles</label>
-                  <input type="number" value={formData.activeRoles} onChange={e => setFormData({ ...formData, activeRoles: parseInt(e.target.value) || 0 })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" />
-                </div>
-                <div>
-                  <label className="block text-[12px] font-bold text-slate-700 mb-1">Revenue (₹)</label>
-                  <input type="number" value={formData.revenue} onChange={e => setFormData({ ...formData, revenue: parseInt(e.target.value) || 0 })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" />
-                </div>
+              <div>
+                <label className="block text-[12px] font-bold text-slate-700 mb-1">Revenue (₹)</label>
+                <input type="number" value={formData.revenue} onChange={e => setFormData({ ...formData, revenue: parseInt(e.target.value) || 0 })} className="w-full px-4 py-2 text-[14px] border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" />
               </div>
 
               <div className="pt-2 border-t border-slate-100">

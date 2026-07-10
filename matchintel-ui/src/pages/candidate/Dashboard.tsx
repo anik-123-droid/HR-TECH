@@ -95,6 +95,19 @@ export default function CandidateDashboard() {
         noticePeriod: formData.noticePeriod
       });
       await applyForJob(selectedJob.id);
+      
+      fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          candidate_email: currentUser.email,
+          candidate_name: currentUser.name || candidateProfile.name || "Candidate",
+          status: 'applied',
+          job_role: selectedJob.title,
+          company_name: 'Venika HR-TECH'
+        })
+      }).catch(e => console.error("Email API error:", e));
+
       alert(`✅ Successfully applied for: ${selectedJob.title}`);
       setApplyModalOpen(false);
       setSelectedJob(null);
